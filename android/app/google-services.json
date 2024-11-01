@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "11402700330",
+    "project_id": "recomendia-app",
+    "storage_bucket": "recomendia-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11402700330:android:a0e06d75cfd64e66888553",
+        "android_client_info": {
+          "package_name": "com.recomendia.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11402700330-8afvode0pf48dtqvqe82nut4kdl460no.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.recomendia.ai",
+            "certificate_hash": "c244f25d8fbfed91a0ef12b851f4ae818b8bb063"
+          }
+        },
+        {
+          "client_id": "11402700330-soeddq3e2n1qiumrmnh3m79e8drop4r0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt4WSvGFVzP0TvZIjUmqrej_YT5Do5YKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11402700330-soeddq3e2n1qiumrmnh3m79e8drop4r0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
