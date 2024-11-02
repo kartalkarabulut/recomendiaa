@@ -85,6 +85,12 @@ class RegisterViewNotifier extends StateNotifier<RegisterViewState> {
       state = state.copyWith(currentFieldIndex: state.currentFieldIndex + 1);
     }
   }
+
+  void backField() {
+    if (state.currentFieldIndex > 0) {
+      state = state.copyWith(currentFieldIndex: state.currentFieldIndex - 1);
+    }
+  }
 }
 
 final registerViewNotifierProvider =

@@ -13,6 +13,7 @@ import 'package:recomendiaa/models/movie_recomendation_model.dart';
 import 'package:recomendiaa/repository/auth_repository.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-generation/book/gemini_book_service.dart';
+import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 import 'package:recomendiaa/services/user/auth/email_password_signin_imp.dart';
 import 'package:recomendiaa/services/user/auth/google_sign_in_imp.dart';
 import 'package:recomendiaa/services/user/data/to-firestore/user_data_to_firestore_imp.dart';
@@ -174,13 +175,17 @@ class LovedCategories extends ConsumerWidget {
             List<BookRecomendationModel> bookRecomendations =
                 await bookRecomendationRepository.initialRecomendation(
                     registeringUser.state.lovedBookCategories, []);
-            List<String> bookPrompts =
-                await bookRecomendationRepository.generatePromptSuggestion(
-                    null, registeringUser.state.lovedBookCategories);
+            List<String> bookPrompts = await bookRecomendationRepository
+                .initialGeneratePromptSuggestion(
+                    null,
+                    registeringUser.state.lovedBookCategories,
+                    RecomendationType.book);
             print("kitap prompts ${bookPrompts}");
-            List<String> moviePrompts =
-                await movieRecomendationRepository.generatePromptSuggestion(
-                    null, registeringUser.state.lovedMovieCategories);
+            List<String> moviePrompts = await movieRecomendationRepository
+                .initialGeneratePromptSuggestion(
+                    null,
+                    registeringUser.state.lovedMovieCategories,
+                    RecomendationType.movie);
             print("film prompts ${moviePrompts}");
             List<MovieRecomendationModel> movieRecomendations =
                 await movieRecomendationRepository.initialRecomendation(

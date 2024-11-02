@@ -70,9 +70,9 @@ class LoginView extends ConsumerWidget {
                 //   height: 50,
                 //   width: 50,
                 // ),
-                GoogleSignIn(onPressed: () async{
-                  
-                },),
+                GoogleSignIn(
+                  onPressed: () async {},
+                ),
               ],
             ),
           ),
@@ -128,7 +128,11 @@ class GoogleSignIn extends StatelessWidget {
   }
 }
 
-class CustomButton extends StatelessWidget {
+final isButtonWorkignProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
+class CustomButton extends ConsumerWidget {
   const CustomButton({
     super.key,
     required this.text,
@@ -141,20 +145,26 @@ class CustomButton extends StatelessWidget {
   final double? width;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isButtonWorking = ref.watch(isButtonWorkignProvider);
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         height: 60,
         width: width,
         decoration: BoxDecoration(
             color: Colors.deepOrange, borderRadius: BorderRadius.circular(10)),
         child: Center(
-            child: Text(
-          text,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        )),
+            child: isButtonWorking
+                ? const CircularProgressIndicator(
+                    color: Colors.black,
+                  )
+                : Text(
+                    text,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 25),
+                  )),
       ),
     );
   }

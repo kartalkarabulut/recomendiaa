@@ -3,12 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 
-final movieRecomendationProvider =
-    FutureProvider<List<MovieRecomendationModel>>((ref) async {
-  return await MovieRecomendationDataImp()
-      .getRecomendations(RecomendationType.movie);
-});
-
 class MovieRecomendationDataImp implements RecomendationDatabaseInterface {
   static const String _boxName = 'movie_recommendations';
   @override
@@ -43,11 +37,12 @@ class MovieRecomendationDataImp implements RecomendationDatabaseInterface {
   }
 
   @override
-  Future<bool> deleteRecomendation(String id) async {
+  Future<bool> deleteRecomendation(String title) async {
     try {
       final box = await Hive.openBox<MovieRecomendationModel>(_boxName);
-      await box.delete(id);
+      await box.delete(title);
       await box.close();
+      print("silindi");
       return true;
     } catch (e) {
       print('Öneriyi silerken hata oluştu: $e');

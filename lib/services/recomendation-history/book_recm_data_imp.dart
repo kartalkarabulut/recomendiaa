@@ -43,12 +43,24 @@ class BookRecomendationDataImp implements RecomendationDatabaseInterface {
   }
 
   @override
-  Future<bool> deleteRecomendation(String id) async {
+  Future<bool> deleteRecomendation(String title) async {
     try {
       final box = await Hive.openBox<BookRecomendationModel>(_boxName);
-      await box.delete(id);
+
+      // Silmeden önce kontrol edelim
+      final exists = box.containsKey(title);
+      print("Silinecek kitap mevcut mu: $exists");
+      print("Silmeden önce box içeriği: ${box.keys.toList()}");
+
+      if (exists) {
+        await box.delete(title);
+        print("Kitap başarıyla silindi: $title");
+      } else {
+        print("Silinecek kitap bulunamadı: $title");
+      }
+
       await box.close();
-      return true;
+      return exists;
     } catch (e) {
       print('Kitap önerisini silerken hata oluştu: $e');
       return false;

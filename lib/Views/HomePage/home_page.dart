@@ -1,24 +1,15 @@
 import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:recomendiaa/Views/Auth/auth_screen.dart';
-
-import 'package:recomendiaa/Views/HomePage/home_view_model.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/recomendation_type_widget.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/recomended_book_widget.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/recomended_movie_widget.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/suggestion_selector.dart';
 import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recomendation_view.dart';
-
 import 'package:recomendiaa/core/constants/app_constans.dart';
-
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
-
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
@@ -34,6 +25,23 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   TextEditingController promptController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   print("PostFrameCallback çalıştı");
+    //   // 3 saniyelik gecikme eklendi
+    //   await Future.delayed(const Duration(seconds: 1));
+    //   try {
+    //     await generateSuggestion();
+    //     print("generateSuggestion tamamlandı");
+    //   } catch (e) {
+    //     print("generateSuggestion hatası: $e");
+    //   }
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +69,37 @@ class _HomePageState extends ConsumerState<HomePage> {
               slivers: [
                 SliverAppBar(
                   floating: true,
+                  // excludeHeaderSemantics: true,
                   pinned: true,
-                  snap: true,
+                  // snap: true,
                   backgroundColor: Colors.transparent,
                   expandedHeight: 80,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
-                      "Recomendia",
-                      style: AppTextStyles.orbitronlargeTextStyle
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    centerTitle: true,
+                  centerTitle: true,
+                  title: Text(
+                    "Recomendia",
+                    style: AppTextStyles.orbitronlargeTextStyle
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
+                  actions: [
+                    IconButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          ref.invalidate(userDataProvider);
+                          ref.invalidate(userIdProvider);
+                        },
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: 40,
+                        ))
+                  ],
+                  //   title: Text(
+                  //     "Recomendia",
+                  //     style: AppTextStyles.orbitronlargeTextStyle
+                  //         .copyWith(fontWeight: FontWeight.bold),
+                  //   ),
+                  //   centerTitle: true,
+                  // ),
                 ),
                 SliverList(
                   delegate: SliverChildListDelegate(
@@ -111,27 +138,35 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      IconButton(
-                          onPressed: () async {
-                            await FirebaseAuth.instance.signOut();
-                            ref.invalidate(userDataProvider);
-                            ref.invalidate(userIdProvider);
-                          },
-                          icon: const Icon(Icons.logout)),
+                      // IconButton(
+                      //     onPressed: () async {
+                      //       // await FirebaseAuth.instance.signOut();
+                      //       // ref.invalidate(userDataProvider);
+                      //       // ref.invalidate(userIdProvider);
+                      //       generateSuggestion();
+                      //     },
+                      //     icon: const Icon(Icons.logout)),
                       Text(
                         "Special For You",
                         style: AppTextStyles.xLargeTextStyle.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SuggestionSelector(),
+                      // const SuggestionSelector()
+                      SuggestionSelector(
+                          onSelectionChanged: (isMovieSelected) {
+                            ref
+                                .read(homeViewModelProvider.notifier)
+                                .toggleMoviesSelection();
+                          },
+                          isFirstSelected: homeState.isMoviesSelected),
                       // const SizedBox(height: 2),
                       userData.when(
                         data: (data) {
                           if (homeState.isMoviesSelected) {
                             return ListView.builder(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return RecomendedMovie(
                                   movie: data!.lastSuggestedMovies[index],

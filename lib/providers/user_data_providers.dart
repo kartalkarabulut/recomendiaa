@@ -5,9 +5,14 @@ import 'package:recomendiaa/services/user/data/from-firestore/user_data_from_fir
 
 final userDataProvider = FutureProvider<UserModel?>((ref) async {
   final userId = ref.watch(userIdProvider);
+  print("userdata provider çalıştı");
   return UserDataFromFirestoreImp().getUserData(userId!);
 });
 
 final userIdProvider = Provider<String?>((ref) {
   return FirebaseAuth.instance.currentUser?.uid;
+});
+
+final authStateProvider = StreamProvider((ref) {
+  return FirebaseAuth.instance.authStateChanges();
 });

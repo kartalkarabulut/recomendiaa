@@ -13,7 +13,7 @@ class GeminiBookService {
     String geminiPrompt = ApiConstants().getBookPrompt(definition);
     final content = [Content.text(geminiPrompt)];
     final response = await model.generateContent(content);
-
+    print("the response from gemini \n ${response.text}");
     final jsonData = jsonDecode(response.text!);
     final List<dynamic> booksJson = jsonData['books'];
     print(booksJson);
@@ -29,9 +29,8 @@ class GeminiBookService {
         .bookSuggestionPrompt(previousBookNames, previousBookPrompts);
     final content = [Content.text(geminiPrompt)];
     final response = await model.generateContent(content);
-
+    print("the book suggestions response from gemini \n ${response.text}");
     final jsonData = jsonDecode(response.text!);
-
     final List<dynamic> books = jsonData['books'];
     return books
         .map((bookJson) =>

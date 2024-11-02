@@ -18,22 +18,21 @@ class GenerateMovieRecomendation implements RecomendationGenerationInterface {
         await GeminiMovieService().getFilmsFromGemini(definition);
     for (var film in films) {
       //?Poster url alındı
-      String? posterUrl =
-          await MoviePosterUrl().getMoviePosterUrl(film["title"]);
+      String? posterUrl = await MoviePosterUrl().getMoviePosterUrl(film.title);
 
       recommendations.add(
         MovieRecomendationModel(
-          title: film["title"],
-          description: film["description"],
+          title: film.title ?? "no-url",
+          description: film.description ?? "no-description",
           posterUrl:
               posterUrl.isEmpty || posterUrl == null ? "no-url" : posterUrl,
-          genre: film["genre"],
-          keywords: film["keywords"],
-          director: film["director"],
-          imdbRating: film["imdbRating"],
-          actors: film["actors"],
-          year: film["year"],
-          duration: film["duration"],
+          genre: film.genre ?? "no-genre",
+          keywords: film.keywords ?? ["no-keywords"],
+          director: film.director ?? "no-director",
+          imdbRating: film.imdbRating ?? "no-imdbRating",
+          actors: film.actors ?? ["no-actors"],
+          year: film.year ?? "no-year",
+          duration: film.duration ?? "no-duration",
         ),
       );
     }

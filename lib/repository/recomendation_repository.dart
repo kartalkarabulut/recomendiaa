@@ -66,6 +66,14 @@ class RecomendationRepository {
     }
   }
 
+  Future<void> deleteTheRecomendation(String title) async {
+    await recomendationDatabase.deleteRecomendation(title);
+  }
+
+  Future<void> updateUserPrompts(String prompt, RecomendationType type) async {
+    await userDataToFirestore.updateUserPrompts(prompt, type);
+  }
+
   Future<dynamic> initialRecomendation(
       List<String> lovedCategories, List<String> lastSuggestedPrompts) async {
     // List<dynamic> recomendations = await recomendationGenerationService
@@ -83,10 +91,32 @@ class RecomendationRepository {
     }
   }
 
-  Future<List<String>> generatePromptSuggestion(
-      List<String>? previousPrompts, List<String>? lovedCategories) async {
-    return await recomendationGenerationService.generatePromptSuggestion(
+  Future<void> generatePromptSuggestion(List<String>? previousPrompts,
+      List<String>? lovedCategories, RecomendationType type) async {
+    final prompts = await recomendationGenerationService
+        .generatePromptSuggestion(previousPrompts, lovedCategories);
+    await userDataToFirestore.savePromptSuggestions(prompts, type);
+  }
+
+  Future<List<String>> initialGeneratePromptSuggestion(
+      List<String>? previousPrompts,
+      List<String>? lovedCategories,
+      RecomendationType type) async {
+    final prompts = await recomendationGenerationService
+        .generatePromptSuggestion(previousPrompts, lovedCategories);
+    return prompts;
+  }
+
+  Future<List<dynamic>> generateSuggestion(List<String> previousPrompts,
+      List<String> lovedCategories, RecomendationType type) async {
+    final suggestions = await recomendationGenerationService.generateSuggestion(
         previousPrompts, lovedCategories);
+    return suggestions;
+  }
+
+  Future<void> updateLastSuggestedRecomendations(
+      List<dynamic> value, RecomendationType type) async {
+    await userDataToFirestore.saveSuggestedRecomendations(value, type);
   }
 }
 

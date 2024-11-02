@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Auth/login/login_view.dart';
+import 'package:recomendiaa/Views/Auth/register/register_view.dart';
 import 'package:recomendiaa/Views/Auth/registration/registration_view.dart';
 import 'package:recomendiaa/Views/Auth/widgets/or_text.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
@@ -33,7 +34,7 @@ class AuthView extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 250,
@@ -51,49 +52,80 @@ class AuthView extends ConsumerWidget {
                   style: AppTextStyles.orbitronlargeTextStyle
                       .copyWith(fontSize: 40),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: [
-                //     Text(
-                //       "Let's Get Started",
-                //       style: AppTextStyles.largeTextStyle
-                //           .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
-                //     ),
-                //   ],
-                // ),
+                Text(
+                  'Your movie and book recommendation assistant',
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.largeTextStyle,
+                ),
+
                 const SizedBox(height: 50),
+
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Already have an account?',
-                      style: AppTextStyles.largeTextStyle
-                          .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginView()));
+                      },
+                      child: Text(
+                        "Login To Your Account",
+                        style: AppTextStyles.xLargeTextStyle
+                            .copyWith(fontWeight: FontWeight.bold, shadows: [
+                          Shadow(
+                            color: Colors.black,
+                            offset: Offset(4, 4),
+                          )
+                        ]),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                CustomButton(
-                  text: "Login",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginView()));
-                  },
-                ),
+                // CustomButton(
+                //   text: "Login",
+                //   onPressed: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => const LoginView()));
+                //   },
+                // ),
                 const SizedBox(height: 20),
                 const OrText(),
                 const SizedBox(height: 20),
-                CustomButton(
-                  text: "Sign Up",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegistrationView()));
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegisterView()));
+                      },
+                      child: Text(
+                        "Let's Get Started",
+                        style: AppTextStyles.xLargeTextStyle
+                            .copyWith(fontWeight: FontWeight.bold, shadows: [
+                          Shadow(
+                            color: Colors.black,
+                            offset: Offset(4, 4),
+                          )
+                        ]),
+                      ),
+                    ),
+                  ],
                 ),
+                //   text: "Sign Up",
+                //   onPressed: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: (context) => const RegistrationView()));
+                //   },
+                // ),
               ],
             ),
           )

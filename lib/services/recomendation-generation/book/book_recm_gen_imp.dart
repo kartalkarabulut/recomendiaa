@@ -39,6 +39,7 @@ class GenerateBookRecomendation implements RecomendationGenerationInterface {
     for (var book in books) {
       recommendations.add(book);
     }
+    print("the book suggestions response from gemini \n ${recommendations}");
     return recommendations;
   }
 

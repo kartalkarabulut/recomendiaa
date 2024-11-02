@@ -8,16 +8,16 @@ class AppTextStyles {
     fontSize: AppConstants.largeFontSize,
     color: AppColors.text100,
   );
-  static TextStyle largeTextStyle = const TextStyle(
+  static TextStyle largeTextStyle = GoogleFonts.ubuntu(
     fontSize: AppConstants.largeFontSize,
     color: AppColors.text100,
   );
-  static TextStyle xLargeTextStyle = const TextStyle(
+  static TextStyle xLargeTextStyle = GoogleFonts.ubuntu(
     fontSize: AppConstants.xLargeFontSize,
     color: AppColors.text100,
   );
 
-  static TextStyle mediumTextStyle = const TextStyle(
+  static TextStyle mediumTextStyle = GoogleFonts.ubuntu(
     fontSize: AppConstants.mediumFontSize,
     color: AppColors.text100,
   );

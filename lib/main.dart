@@ -1,9 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:recomendiaa/Views/Auth/register/register_view.dart';
-import 'package:recomendiaa/Views/HomePage/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
-import 'package:recomendiaa/Views/history/recomendation_history.dart';
+import 'package:recomendiaa/app/auth_wigdet.dart';
 import 'package:recomendiaa/core/theme/light_theme.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,57 +43,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class AuthWidget extends ConsumerWidget {
-  const AuthWidget({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authStateProvider);
-    print("auth state: $authState");
-    return authState.when(
-      data: (user) {
-        if (user != null) {
-          return PageRooter();
-        }
-        return const RegisterView();
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(child: Text('Hata: $error')),
-    );
-  }
-}
-
-final authStateProvider = StreamProvider((ref) {
-  return FirebaseAuth.instance.authStateChanges();
-});
-
-class PageRooter extends ConsumerWidget {
-  PageRooter({super.key});
-  List<Widget> pages = [
-    const HomePage(),
-    const RecomendationHistory(),
-  ];
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final pageIndex = ref.watch(pageIndexProvider);
-    return Scaffold(
-      body: pages[pageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: pageIndex,
-        onTap: (index) {
-          ref.read(pageIndexProvider.notifier).state = index;
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-        ],
-      ),
-    );
-  }
-}
-
-final pageIndexProvider = StateProvider((ref) => 0);

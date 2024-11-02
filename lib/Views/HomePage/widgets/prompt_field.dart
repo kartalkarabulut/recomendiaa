@@ -17,7 +17,7 @@ class PromptField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       height: 200,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           // image: DecorationImage(
           //   image: AssetImage("assets/images/fieldbg.png"),
           //   fit: BoxFit.fill,
@@ -27,7 +27,16 @@ class PromptField extends StatelessWidget {
       child: TextFormField(
         maxLines: 7,
         controller: promptController,
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.next,
+        onEditingComplete: () {
+          FocusScope.of(context).unfocus(); // Klavyeyi kapatır
+        },
+        onFieldSubmitted: (value) {
+          FocusScope.of(context).unfocus(); // Klavyeyi kapatır
+        },
         // keyboardType: TextInputType.multiline,
+        autofocus: false,
         style: AppTextStyles.largeTextStyle.copyWith(
           fontWeight: FontWeight.bold,
         ),
