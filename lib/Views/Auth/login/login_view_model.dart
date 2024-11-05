@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recomendiaa/Views/Auth/login/login_view.dart';
 import 'package:recomendiaa/repository/auth_repository.dart';
 import 'package:recomendiaa/services/user/auth/email_password_signin_imp.dart';
 import 'package:recomendiaa/services/user/auth/google_sign_in_imp.dart';
@@ -25,9 +26,12 @@ class LoginViewModel extends StateNotifier<LoginState> {
       googleAuthService: GoogleSignInImp(),
       firestoreImp: UserDataToFirestoreImp());
 
-  // Future<void> login(String email, String password) async {
-  //   state = state.copyWith(isLoading: true);
-  //   final user = await authRepository.authService.signIn(email, password);
-  //   state = state.copyWith(isLoading: false);
-  // }
+  Future<bool> login(String email, String password, WidgetRef ref) async {
+    ref.read(isButtonWorkignProvider.notifier).state = true;
+    state = state.copyWith(isLoading: true);
+    final user = await authRepository.signInWithEmailPassword(email, password);
+    state = state.copyWith(isLoading: false);
+    ref.read(isButtonWorkignProvider.notifier).state = false;
+    return user;
+  }
 }

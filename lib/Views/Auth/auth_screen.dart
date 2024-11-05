@@ -53,7 +53,7 @@ class AuthView extends ConsumerWidget {
                       .copyWith(fontSize: 40),
                 ),
                 Text(
-                  'Your movie and book recommendation assistant',
+                  'Your personal movie and book recommendation assistant',
                   textAlign: TextAlign.center,
                   style: AppTextStyles.largeTextStyle,
                 ),

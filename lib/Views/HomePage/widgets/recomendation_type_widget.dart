@@ -17,9 +17,9 @@ class RecomendationTypeWidget extends StatelessWidget {
 
   final double? height;
   final String imagePath;
+  final Function() onTap;
   final String title;
   final double? width;
-  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +58,13 @@ class RecomendationTypeWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
+              overflow: TextOverflow.ellipsis,
               title,
-              maxLines: 3,
+              maxLines: 2,
               style: AppTextStyles.largeTextStyle.copyWith(
-                  color: AppColors.blackColor, fontWeight: FontWeight.bold),
+                color: AppColors.blackColor,
+                fontWeight: FontWeight.bold,
+              ),
             )
           ],
         ),

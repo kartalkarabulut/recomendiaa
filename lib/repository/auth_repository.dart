@@ -34,12 +34,7 @@ class AuthRepository {
     }
   }
 
-  // Future<UserModel?> signUp(
-  //     String email, String password, SignUpType signUpType) async {
-  //   if (signUpType == SignUpType.emailPassword) {
-  //     return await emailPasswordAuthService.signUp(email, password);
-  //   } else {
-  //     return await googleAuthService.signUp(email, password);
-  //   }
-  // }
+  Future<bool> signInWithEmailPassword(String email, String password) async {
+    return await emailPasswordAuthService.signIn(email, password);
+  }
 }

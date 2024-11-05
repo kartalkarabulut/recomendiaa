@@ -35,6 +35,7 @@ class BookRecomendationView extends ConsumerWidget {
     final bookRecomendationViewModel =
         ref.read(bookRecomendationViewModelProvider.notifier);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(

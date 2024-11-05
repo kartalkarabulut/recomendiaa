@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Auth/widgets/or_text.dart';
+import 'package:recomendiaa/Views/HomePage/home_page.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
+import 'package:recomendiaa/providers/auth-screens/auth_screens_providers.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});
@@ -15,7 +17,10 @@ class LoginView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    final loginViewModel = ref.read(loginViewModelProvider.notifier);
+    // final loginState = ref.watch(loginViewModelProvider);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
@@ -35,7 +40,7 @@ class LoginView extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
                   'assets/logos/logo.png',
@@ -60,19 +65,28 @@ class LoginView extends ConsumerWidget {
                 const SizedBox(height: 20),
                 CustomButton(
                   text: "Login",
-                  onPressed: () {},
+                  onPressed: () async {
+                    bool isLogin = await loginViewModel.login(
+                        emailController.text, passwordController.text, ref);
+                    if (isLogin) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    }
+                  },
                 ),
                 const SizedBox(height: 20),
-                const OrText(),
-                const SizedBox(height: 20),
+                // const OrText(),
+                // const SizedBox(height: 20),
                 // Image.asset(
                 //   'assets/logos/google.png',
                 //   height: 50,
                 //   width: 50,
                 // ),
-                GoogleSignIn(
-                  onPressed: () async {},
-                ),
+                // GoogleSignIn(
+                //   onPressed: () async {},
+                // ),
               ],
             ),
           ),
