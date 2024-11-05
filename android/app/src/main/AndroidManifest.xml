@@ -2,7 +2,7 @@
     package="com.recomendia.ai">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="recomendiaa"
+        android:label="Recomendia"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
