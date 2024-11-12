@@ -10,6 +10,7 @@ import 'package:recomendiaa/Views/HomePage/widgets/recomendations.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/recomended_book_widget.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/recomended_movie_widget.dart';
 import 'package:recomendiaa/Views/HomePage/widgets/suggestion_selector.dart';
+import 'package:recomendiaa/Views/Profile/profile_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recomendation_view.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
@@ -100,9 +101,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                       actions: [
                         IconButton(
                             onPressed: () async {
-                              await FirebaseAuth.instance.signOut();
-                              ref.invalidate(userDataProvider);
-                              ref.invalidate(userIdProvider);
+                              // await FirebaseAuth.instance.signOut();
+                              // ref.invalidate(userDataProvider);
+                              // ref.invalidate(userIdProvider);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const ProfileView(),
+                                ),
+                              );
                             },
                             icon: const Icon(
                               Icons.person,

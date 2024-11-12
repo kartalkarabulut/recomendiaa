@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
+import 'package:recomendiaa/services/generation-data/recm_gen_data_imp.dart';
 import 'package:recomendiaa/services/recomendation-generation/book/book_recm_gen_imp.dart';
 import 'package:recomendiaa/services/recomendation-generation/movie/movie_recm_gen_imp.dart';
 import 'package:recomendiaa/services/recomendation-generation/recomendation_generation_interface.dart';
@@ -36,6 +37,10 @@ class RecomendationRepository {
     required this.userDataToFirestore,
   });
 
+  //! This class is for saving total generated recomendation data,
+  //! its not about a single user, about all users
+  RecmGenDataImp recomendationGenData = RecmGenDataImp();
+
   Future<List<dynamic>> makeRecomendation(
       String prompt, RecomendationType type) async {
     //Todo: Geminiden öneri alıp, poster url ile birleştirme
@@ -45,6 +50,11 @@ class RecomendationRepository {
 
     //Todo: User prompts verisini güncelleme
     await userDataToFirestore.updateUserPrompts(prompt, type);
+    if (type == RecomendationType.book) {
+      await recomendationGenData.updateBookRecomendationData();
+    } else if (type == RecomendationType.movie) {
+      await recomendationGenData.updateMovieRecomendationData();
+    }
     return recomendations;
   }
 

@@ -9,11 +9,9 @@ class AppGradientColors {
     colors: [
       AppColors.greenyColor,
       // AppColors.greenyColor,
-      // AppColors.bluishColor,
+      AppColors.bluishColor,
       // AppColors.blackColor,
-      AppColors.yellowGreenColor,
-      // AppColors.greenyColor,
-      // Colors.deepOrange
+      // AppColors.yellowGreenColor,
     ],
     // transform: GradientRotation(3.14 / 4),
     // stops: [0.0, 0.2, 1.0],

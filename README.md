@@ -5,3 +5,10 @@ An intelligent recommendation app that provides personalized book and movie sugg
 Uses Gemini API for generating recommendations.
 
 
+
+
+
+Todo:
+Bottom Navbar
+#####Genel öneri taikbi
+Reklamlar

@@ -1,12 +1,13 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:recomendiaa/core/constants/api_constants.dart';
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // dotenv paketini ekleyin
 
 import 'package:recomendiaa/models/book_recomendation_model.dart';
 
 class GeminiBookService {
   final GenerativeModel model = GenerativeModel(
-      model: 'gemini-1.5-flash', apiKey: ApiConstants.geminiApiKey);
+      model: 'gemini-1.5-flash', apiKey: dotenv.env['GEMINI_API_KEY'] ?? "");
 
   Future<List<BookRecomendationModel>> getBooksFromGemini(
       String definition) async {

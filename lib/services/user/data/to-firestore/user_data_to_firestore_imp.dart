@@ -96,6 +96,37 @@ class UserDataToFirestoreImp implements UserDataToFirestoreInterface {
         .update({field: recomendations});
   }
 
+  Future<void> updateLovedCategories(
+      List<String> categories, RecomendationType type) async {
+    try {
+      final userId = _getCurrentUserId();
+      final String field = type == RecomendationType.book
+          ? 'lovedBookCategories'
+          : 'lovedMovieCategories';
+
+      // Mevcut kategorileri al
+      final docSnapshot =
+          await _firestore.collection(_userCollection).doc(userId).get();
+
+      final currentCategories =
+          List<String>.from(docSnapshot.data()?[field] ?? []);
+
+      // Yeni kategorileri ekle ve duplicate'leri kaldır
+      final mergedCategories = {...currentCategories, ...categories}.toList();
+
+      await _firestore
+          .collection(_userCollection)
+          .doc(userId)
+          .update({field: mergedCategories});
+
+      _logger.i('Sevilen kategoriler başarıyla güncellendi: $userId, $type');
+    } catch (e) {
+      _logger.e('Sevilen kategoriler güncellenirken hata oluştu',
+          error: e, stackTrace: StackTrace.current);
+      // throw FirestoreException('Sevilen kategoriler güncellenemedi');
+    }
+  }
+
   String _getCurrentUserId() {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     if (userId == null) {
