@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recomendiaa/Views/Introduction-Screens/introduction_screen.dart';
 import 'package:recomendiaa/app/auth_wigdet.dart';
 import 'package:recomendiaa/app/main_initializations.dart';
 import 'package:recomendiaa/core/theme/light_theme.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MainInitializations.allInitializations();
+  print("başladı");
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
       // locale: const Locale('tr'),
       title: 'Flutter Demo',
       theme: lightTheme,
-      home: const AuthWidget(),
+      home: const IntroductionPageView(),
     );
   }
 }

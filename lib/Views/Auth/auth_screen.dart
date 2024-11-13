@@ -20,9 +20,10 @@ class AuthView extends ConsumerWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                gradient: AppGradientColors.primaryGradient,
-                // color: AppColors.greenyColor,
-                backgroundBlendMode: BlendMode.lighten),
+              gradient: AppGradientColors.primaryGradient,
+              // color: AppColors.greenyColor,
+              // backgroundBlendMode: BlendMode.lighten
+            ),
           ),
           Positioned.fill(
             child: BackdropFilter(
@@ -33,99 +34,55 @@ class AuthView extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  width: 250,
-                  height: 250,
-                  child: Image.asset(
-                    fit: BoxFit.cover,
-                    'assets/logos/logo.png',
-                    // width: 250,
-                    // height: 250,
+                Column(
+                  children: [
+                    Text(
+                      'Recomendia',
+                      style: AppTextStyles.orbitronlargeTextStyle
+                          .copyWith(fontSize: 40),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Your personal movie and book recommendation assistant',
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.mediumTextStyle,
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomButton(
+                          text: "Login",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const LoginView(),
+                              ),
+                            );
+                          }),
+                      OrText(),
+                      CustomButton(
+                          text: "Register",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const RegisterView(),
+                              ),
+                            );
+                          })
+                    ],
                   ),
-                ),
-                // const SizedBox(height: 20),
-                Text(
-                  'Recomendia',
-                  style: AppTextStyles.orbitronlargeTextStyle
-                      .copyWith(fontSize: 40),
-                ),
-                Text(
-                  'Your personal movie and book recommendation assistant',
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.largeTextStyle,
-                ),
-
-                const SizedBox(height: 50),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginView()));
-                      },
-                      child: Text(
-                        "Login To Your Account",
-                        style: AppTextStyles.xLargeTextStyle
-                            .copyWith(fontWeight: FontWeight.bold, shadows: [
-                          Shadow(
-                            color: Colors.black,
-                            offset: Offset(4, 4),
-                          )
-                        ]),
-                      ),
-                    ),
-                  ],
-                ),
-                // CustomButton(
-                //   text: "Login",
-                //   onPressed: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => const LoginView()));
-                //   },
-                // ),
-                const SizedBox(height: 20),
-                const OrText(),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterView()));
-                      },
-                      child: Text(
-                        "Let's Get Started",
-                        style: AppTextStyles.xLargeTextStyle
-                            .copyWith(fontWeight: FontWeight.bold, shadows: [
-                          Shadow(
-                            color: Colors.black,
-                            offset: Offset(4, 4),
-                          )
-                        ]),
-                      ),
-                    ),
-                  ],
-                ),
-                //   text: "Sign Up",
-                //   onPressed: () {
-                //     Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => const RegistrationView()));
-                //   },
-                // ),
+                )
               ],
             ),
           )

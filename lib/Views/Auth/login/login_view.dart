@@ -165,6 +165,7 @@ class CustomButton extends ConsumerWidget {
       onTap: onPressed,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 60,
         width: width,
         decoration: BoxDecoration(
