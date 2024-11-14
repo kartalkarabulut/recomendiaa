@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
+import 'package:recomendiaa/core/constants/image_paths.dart';
 import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
@@ -8,7 +9,9 @@ import 'package:recomendiaa/models/book_recomendation_model.dart';
 
 class BookDetailSheet extends StatelessWidget {
   const BookDetailSheet({super.key, required this.book});
+
   final BookRecomendationModel book;
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = AppConstants.screenHeight(context);
@@ -33,11 +36,22 @@ class BookDetailSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
-                    Text(
-                      book.title,
-                      style: AppTextStyles.xLargeTextStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          ImagePaths.bookHeader,
+                          width: 20,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          book.title,
+                          style: AppTextStyles.xLargeTextStyle.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 10),
                     Text(
@@ -56,6 +70,14 @@ class BookDetailSheet extends StatelessWidget {
                     const SizedBox(height: 30),
                     Text(book.description, style: AppTextStyles.largeTextStyle),
                     const SizedBox(height: 30),
+                    Text(
+                      "Related Tags #",
+                      style: AppTextStyles.largeTextStyle
+                          .copyWith(color: Colors.grey),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Wrap(
                       spacing: 10,
                       runSpacing: 20,

@@ -105,7 +105,7 @@ class RecomendedMovie extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.mediumTextStyle
-                          .copyWith(color: Colors.white),
+                          .copyWith(color: Colors.grey),
                     ),
                   ],
                 ),

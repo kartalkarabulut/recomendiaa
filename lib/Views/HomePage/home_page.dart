@@ -14,6 +14,7 @@ import 'package:recomendiaa/Views/Profile/profile_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recomendation_view.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
+import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -91,7 +92,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       pinned: true,
                       // snap: true,
                       backgroundColor: Colors.transparent,
-                      expandedHeight: 80,
+                      // expandedHeight: 80,
                       centerTitle: true,
                       title: Text(
                         "Recomendia",
@@ -101,15 +102,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                       actions: [
                         IconButton(
                             onPressed: () async {
-                              // await FirebaseAuth.instance.signOut();
-                              // ref.invalidate(userDataProvider);
-                              // ref.invalidate(userIdProvider);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const ProfileView(),
-                                ),
-                              );
+                              await FirebaseAuth.instance.signOut();
+                              ref.invalidate(userDataProvider);
+                              ref.invalidate(userIdProvider);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (_) => const ProfileView(),
+                              //   ),
+                              // );
                             },
                             icon: const Icon(
                               Icons.person,
@@ -121,6 +122,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                     SliverList(
                       delegate: SliverChildListDelegate(
                         [
+                          Consumer(
+                            builder: (context, ref, child) {
+                              final userData =
+                                  ref.watch(userDataProvider).value;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      AllFormatters.capitalizeEachWord(
+                                          userData!.fullName),
+                                      style: AppTextStyles.largeTextStyle
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      userData!.email,
+                                      style: AppTextStyles.mediumTextStyle
+                                          .copyWith(color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                           const RecomendationTypesRow(),
                           const SizedBox(height: 40),
                           Text(

@@ -61,7 +61,7 @@ class RecomendationTypeWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               title,
               maxLines: 2,
-              style: AppTextStyles.largeTextStyle.copyWith(
+              style: AppTextStyles.mediumTextStyle.copyWith(
                 color: AppColors.blackColor,
                 fontWeight: FontWeight.bold,
               ),

@@ -2,6 +2,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:recomendiaa/Views/Auth/register/loved_categories.dart";
+import "package:recomendiaa/core/theme/colors/app_colors.dart";
 import "package:recomendiaa/core/theme/colors/gradient_colors.dart";
 import "package:recomendiaa/core/theme/styles/app_text_styles.dart";
 import "package:recomendiaa/models/user_model.dart";
@@ -112,6 +113,26 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   final TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  int _currentStep = 0;
+  InputDecoration _buildInputDecoration(String hintText) {
+    return InputDecoration(
+      filled: true,
+      fillColor: Colors.white.withOpacity(0.9),
+      hintText: hintText,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.primary100),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.primary100, width: 2),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -144,6 +165,115 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
               child: Container(color: Colors.black.withOpacity(0.5)),
             ),
           ),
+          // SafeArea(
+          //   child: Form(
+          //     key: _formKey,
+          //     child: Stepper(
+          //       currentStep: _currentStep,
+          //       onStepContinue: () {
+          //         if (_formKey.currentState!.validate()) {
+          //           if (_currentStep < 2) {
+          //             setState(() {
+          //               _currentStep++;
+          //             });
+          //           } else {
+          //             Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: (context) => const LovedCategories(),
+          //               ),
+          //             );
+          //           }
+          //         }
+          //       },
+          //       onStepCancel: () {
+          //         if (_currentStep > 0) {
+          //           setState(() {
+          //             _currentStep--;
+          //           });
+          //         }
+          //       },
+          //       steps: [
+          //         Step(
+          //           title: Text('İsim',
+          //               style: AppTextStyles.largeTextStyle
+          //                   .copyWith(color: AppColors.whiteColor)),
+          //           content: TextFormField(
+          //             controller: fullNameController,
+          //             decoration: _buildInputDecoration('İsminizi giriniz'),
+          //             validator: (value) =>
+          //                 value?.isEmpty ?? true ? 'İsim boş olamaz' : null,
+          //             onChanged: (value) {
+          //               ref
+          //                   .read(registeringUserProvider.notifier)
+          //                   .update((state) => state.copyWith(fullName: value));
+          //             },
+          //           ),
+          //           isActive: _currentStep >= 0,
+          //         ),
+          //         Step(
+          //           title: Text('Email',
+          //               style: AppTextStyles.largeTextStyle
+          //                   .copyWith(color: AppColors.whiteColor)),
+          //           content: TextFormField(
+          //             controller: emailController,
+          //             decoration:
+          //                 _buildInputDecoration('Email adresinizi giriniz'),
+          //             validator: (value) =>
+          //                 value?.isEmpty ?? true ? 'Email boş olamaz' : null,
+          //             onChanged: (value) {
+          //               ref
+          //                   .read(registeringUserProvider.notifier)
+          //                   .update((state) => state.copyWith(email: value));
+          //             },
+          //           ),
+          //           isActive: _currentStep >= 1,
+          //         ),
+          //         Step(
+          //           title: Text('Parola',
+          //               style: AppTextStyles.largeTextStyle
+          //                   .copyWith(color: AppColors.whiteColor)),
+          //           content: TextFormField(
+          //             controller: passwordController,
+          //             decoration: _buildInputDecoration('Parolanızı giriniz'),
+          //             obscureText: true,
+          //             validator: (value) =>
+          //                 value?.isEmpty ?? true ? 'Parola boş olamaz' : null,
+          //             onChanged: (value) {
+          //               ref
+          //                   .read(registeringUserProvider.notifier)
+          //                   .update((state) => state.copyWith(password: value));
+          //             },
+          //           ),
+          //           isActive: _currentStep >= 2,
+          //         ),
+          //       ],
+          //       controlsBuilder: (context, details) {
+          //         return Padding(
+          //           padding: const EdgeInsets.only(top: 16.0),
+          //           child: Row(
+          //             children: [
+          //               ElevatedButton(
+          //                 onPressed: details.onStepContinue,
+          //                 style: ElevatedButton.styleFrom(
+          //                   backgroundColor: AppColors.primary100,
+          //                 ),
+          //                 child: Text(_currentStep == 2 ? 'Bitir' : 'Devam Et'),
+          //               ),
+          //               if (_currentStep > 0) ...[
+          //                 const SizedBox(width: 8),
+          //                 TextButton(
+          //                   onPressed: details.onStepCancel,
+          //                   child: const Text('Geri'),
+          //                 ),
+          //               ]
+          //             ],
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
           Form(
             key: _formKey,
             child: Column(

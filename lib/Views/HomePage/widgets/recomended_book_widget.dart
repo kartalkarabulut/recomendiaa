@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recomendiaa/SharedViews/book_detail_sheet.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
+import 'package:recomendiaa/core/constants/image_paths.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
@@ -48,14 +49,26 @@ class RecomendedBook extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              book.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.largeTextStyle.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.asset(
+                  ImagePaths.bookHeader,
+                  width: 20,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  book.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.largeTextStyle.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
             ),
             Text(
               book.author,
@@ -70,7 +83,7 @@ class RecomendedBook extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.mediumTextStyle.copyWith(
-                color: Colors.white,
+                color: Colors.grey,
               ),
             ),
           ],
