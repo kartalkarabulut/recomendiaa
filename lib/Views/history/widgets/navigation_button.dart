@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recomendiaa/Views/history/recomendation_history.dart';
+import 'package:recomendiaa/providers/recm_history_providers.dart';
 
 class HistoryNavigationButtons extends ConsumerWidget {
   const HistoryNavigationButtons({

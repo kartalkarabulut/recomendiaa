@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Auth/login/login_view.dart';
-import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
+import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/widgets/book_recm_sheet.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
@@ -17,15 +17,11 @@ class BookRecomendationViewModel extends StateNotifier {
     final userData = ref.watch(userDataProvider);
     final bookRecomendationRepository =
         ref.read(bookRecomendationRepositoryProvider);
-    print(userData.value!.bookPromptHistory.toString());
-    print(userData.value!.lovedBookCategories.toString());
 
     List<BookRecomendationModel> bookValue = await GenerateBookRecomendation()
         .generateSuggestion(userData.value?.bookPromptHistory ?? [],
             userData.value?.lovedBookCategories ?? []);
 
-    print(bookValue.length);
-    print("kitap önerileri kaydedilecek");
     final List<Map<String, dynamic>> bookMaps =
         bookValue.map((book) => book.toJson()).toList();
 
@@ -74,7 +70,6 @@ class BookRecomendationViewModel extends StateNotifier {
         );
       }
     } catch (e) {
-      print("Hata oluştu: $e");
       ref.read(isButtonWorkignProvider.notifier).state = false;
     } finally {
       ref.read(isButtonWorkignProvider.notifier).state = false;

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/HomePage/home_page.dart';
-import 'package:recomendiaa/Views/history/recomendation_history.dart';
+import 'package:recomendiaa/Views/history/recomendation_history_view.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/providers/app_providers.dart';

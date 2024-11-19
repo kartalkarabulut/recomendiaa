@@ -1,56 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recomendiaa/Views/HomePage/widgets/recomended_book_widget.dart';
-import 'package:recomendiaa/Views/HomePage/widgets/recomended_movie_widget.dart';
-import 'package:recomendiaa/Views/HomePage/widgets/suggestion_selector.dart';
 import 'package:recomendiaa/Views/history/widgets/books_listview.dart';
 import 'package:recomendiaa/Views/history/widgets/movies_listview.dart';
 import 'package:recomendiaa/Views/history/widgets/navigation_button.dart';
-import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
-import 'package:recomendiaa/providers/book_providers.dart';
-import 'package:recomendiaa/providers/home_page_providers.dart';
-import 'package:recomendiaa/providers/movie_providers.dart';
-
-class RecomendationHistoryState {
-  RecomendationHistoryState({
-    this.isMoviesSelected = true,
-    this.currentIndex = 0,
-  });
-
-  final int currentIndex;
-  final bool isMoviesSelected;
-
-  RecomendationHistoryState copyWith({
-    bool? isMoviesSelected,
-    int? currentIndex,
-  }) {
-    return RecomendationHistoryState(
-      isMoviesSelected: isMoviesSelected ?? this.isMoviesSelected,
-      currentIndex: currentIndex ?? this.currentIndex,
-    );
-  }
-}
-
-class RecomendationHistoryViewModel
-    extends StateNotifier<RecomendationHistoryState> {
-  RecomendationHistoryViewModel() : super(RecomendationHistoryState());
-
-  void toggleMoviesSelection() {
-    state = state.copyWith(isMoviesSelected: !state.isMoviesSelected);
-  }
-
-  void setCurrentIndex(int index) {
-    state = state.copyWith(currentIndex: index);
-  }
-}
-
-final recomendationHistoryViewModelProvider = StateNotifierProvider<
-    RecomendationHistoryViewModel,
-    RecomendationHistoryState>((ref) => RecomendationHistoryViewModel());
+import 'package:recomendiaa/providers/recm_history_providers.dart';
 
 class RecomendationHistory extends ConsumerStatefulWidget {
   const RecomendationHistory({super.key});
@@ -96,7 +52,6 @@ class _RecomendationHistoryState extends ConsumerState<RecomendationHistory> {
           ),
           Column(
             children: [
-              // const SizedBox(height: 20),
               SizedBox(
                 height: 80,
                 child: Center(
@@ -104,12 +59,10 @@ class _RecomendationHistoryState extends ConsumerState<RecomendationHistory> {
                     "Recomendation History",
                     style: AppTextStyles.orbitronlargeTextStyle.copyWith(
                       fontSize: 24,
-                      // fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              // const SizedBox(height: 20),
 
               // Navigation Buttons
               const HistoryNavigationButtons(),
@@ -119,9 +72,6 @@ class _RecomendationHistoryState extends ConsumerState<RecomendationHistory> {
                 child: PageView(
                   controller: _pageController,
                   onPageChanged: (index) {
-                    // setState(() {
-                    //   _currentPage = index;
-                    // });
                     ref
                         .read(recomendationHistoryViewModelProvider.notifier)
                         .setCurrentIndex(index);
