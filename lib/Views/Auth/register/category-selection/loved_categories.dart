@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Auth/register/register_view.dart';
-import 'package:recomendiaa/Views/HomePage/home_page.dart';
+import 'package:recomendiaa/Views/Home/home_page.dart';
 import 'package:recomendiaa/app/page_rooter_widget.dart';
 // import 'package:recomendiaa/Views/Auth/register/register_view.dart';
 import 'package:recomendiaa/core/constants/category_names.dart';

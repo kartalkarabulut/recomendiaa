@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recomendiaa/Views/HomePage/widgets/recomendation_type_widget.dart';
+import 'package:recomendiaa/Views/Home/widgets/recomendation_type_widget.dart';
 import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recomendation_view.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';

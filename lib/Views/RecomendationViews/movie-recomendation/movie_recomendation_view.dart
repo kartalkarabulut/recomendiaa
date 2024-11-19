@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Auth/login/login_view.dart';
-import 'package:recomendiaa/Views/HomePage/widgets/prompt_field.dart';
+import 'package:recomendiaa/Views/Home/widgets/prompt_field.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recm_view_model.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_card.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';

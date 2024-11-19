@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:recomendiaa/Views/Auth/auth_screen.dart';
 import 'package:recomendiaa/Views/Auth/register/register_view.dart';
-import 'package:recomendiaa/Views/Introduction-Screens/introduction_screen.dart';
+import 'package:recomendiaa/Views/Auth/Introduction/introduction_screen.dart';
 import 'package:recomendiaa/app/page_rooter_widget.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 
