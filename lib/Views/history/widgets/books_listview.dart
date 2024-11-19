@@ -13,12 +13,26 @@ class BooksListView extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: bookRecomendations.when(
-        data: (data) => ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, index) => RecomendedBook(
-            book: data[index],
-          ),
-        ),
+        data: (data) {
+          if (data.isEmpty) {
+            return const Center(
+              child: Text(
+                'You have no recomendations yet',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) => RecomendedBook(
+              book: data[index],
+              isSmartSuggestion: false,
+            ),
+          );
+        },
         error: (error, stack) => Text(error.toString()),
         loading: () => const Center(
           child: CircularProgressIndicator(),

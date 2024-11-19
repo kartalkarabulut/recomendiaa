@@ -103,9 +103,20 @@ class RecomendationRepository {
 
   Future<void> generatePromptSuggestion(List<String>? previousPrompts,
       List<String>? lovedCategories, RecomendationType type) async {
-    final prompts = await recomendationGenerationService
-        .generatePromptSuggestion(previousPrompts, lovedCategories);
-    await userDataToFirestore.savePromptSuggestions(prompts, type);
+    try {
+      print('Öneri istekleri oluşturuluyor...');
+      final prompts = await recomendationGenerationService
+          .generatePromptSuggestion(previousPrompts, lovedCategories);
+
+      print(
+          'Öneri istekleri başarıyla oluşturuldu. Firestore\'a kaydediliyor...');
+      await userDataToFirestore.savePromptSuggestions(prompts, type);
+
+      print('Öneri istekleri başarıyla kaydedildi.');
+    } catch (e) {
+      print('Öneri istekleri oluşturulurken hata: $e');
+      throw Exception('Öneri istekleri oluşturulamadı: $e');
+    }
   }
 
   Future<List<String>> initialGeneratePromptSuggestion(

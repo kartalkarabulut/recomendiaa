@@ -40,7 +40,12 @@ class _GeneratedMovieWidgetState extends ConsumerState<GeneratedMovieWidget> {
             setState(() {});
           },
         ),
-        Expanded(child: RecomendedMovie(movie: widget.movie))
+        Expanded(
+          child: RecomendedMovie(
+            movie: widget.movie,
+            isSmartSuggestion: false,
+          ),
+        )
       ],
     );
   }

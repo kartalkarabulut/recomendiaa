@@ -46,7 +46,12 @@ class _GeneratedBookWidgetState extends ConsumerState<GeneratedBookWidget> {
             setState(() {});
           },
         ),
-        Expanded(child: RecomendedBook(book: widget.book))
+        Expanded(
+          child: RecomendedBook(
+            book: widget.book,
+            isSmartSuggestion: false,
+          ),
+        )
       ],
     );
   }

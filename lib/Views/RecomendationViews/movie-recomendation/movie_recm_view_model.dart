@@ -74,6 +74,7 @@ class MovieRecomendationViewModel extends StateNotifier {
                   RecomendationType.movie)
               .then(
             (value) {
+              print("will invalidate");
               ref.invalidate(userDataProvider);
             },
           );

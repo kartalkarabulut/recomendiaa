@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Auth/auth_screen.dart';
 import 'package:recomendiaa/Views/Auth/login/login_view.dart';
+import 'package:recomendiaa/Views/Auth/register/register_view.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
@@ -192,7 +193,7 @@ class _IntroductionPageViewState extends ConsumerState<IntroductionPageView> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const AuthView(),
+                                builder: (context) => const RegisterView(),
                               ),
                             );
                           },

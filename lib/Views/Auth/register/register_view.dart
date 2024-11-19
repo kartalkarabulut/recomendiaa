@@ -1,7 +1,7 @@
 import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:recomendiaa/Views/Auth/register/loved_categories.dart";
+import "package:recomendiaa/Views/Auth/register/category-selection/loved_categories.dart";
 import "package:recomendiaa/core/theme/colors/app_colors.dart";
 import "package:recomendiaa/core/theme/colors/gradient_colors.dart";
 import "package:recomendiaa/core/theme/styles/app_text_styles.dart";

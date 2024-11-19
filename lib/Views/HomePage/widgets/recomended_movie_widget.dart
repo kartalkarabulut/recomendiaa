@@ -14,10 +14,11 @@ class RecomendedMovie extends StatelessWidget {
   const RecomendedMovie({
     super.key,
     required this.movie,
+    required this.isSmartSuggestion,
   });
 
   final MovieRecomendationModel movie;
-
+  final bool isSmartSuggestion;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +35,10 @@ class RecomendedMovie extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: AppGradientColors.primaryGradient,
             ),
-            child: MovieDetailSheet(movie: movie),
+            child: MovieDetailSheet(
+              movie: movie,
+              isSmartSuggestion: isSmartSuggestion,
+            ),
           ),
         );
       },

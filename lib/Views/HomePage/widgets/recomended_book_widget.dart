@@ -11,9 +11,11 @@ class RecomendedBook extends StatelessWidget {
   const RecomendedBook({
     super.key,
     required this.book,
+    required this.isSmartSuggestion,
   });
 
   final BookRecomendationModel book;
+  final bool isSmartSuggestion;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,10 @@ class RecomendedBook extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: AppGradientColors.primaryGradient,
             ),
-            child: BookDetailSheet(book: book),
+            child: BookDetailSheet(
+              book: book,
+              isSmartSuggestion: isSmartSuggestion,
+            ),
           ),
         );
       },
@@ -59,13 +64,15 @@ class RecomendedBook extends StatelessWidget {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  book.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.largeTextStyle.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    book.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.largeTextStyle.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 )
               ],

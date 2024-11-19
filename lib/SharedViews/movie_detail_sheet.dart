@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recomendiaa/SharedViews/shared_snackbars.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
+import 'package:recomendiaa/providers/movie_providers.dart';
+import 'package:recomendiaa/services/recomendation-history/movie_recm_data_imp.dart';
 
 class MovieDetailSheet extends StatelessWidget {
   const MovieDetailSheet({
     super.key,
     required this.movie,
+    required this.isSmartSuggestion,
   });
 
   final MovieRecomendationModel movie;
+  final bool isSmartSuggestion;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,7 @@ class MovieDetailSheet extends StatelessWidget {
           Container(
             height: screenHeight * 0.85,
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
               gradient: AppGradientColors.primaryGradient,
             ),
           ),
@@ -84,6 +91,12 @@ class MovieDetailSheet extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            Image.asset(
+                              "assets/images/film-director.png",
+                              // color: Colors.orange,
+                              width: 30,
+                            ),
+                            const SizedBox(width: 10),
                             Text(
                               movie.director,
                               style: AppTextStyles.largeTextStyle,
@@ -92,11 +105,23 @@ class MovieDetailSheet extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Text(
-                          movie.actors.join(", "),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.largeTextStyle,
+                        Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/actor.png",
+                              // color: Colors.orange,
+                              width: 30,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                movie.actors.join(", "),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.largeTextStyle,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 20),
                         Text(
@@ -127,7 +152,37 @@ class MovieDetailSheet extends StatelessWidget {
                                     ),
                                   ))
                               .toList(),
-                        )
+                        ),
+                        isSmartSuggestion
+                            ? const SizedBox()
+                            : Consumer(
+                                builder: (context, ref, child) {
+                                  return TextButton(
+                                    onPressed: () async {
+                                      await MovieRecomendationDataImp()
+                                          .deleteRecomendation(movie.title);
+                                      ref.invalidate(getAllMovieRecomendations);
+                                      SharedSnackbars.showSuccessSnackBar(
+                                          context, "Movie Deleted");
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      "Delete This Movie ",
+                                      style:
+                                          AppTextStyles.largeTextStyle.copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        shadows: [
+                                          const Shadow(
+                                            color: Colors.black,
+                                            offset: Offset(1, 1),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
                       ],
                     ),
                   ),

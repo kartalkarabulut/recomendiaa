@@ -13,12 +13,26 @@ class MoviesListView extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: movieRecomendations.when(
-        data: (data) => ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, index) => RecomendedMovie(
-            movie: data[index],
-          ),
-        ),
+        data: (data) {
+          if (data.isEmpty) {
+            return const Center(
+              child: Text(
+                'You have no recomendations yet',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) => RecomendedMovie(
+              isSmartSuggestion: false,
+              movie: data[index],
+            ),
+          );
+        },
         error: (error, stack) => Text(error.toString()),
         loading: () => const Center(
           child: CircularProgressIndicator(),

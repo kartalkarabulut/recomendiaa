@@ -126,7 +126,7 @@ class _RecomendationHistoryState extends ConsumerState<RecomendationHistory> {
                         .read(recomendationHistoryViewModelProvider.notifier)
                         .setCurrentIndex(index);
                   },
-                  children: [
+                  children: const [
                     // Movies Page
                     MoviesListView(),
 

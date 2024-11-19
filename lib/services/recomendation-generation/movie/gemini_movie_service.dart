@@ -48,12 +48,44 @@ class GeminiMovieService {
 
   Future<List<String>> generatePromptSuggestion(
       List<String>? previousPrompts, List<String>? lovedMovieCategories) async {
-    String geminiPrompt = ApiConstants()
-        .getMoviePromptSuggestionPrompt(previousPrompts, lovedMovieCategories);
-    final content = [Content.text(geminiPrompt)];
-    final response = await model.generateContent(content);
-    final jsonData = jsonDecode(response.text!);
-    final List<dynamic> suggestions = jsonData['suggestedPrompts'];
-    return suggestions.map((prompt) => prompt.toString()).toList();
+    try {
+      print("Film önerileri oluşturuluyor...");
+      print("Önceki promptlar: $previousPrompts");
+      print("Sevilen kategoriler: $lovedMovieCategories");
+
+      String geminiPrompt = ApiConstants().getMoviePromptSuggestionPrompt(
+          previousPrompts, lovedMovieCategories);
+
+      print("Gemini'ye gönderilen prompt: $geminiPrompt");
+
+      final content = [Content.text(geminiPrompt)];
+      final response = await model.generateContent(content);
+
+      if (response.text == null) {
+        throw Exception("Gemini'den boş yanıt alındı");
+      }
+
+      print("Gemini'den gelen ham yanıt: ${response.text}");
+
+      final jsonData = jsonDecode(response.text!);
+
+      if (!jsonData.containsKey('suggestedPrompts')) {
+        throw Exception(
+            "Yanıt beklenen formatta değil - 'suggestedPrompts' anahtarı bulunamadı");
+      }
+
+      final List<dynamic> suggestions = jsonData['suggestedPrompts'];
+      print("Oluşturulan prompt önerileri: $suggestions");
+
+      final processedSuggestions =
+          suggestions.map((prompt) => prompt.toString()).toList();
+      print("İşlenmiş ve dönüştürülmüş öneriler: $processedSuggestions");
+
+      return processedSuggestions;
+    } catch (e, stackTrace) {
+      print("Film prompt önerileri oluşturulurken hata: $e");
+      print("Stack trace: $stackTrace");
+      rethrow;
+    }
   }
 }
