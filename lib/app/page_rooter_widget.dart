@@ -78,7 +78,6 @@ class PageRooter extends ConsumerWidget {
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
-
   final ValueChanged<int> onTap;
 
   const CustomBottomNavigationBar({
@@ -89,74 +88,102 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          height: 80,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                AppColors.yellowGreenColor.withOpacity(0.7),
-                AppColors.greenyColor.withOpacity(0.7)
-              ],
-            ),
-            border: Border(
-              top: BorderSide(
-                color: Colors.white.withOpacity(0.2),
-                width: 0.5,
-              ),
-            ),
+    return NavigationBarContainer(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          NavigationItem(
+            isSelected: currentIndex == 0,
+            onTap: () => onTap(0),
+            icon: Icons.home_rounded,
+            label: 'Home',
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              GestureDetector(
-                onTap: () => onTap(0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.home_rounded,
-                      size: currentIndex == 0 ? 32 : 28,
-                      color: currentIndex == 0
-                          ? Colors.white
-                          : Colors.white.withOpacity(0.6),
-                    ),
-                    const Text(
-                      'Home',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () => onTap(1),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.history_rounded,
-                      size: currentIndex == 1 ? 32 : 28,
-                      color: currentIndex == 1
-                          ? Colors.white
-                          : Colors.white.withOpacity(0.6),
-                    ),
-                    const Text(
-                      'History',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          NavigationItem(
+            isSelected: currentIndex == 1,
+            onTap: () => onTap(1),
+            icon: Icons.history_rounded,
+            label: 'History',
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class NavigationBarContainer extends StatelessWidget {
+  final Widget child;
+
+  const NavigationBarContainer({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.darkBackgorind.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.1),
+          width: 0.5,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class NavigationItem extends StatelessWidget {
+  final bool isSelected;
+  final VoidCallback onTap;
+  final IconData icon;
+  final String label;
+
+  const NavigationItem({
+    Key? key,
+    required this.isSelected,
+    required this.onTap,
+    required this.icon,
+    required this.label,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: isSelected
+              ? AppColors.yellowGreenColor.withOpacity(0.2)
+              : Colors.transparent,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              size: 24,
+              color: isSelected
+                  ? AppColors.yellowGreenColor
+                  : Colors.white.withOpacity(0.5),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected
+                    ? AppColors.yellowGreenColor
+                    : Colors.white.withOpacity(0.5),
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+          ],
         ),
       ),
     );

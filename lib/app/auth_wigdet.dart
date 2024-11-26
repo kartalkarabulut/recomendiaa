@@ -13,21 +13,33 @@ class AuthWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authStateProvider);
-    final hasSeenOnboarding = ref.watch(hasSeenOnboardingProvider);
+    // final hasSeenOnboarding = ref.watch(hasSeenOnboardingProvider);
 
     print("auth state: $authState");
+    // return authState.when(
+    //   data: (user) {
+    //     if (user != null) {
+    //       return PageRooter();
+    //     }
+    //     return hasSeenOnboarding.when(
+    //       data: (hasSeenOnboarding) {
+    //         return hasSeenOnboarding
+    //             ? const AuthView()
+    //             : const IntroductionPageView();
+    //       },
+    //       loading: () => const Center(child: CircularProgressIndicator()),
+    //       error: (error, stack) => Center(child: Text('Hata: $error')),
+    //     );
+    //   },
+    //   loading: () => const Center(child: CircularProgressIndicator()),
+    //   error: (error, stack) => Center(child: Text('Hata: $error')),
+    // );
     return authState.when(
       data: (user) {
         if (user != null) {
           return PageRooter();
         }
-        return hasSeenOnboarding.when(
-          data: (hasSeenOnboarding) {
-            return hasSeenOnboarding ? const AuthView() : const AuthView();
-          },
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(child: Text('Hata: $error')),
-        );
+        return const AuthView();
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('Hata: $error')),

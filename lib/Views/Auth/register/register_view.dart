@@ -107,225 +107,312 @@ class RegisterView extends ConsumerStatefulWidget {
 }
 
 class _RegisterViewState extends ConsumerState<RegisterView> {
-  final TextEditingController emailController = TextEditingController();
-  List<Widget> fields = [];
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-  int _currentStep = 0;
-  InputDecoration _buildInputDecoration(String hintText) {
-    return InputDecoration(
-      filled: true,
-      fillColor: Colors.white.withOpacity(0.9),
-      hintText: hintText,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColors.primary100),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: AppColors.primary100, width: 2),
-      ),
-    );
+  @override
+  void dispose() {
+    fullNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    fields = [
-      RegisterViewField(
-          fullNameController: fullNameController, hintText: "Share your name"),
-      RegisterViewField(
-          fullNameController: emailController, hintText: "Share your email"),
-      RegisterViewField(
-          fullNameController: passwordController, hintText: "Set a password"),
-    ];
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  String _getStepTitle(int index) {
+    switch (index) {
+      case 0:
+        return "Önce seni tanıyalım";
+      case 1:
+        return "E-posta adresini gir";
+      case 2:
+        return "Güvenli bir şifre belirle";
+      default:
+        return "";
+    }
+  }
+
+  String _getStepSubtitle(int index) {
+    switch (index) {
+      case 0:
+        return "Adın ne?";
+      case 1:
+        return "Sana ulaşabilmemiz için";
+      case 2:
+        return "Hesabını güvende tutmak için";
+      default:
+        return "";
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(registerViewNotifierProvider);
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
-                gradient: AppGradientColors.primaryGradient,
-                // color: AppColors.greenyColor,
-                backgroundBlendMode: BlendMode.lighten),
+              gradient: AppGradientColors.primaryGradient,
+              backgroundBlendMode: BlendMode.lighten,
+            ),
           ),
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(color: Colors.black.withOpacity(0.5)),
+              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.6),
+                      Colors.black.withOpacity(0.8),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: screenHeight * 0.1),
+                    LinearProgressIndicator(
+                      value: (state.currentFieldIndex + 1) / 3,
+                      backgroundColor: Colors.white.withOpacity(0.3),
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(AppColors.primary100),
+                    ),
+                    SizedBox(height: screenHeight * 0.05),
+                    Text(
+                      _getStepTitle(state.currentFieldIndex),
+                      style: AppTextStyles.largeTextStyle.copyWith(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      _getStepSubtitle(state.currentFieldIndex),
+                      style: AppTextStyles.mediumTextStyle.copyWith(
+                        color: Colors.white70,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.05),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.1, 0.0),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: RegisterViewField(
+                        key: ValueKey<int>(state.currentFieldIndex),
+                        fullNameController: state.currentFieldIndex == 0
+                            ? fullNameController
+                            : state.currentFieldIndex == 1
+                                ? emailController
+                                : passwordController,
+                        hintText: state.currentFieldIndex == 0
+                            ? "Adın"
+                            : state.currentFieldIndex == 1
+                                ? "E-posta adresin"
+                                : "Şifren",
+                        isPassword: state.currentFieldIndex == 2,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Yeni eklenen navigasyon butonları
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Geri butonu
+                        if (state.currentFieldIndex > 0)
+                          TextButton.icon(
+                            onPressed: () {
+                              ref
+                                  .read(registerViewNotifierProvider.notifier)
+                                  .backField();
+
+                              // Önceki sayfanın controller'ını güncelle
+                              final currentIndex = ref
+                                  .read(registerViewNotifierProvider)
+                                  .currentFieldIndex;
+                              final userModel =
+                                  ref.read(registeringUserProvider);
+
+                              switch (currentIndex) {
+                                case 0:
+                                  fullNameController.text = userModel.fullName;
+                                  break;
+                                case 1:
+                                  emailController.text = userModel.email;
+                                  break;
+                                case 2:
+                                  passwordController.text = userModel.password;
+                                  break;
+                              }
+                            },
+                            icon: const Icon(Icons.arrow_back,
+                                color: Colors.white70),
+                            label: Text(
+                              'Geri',
+                              style: AppTextStyles.mediumTextStyle.copyWith(
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ),
+                        // İleri butonu
+                        TextButton.icon(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              if (state.currentFieldIndex == 2) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const LovedCategories(),
+                                  ),
+                                );
+                              } else {
+                                ref
+                                    .read(registerViewNotifierProvider.notifier)
+                                    .nextField();
+                              }
+                            }
+                          },
+                          label: Text(
+                            state.currentFieldIndex == 2
+                                ? "Kategorilere Geç"
+                                : "Devam Et",
+                            style: AppTextStyles.mediumTextStyle.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                          icon: const Icon(Icons.arrow_forward,
+                              color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           // SafeArea(
-          //   child: Form(
-          //     key: _formKey,
-          //     child: Stepper(
-          //       currentStep: _currentStep,
-          //       onStepContinue: () {
-          //         if (_formKey.currentState!.validate()) {
-          //           if (_currentStep < 2) {
-          //             setState(() {
-          //               _currentStep++;
-          //             });
-          //           } else {
-          //             Navigator.push(
-          //               context,
-          //               MaterialPageRoute(
-          //                 builder: (context) => const LovedCategories(),
-          //               ),
-          //             );
-          //           }
-          //         }
-          //       },
-          //       onStepCancel: () {
-          //         if (_currentStep > 0) {
-          //           setState(() {
-          //             _currentStep--;
-          //           });
-          //         }
-          //       },
-          //       steps: [
-          //         Step(
-          //           title: Text('İsim',
-          //               style: AppTextStyles.largeTextStyle
-          //                   .copyWith(color: AppColors.whiteColor)),
-          //           content: TextFormField(
-          //             controller: fullNameController,
-          //             decoration: _buildInputDecoration('İsminizi giriniz'),
-          //             validator: (value) =>
-          //                 value?.isEmpty ?? true ? 'İsim boş olamaz' : null,
-          //             onChanged: (value) {
-          //               ref
-          //                   .read(registeringUserProvider.notifier)
-          //                   .update((state) => state.copyWith(fullName: value));
-          //             },
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 24),
+          //     child: Form(
+          //       key: _formKey,
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           SizedBox(height: screenHeight * 0.1),
+          //           LinearProgressIndicator(
+          //             value: (state.currentFieldIndex + 1) / 3,
+          //             backgroundColor: Colors.white.withOpacity(0.3),
+          //             valueColor:
+          //                 AlwaysStoppedAnimation<Color>(AppColors.primary100),
           //           ),
-          //           isActive: _currentStep >= 0,
-          //         ),
-          //         Step(
-          //           title: Text('Email',
-          //               style: AppTextStyles.largeTextStyle
-          //                   .copyWith(color: AppColors.whiteColor)),
-          //           content: TextFormField(
-          //             controller: emailController,
-          //             decoration:
-          //                 _buildInputDecoration('Email adresinizi giriniz'),
-          //             validator: (value) =>
-          //                 value?.isEmpty ?? true ? 'Email boş olamaz' : null,
-          //             onChanged: (value) {
-          //               ref
-          //                   .read(registeringUserProvider.notifier)
-          //                   .update((state) => state.copyWith(email: value));
-          //             },
+          //           SizedBox(height: screenHeight * 0.05),
+          //           Text(
+          //             _getStepTitle(state.currentFieldIndex),
+          //             style: AppTextStyles.largeTextStyle.copyWith(
+          //               color: Colors.white,
+          //               fontSize: 28,
+          //               fontWeight: FontWeight.bold,
+          //             ),
           //           ),
-          //           isActive: _currentStep >= 1,
-          //         ),
-          //         Step(
-          //           title: Text('Parola',
-          //               style: AppTextStyles.largeTextStyle
-          //                   .copyWith(color: AppColors.whiteColor)),
-          //           content: TextFormField(
-          //             controller: passwordController,
-          //             decoration: _buildInputDecoration('Parolanızı giriniz'),
-          //             obscureText: true,
-          //             validator: (value) =>
-          //                 value?.isEmpty ?? true ? 'Parola boş olamaz' : null,
-          //             onChanged: (value) {
-          //               ref
-          //                   .read(registeringUserProvider.notifier)
-          //                   .update((state) => state.copyWith(password: value));
-          //             },
+          //           const SizedBox(height: 8),
+          //           Text(
+          //             _getStepSubtitle(state.currentFieldIndex),
+          //             style: AppTextStyles.mediumTextStyle.copyWith(
+          //               color: Colors.white70,
+          //               fontSize: 16,
+          //             ),
           //           ),
-          //           isActive: _currentStep >= 2,
-          //         ),
-          //       ],
-          //       controlsBuilder: (context, details) {
-          //         return Padding(
-          //           padding: const EdgeInsets.only(top: 16.0),
-          //           child: Row(
-          //             children: [
-          //               ElevatedButton(
-          //                 onPressed: details.onStepContinue,
-          //                 style: ElevatedButton.styleFrom(
-          //                   backgroundColor: AppColors.primary100,
+          //           SizedBox(height: screenHeight * 0.05),
+          //           AnimatedSwitcher(
+          //             duration: const Duration(milliseconds: 300),
+          //             transitionBuilder:
+          //                 (Widget child, Animation<double> animation) {
+          //               return FadeTransition(
+          //                 opacity: animation,
+          //                 child: SlideTransition(
+          //                   position: Tween<Offset>(
+          //                     begin: const Offset(0.1, 0.0),
+          //                     end: Offset.zero,
+          //                   ).animate(animation),
+          //                   child: child,
           //                 ),
-          //                 child: Text(_currentStep == 2 ? 'Bitir' : 'Devam Et'),
-          //               ),
-          //               if (_currentStep > 0) ...[
-          //                 const SizedBox(width: 8),
-          //                 TextButton(
-          //                   onPressed: details.onStepCancel,
-          //                   child: const Text('Geri'),
-          //                 ),
-          //               ]
-          //             ],
+          //               );
+          //             },
+          //             child: RegisterViewField(
+          //               key: ValueKey<int>(state.currentFieldIndex),
+          //               fullNameController: state.currentFieldIndex == 0
+          //                   ? fullNameController
+          //                   : state.currentFieldIndex == 1
+          //                       ? emailController
+          //                       : passwordController,
+          //               hintText: state.currentFieldIndex == 0
+          //                   ? "Adın"
+          //                   : state.currentFieldIndex == 1
+          //                       ? "E-posta adresin"
+          //                       : "Şifren",
+          //               isPassword: state.currentFieldIndex == 2,
+          //             ),
           //           ),
-          //         );
-          //       },
+          //         ],
+          //       ),
           //     ),
           //   ),
           // ),
-          Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              // crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    fields[state.currentFieldIndex],
-                  ],
-                ),
-                // SizedBox(height: 20),
-              ],
-            ),
-          ),
         ],
       ),
-      floatingActionButton: state.currentFieldIndex == 2
-          ? FloatingActionButton.extended(
-              isExtended: true,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LovedCategories()));
-              },
-              label: Text(
-                "Category Selection",
-                style: AppTextStyles.largeTextStyle,
-              ),
-              icon: const Icon(Icons.arrow_forward),
-            )
-          : FloatingActionButton.extended(
-              isExtended: true,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  // FocusScope.of(context).unfocus();
-
-                  ref.read(registerViewNotifierProvider.notifier).nextField();
-                }
-
-                print(state.currentFieldIndex);
-                print(state.userModel.toString());
-              },
-              label: Text(
-                "Next",
-                style: AppTextStyles.largeTextStyle,
-              ),
-              icon: const Icon(Icons.arrow_forward),
-            ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(right: 24),
+      //   child: FloatingActionButton.extended(
+      //     isExtended: true,
+      //     onPressed: () {
+      //       if (_formKey.currentState!.validate()) {
+      //         if (state.currentFieldIndex == 2) {
+      //           Navigator.push(
+      //             context,
+      //             MaterialPageRoute(
+      //                 builder: (context) => const LovedCategories()),
+      //           );
+      //         } else {
+      //           ref.read(registerViewNotifierProvider.notifier).nextField();
+      //         }
+      //       }
+      //     },
+      //     backgroundColor: AppColors.primary100,
+      //     label: Text(
+      //       state.currentFieldIndex == 2 ? "Kategorilere Geç" : "Devam Et",
+      //       style: AppTextStyles.largeTextStyle.copyWith(color: Colors.white),
+      //     ),
+      //     icon: const Icon(Icons.arrow_forward, color: Colors.white),
+      // ),
+      // ),
     );
   }
 }
@@ -335,23 +422,26 @@ class RegisterViewField extends ConsumerWidget {
     super.key,
     required this.fullNameController,
     required this.hintText,
+    this.isPassword = false,
   });
 
   final TextEditingController fullNameController;
   final String hintText;
+  final bool isPassword;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: EdgeInsets.only(right: 40),
-      width: 300,
+      width: double.infinity,
       child: TextFormField(
         controller: fullNameController,
-        cursorColor: Colors.black,
+        cursorColor: Colors.white,
         autofocus: true,
+        obscureText: isPassword,
+        style: const TextStyle(color: Colors.white, fontSize: 20),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Field cannot be empty";
+            return "Bu alan boş bırakılamaz";
           }
           return null;
         },
@@ -375,29 +465,25 @@ class RegisterViewField extends ConsumerWidget {
         decoration: InputDecoration(
           filled: false,
           hintText: hintText,
-          // hintTextDirection: TextDirection.rtl,
-          contentPadding: const EdgeInsets.all(10),
-          hintStyle: const TextStyle(color: Colors.black, fontSize: 20),
-          enabledBorder: const UnderlineInputBorder(
+          contentPadding: const EdgeInsets.all(16),
+          hintStyle:
+              TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 20),
+          enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.black,
+              color: Colors.white.withOpacity(0.5),
               width: 1.5,
             ),
           ),
           errorBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.red,
+              color: Colors.redAccent,
               width: 1.5,
             ),
           ),
-          // border: OutlineInputBorder(
-
-          //     borderSide:
-          //         BorderSide(color: Colors.black, width: 1.5)),
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.black,
-              width: 1.5,
+              color: Colors.white,
+              width: 2,
             ),
           ),
         ),

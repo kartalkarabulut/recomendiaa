@@ -12,3 +12,9 @@ Todo:
 Bottom Navbar
 #####Genel öneri taikbi
 Reklamlar
+
+Todo For IOS Version
+- Reklam entegrasyonu
+- Firebase entegrasyonu
+- IOS için test ID'leri
+

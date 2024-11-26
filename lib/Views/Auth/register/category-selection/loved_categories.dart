@@ -32,14 +32,25 @@ class LovedCategories extends ConsumerWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                  gradient: AppGradientColors.primaryGradient,
-                  // color: AppColors.greenyColor,
-                  backgroundBlendMode: BlendMode.lighten),
+                gradient: AppGradientColors.primaryGradient,
+                backgroundBlendMode: BlendMode.lighten,
+              ),
             ),
             Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
-                child: Container(color: Colors.black.withOpacity(0.75)),
+                filter: ImageFilter.blur(sigmaX: 15, sigmaY: 0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.6),
+                        Colors.black.withOpacity(0.8),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
             SingleChildScrollView(
@@ -122,79 +133,132 @@ class LovedCategories extends ConsumerWidget {
                 ),
               ),
             ),
+            if (state.isLoading == true)
+              Center(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  child: Center(
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2C3E50),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            spreadRadius: 5,
+                          )
+                        ],
+                      ),
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          decoration: BoxDecoration(
+                            color: Color(0xFF2C3E50),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.orange),
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                state.registrationStatus,
+                                style: AppTextStyles.mediumTextStyle
+                                    .copyWith(color: Colors.white),
+                                textAlign: TextAlign.center,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: AppColors.yellowGreenColor,
-          onPressed: () async {
-            print("fab pressed  eaee e fffff aaaaaaaa bbbb ccccccc");
-            final viewModel =
-                ref.read(lovedCategoriesViewModelProvider.notifier);
-            final user = await viewModel.finishRegistration(context, ref);
-            if (user != null) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PageRooter(),
-                ),
-              );
-            }
-            // final authRepository = ref.read(authRepositoryProvider);
-            // final registeringUser = ref.read(registeringUserProvider.notifier);
-            // //!initial recomendation in here
-            // final bookRecomendationRepository =
-            //     ref.read(bookRecomendationRepositoryProvider);
-            // final movieRecomendationRepository =
-            //     ref.read(movieRecomendationRepositoryProvider);
+        floatingActionButton: Opacity(
+          opacity: state.isLoading ? 0.5 : 1,
+          child: FloatingActionButton.extended(
+            backgroundColor: AppColors.yellowGreenColor,
+            onPressed: () async {
+              print("fab pressed  eaee e fffff aaaaaaaa bbbb ccccccc");
+              final viewModel =
+                  ref.read(lovedCategoriesViewModelProvider.notifier);
+              final user = await viewModel.finishRegistration(context, ref);
+              if (user != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PageRooter(),
+                  ),
+                );
+              }
+              // final authRepository = ref.read(authRepositoryProvider);
+              // final registeringUser = ref.read(registeringUserProvider.notifier);
+              // //!initial recomendation in here
+              // final bookRecomendationRepository =
+              //     ref.read(bookRecomendationRepositoryProvider);
+              // final movieRecomendationRepository =
+              //     ref.read(movieRecomendationRepositoryProvider);
 
-            // List<String> moviePrompts = await movieRecomendationRepository
-            //     .initialGeneratePromptSuggestion(
-            //         null,
-            //         registeringUser.state.lovedMovieCategories,
-            //         RecomendationType.movie);
-            // print("film prompts ${moviePrompts}");
-            // List<MovieRecomendationModel> movieRecomendations =
-            //     await movieRecomendationRepository.initialRecomendation(
-            //         registeringUser.state.lovedMovieCategories, []);
+              // List<String> moviePrompts = await movieRecomendationRepository
+              //     .initialGeneratePromptSuggestion(
+              //         null,
+              //         registeringUser.state.lovedMovieCategories,
+              //         RecomendationType.movie);
+              // print("film prompts ${moviePrompts}");
+              // List<MovieRecomendationModel> movieRecomendations =
+              //     await movieRecomendationRepository.initialRecomendation(
+              //         registeringUser.state.lovedMovieCategories, []);
 
-            // List<BookRecomendationModel> bookRecomendations =
-            //     await bookRecomendationRepository.initialRecomendation(
-            //         registeringUser.state.lovedBookCategories, []);
-            // List<String> bookPrompts = await bookRecomendationRepository
-            //     .initialGeneratePromptSuggestion(
-            //         null,
-            //         registeringUser.state.lovedBookCategories,
-            //         RecomendationType.book);
-            // print("kitap prompts ${bookPrompts}");
+              // List<BookRecomendationModel> bookRecomendations =
+              //     await bookRecomendationRepository.initialRecomendation(
+              //         registeringUser.state.lovedBookCategories, []);
+              // List<String> bookPrompts = await bookRecomendationRepository
+              //     .initialGeneratePromptSuggestion(
+              //         null,
+              //         registeringUser.state.lovedBookCategories,
+              //         RecomendationType.book);
+              // print("kitap prompts ${bookPrompts}");
 
-            // registeringUser.state.lastSuggestedBooks = bookRecomendations;
-            // registeringUser.state.lastSuggestedMovies = movieRecomendations;
-            // registeringUser.state.lastSuggestedBookPrompts = bookPrompts;
-            // registeringUser.state.lastSuggestedMoviePrompts = moviePrompts;
+              // registeringUser.state.lastSuggestedBooks = bookRecomendations;
+              // registeringUser.state.lastSuggestedMovies = movieRecomendations;
+              // registeringUser.state.lastSuggestedBookPrompts = bookPrompts;
+              // registeringUser.state.lastSuggestedMoviePrompts = moviePrompts;
 
-            // //!end of initial recomendation
+              // //!end of initial recomendation
 
-            // final user = await authRepository.signUpAndSaveData(
-            //     registeringUser.state,
-            //     registeringUser.state.email,
-            //     registeringUser.state.password,
-            //     registeringUser.state.fullName,
-            //     SignUpType.emailPassword);
-            // if (user != null) {
-            //   print(
-            //       "kullanıcı verileri kaydedildi mi ${user.lastSuggestedBooks.first.title}");
-            //   Navigator.pushReplacement(context,
-            //       MaterialPageRoute(builder: (context) => const HomePage()));
-            // }
-          },
-          label: state.isLoading
-              ? const CircularProgressIndicator()
-              : Text(
-                  "Finish",
-                  style: AppTextStyles.largeTextStyle
-                      .copyWith(color: Colors.black),
-                ),
-          icon: const Icon(Icons.arrow_forward, color: Colors.black),
+              // final user = await authRepository.signUpAndSaveData(
+              //     registeringUser.state,
+              //     registeringUser.state.email,
+              //     registeringUser.state.password,
+              //     registeringUser.state.fullName,
+              //     SignUpType.emailPassword);
+              // if (user != null) {
+              //   print(
+              //       "kullanıcı verileri kaydedildi mi ${user.lastSuggestedBooks.first.title}");
+              //   Navigator.pushReplacement(context,
+              //       MaterialPageRoute(builder: (context) => const HomePage()));
+              // }
+            },
+            label: Text(
+              "Finish",
+              style: AppTextStyles.largeTextStyle.copyWith(color: Colors.black),
+            ),
+            icon: const Icon(Icons.arrow_forward, color: Colors.black),
+          ),
         ),
       ),
     );

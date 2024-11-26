@@ -7,6 +7,7 @@ import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
+import 'package:recomendiaa/services/ad-services/ads_services.dart';
 import 'package:recomendiaa/services/recomendation-generation/book/book_recm_gen_imp.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 
@@ -56,6 +57,7 @@ class BookRecomendationViewModel extends StateNotifier {
         );
 
         generateBookSuggestion(ref);
+        await AdServices().showInterstitialAd();
 
         showModalBottomSheet(
           context: context,

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,6 +89,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   slivers: [
                     SliverAppBar(
                       floating: true,
+                      automaticallyImplyLeading: false,
                       // excludeHeaderSemantics: true,
                       pinned: true,
                       // snap: true,
@@ -99,51 +101,131 @@ class _HomePageState extends ConsumerState<HomePage> {
                         style: AppTextStyles.orbitronlargeTextStyle
                             .copyWith(fontSize: 25),
                       ),
-                      actions: [
-                        IconButton(
-                            onPressed: () async {
-                              await FirebaseAuth.instance.signOut();
-                              ref.invalidate(userDataProvider);
-                              ref.invalidate(userIdProvider);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (_) => const ProfileView(),
-                              //   ),
-                              // );
-                            },
-                            icon: const Icon(
-                              Icons.person,
-                              color: Colors.black,
-                              size: 40,
-                            ))
-                      ],
                     ),
                     SliverList(
                       delegate: SliverChildListDelegate(
                         [
                           Consumer(
                             builder: (context, ref, child) {
-                              final userData =
-                                  ref.watch(userDataProvider).value;
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      AllFormatters.capitalizeEachWord(
-                                          userData!.fullName),
-                                      style: AppTextStyles.largeTextStyle
-                                          .copyWith(
-                                              fontWeight: FontWeight.bold),
+                              final userDataAsync = ref.watch(userDataProvider);
+
+                              return userDataAsync.when(
+                                loading: () => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                error: (error, stackTrace) => Center(
+                                  child: Text(
+                                    "Bir hata oluştu: $error",
+                                    style:
+                                        AppTextStyles.mediumTextStyle.copyWith(
+                                      color: Colors.red,
                                     ),
-                                    Text(
-                                      userData!.email,
-                                      style: AppTextStyles.mediumTextStyle
-                                          .copyWith(color: Colors.grey),
-                                    ),
-                                  ],
+                                  ),
+                                ),
+                                data: (userData) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 15),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              userData?.fullName != null &&
+                                                      userData!
+                                                          .fullName.isNotEmpty
+                                                  ? AllFormatters
+                                                      .capitalizeEachWord(
+                                                          userData.fullName)
+                                                  : "İsim Belirtilmedi",
+                                              style: AppTextStyles
+                                                  .largeTextStyle
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                            ),
+                                            Text(
+                                              userData?.email != null &&
+                                                      userData!.email.isNotEmpty
+                                                  ? userData.email
+                                                  : "E-posta Belirtilmedi",
+                                              style: AppTextStyles
+                                                  .mediumTextStyle
+                                                  .copyWith(color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      PopupMenuButton(
+                                        icon: const Icon(Icons.more_vert,
+                                            color: Colors.white),
+                                        color: AppColors.darkBackgorind,
+                                        itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: Row(
+                                              children: [
+                                                const Icon(Icons.logout,
+                                                    color: Colors.white),
+                                                const SizedBox(width: 8),
+                                                Text('Çıkış Yap',
+                                                    style: AppTextStyles
+                                                        .mediumTextStyle),
+                                              ],
+                                            ),
+                                            onTap: () async {
+                                              await FirebaseAuth.instance
+                                                  .signOut();
+                                              ref.invalidate(userDataProvider);
+                                              ref.invalidate(userIdProvider);
+                                              ref.invalidate(authStateProvider);
+                                            },
+                                          ),
+                                          PopupMenuItem(
+                                            child: Row(
+                                              children: [
+                                                const Icon(Icons.delete,
+                                                    color: Colors.red),
+                                                const SizedBox(width: 8),
+                                                Text('Hesabı Sil',
+                                                    style: AppTextStyles
+                                                        .mediumTextStyle
+                                                        .copyWith(
+                                                            color: Colors.red)),
+                                              ],
+                                            ),
+                                            onTap: () async {
+                                              try {
+                                                final user = FirebaseAuth
+                                                    .instance.currentUser;
+                                                if (user != null) {
+                                                  // Firestore'daki kullanıcı verilerini sil
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('users')
+                                                      .doc(user.uid)
+                                                      .delete();
+
+                                                  // Firebase Auth'daki kullanıcıyı sil
+                                                  await user.delete();
+
+                                                  // Provider'ları sıfırla
+                                                  ref.invalidate(
+                                                      userDataProvider);
+                                                  ref.invalidate(
+                                                      userIdProvider);
+                                                  ref.invalidate(
+                                                      authStateProvider);
+                                                }
+                                              } catch (e) {
+                                                print(e);
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },

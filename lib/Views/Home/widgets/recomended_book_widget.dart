@@ -29,9 +29,11 @@ class RecomendedBook extends StatelessWidget {
           // showDragHandle: true,
           backgroundColor: Colors.black,
           builder: (context) => Container(
-            height: AppConstants.screenHeight(context) * 0.6,
+            height: AppConstants.screenHeight(context) * 0.8,
             width: AppConstants.screenWidth(context),
             decoration: BoxDecoration(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
               gradient: AppGradientColors.primaryGradient,
             ),
             child: BookDetailSheet(

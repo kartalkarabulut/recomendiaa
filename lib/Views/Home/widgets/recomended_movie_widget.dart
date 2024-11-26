@@ -34,6 +34,8 @@ class RecomendedMovie extends StatelessWidget {
             height: AppConstants.screenHeight(context) * 0.85,
             decoration: BoxDecoration(
               gradient: AppGradientColors.primaryGradient,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
             ),
             child: MovieDetailSheet(
               movie: movie,
@@ -54,34 +56,37 @@ class RecomendedMovie extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 120,
-              child: Image.network(
-                movie.posterUrl ?? '',
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: 80,
-                    color: AppColors.darkBackgorind,
-                    child: const Center(
-                      child: Icon(
-                        Icons.movie_outlined,
-                        color: Colors.white54,
-                        size: 40,
+            Hero(
+              tag: movie.posterUrl ?? 'emptyUrl',
+              child: SizedBox(
+                height: 120,
+                child: Image.network(
+                  movie.posterUrl ?? '',
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 80,
+                      color: AppColors.darkBackgorind,
+                      child: const Center(
+                        child: Icon(
+                          Icons.movie_outlined,
+                          color: Colors.white54,
+                          size: 40,
+                        ),
                       ),
-                    ),
-                  );
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Container(
-                    width: 80,
-                    color: AppColors.darkBackgorind,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                },
-                fit: BoxFit.cover,
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      width: 80,
+                      color: AppColors.darkBackgorind,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(width: 10),

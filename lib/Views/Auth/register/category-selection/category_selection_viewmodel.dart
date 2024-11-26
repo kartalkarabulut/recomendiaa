@@ -12,14 +12,17 @@ import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 
 class LovedCategoriesState {
-  LovedCategoriesState(
-      {required this.selectedMovieCategories,
-      required this.selectedBookCategories,
-      this.isLoading = false});
+  LovedCategoriesState({
+    required this.selectedMovieCategories,
+    required this.selectedBookCategories,
+    this.isLoading = false,
+    this.registrationStatus = '', // Yeni alan
+  });
 
   final List<String> selectedBookCategories;
   final List<String> selectedMovieCategories;
   bool isLoading;
+  String registrationStatus; // Yeni alan
 }
 
 class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
@@ -77,60 +80,80 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
         ref.read(movieRecomendationRepositoryProvider);
 
     try {
-      state = LovedCategoriesState(
-          selectedMovieCategories: state.selectedMovieCategories,
-          selectedBookCategories: state.selectedBookCategories,
-          isLoading: true);
-      //!Initial movie recomendations
+      _updateState(isLoading: true, status: 'Initializing...');
+
+      // Film önerileri
+      _updateState(status: 'Preparing movie recommendations...');
       List<MovieRecomendationModel> movieRecomendations =
           await movieRecomendationRepository.initialRecomendation(
               registeringUser.state.lovedMovieCategories, []);
-      print("movie recomendations ${movieRecomendations}");
-      //!Initial movie prompt recomendations
+
+      // Film promptları
+      _updateState(status: 'Creating prompts for movie recommendations...');
       List<String> moviePrompts =
           await movieRecomendationRepository.initialGeneratePromptSuggestion(
               null,
               registeringUser.state.lovedMovieCategories,
               RecomendationType.movie);
-      print("film prompts ${moviePrompts}");
-      //!Iinital book recomendations
+
+      // Kitap önerileri
+      _updateState(status: 'Preparing book recommendations...');
       List<BookRecomendationModel> bookRecomendations =
           await bookRecomendationRepository.initialRecomendation(
               registeringUser.state.lovedBookCategories, []);
 
-      //!Initial book prompts recomendations
+      // Kitap promptları
+      _updateState(status: 'Creating prompts for book recommendations...');
       List<String> bookPrompts =
           await bookRecomendationRepository.initialGeneratePromptSuggestion(
               null,
               registeringUser.state.lovedBookCategories,
               RecomendationType.book);
-      print("kitap prompts ${bookPrompts}");
 
-      //!Setting last suggested books, movies, book prompts and movie prompts
+      // Kullanıcı verilerini güncelleme
+      _updateState(status: 'Saving recommendations...');
       registeringUser.state.lastSuggestedBooks = bookRecomendations;
       registeringUser.state.lastSuggestedMovies = movieRecomendations;
       registeringUser.state.lastSuggestedBookPrompts = bookPrompts;
       registeringUser.state.lastSuggestedMoviePrompts = moviePrompts;
 
-      //!Signing up and saving data to firestore
+      // Kullanıcı kaydı
+      _updateState(status: 'Creating your account...');
       UserModel? user = await authRepository.signUpAndSaveData(
           registeringUser.state,
           registeringUser.state.email,
           registeringUser.state.password,
           registeringUser.state.fullName,
           SignUpType.emailPassword);
-      state = LovedCategoriesState(
-          selectedMovieCategories: state.selectedMovieCategories,
-          selectedBookCategories: state.selectedBookCategories,
-          isLoading: false);
-      return user;
+
+      if (user != null) {
+        _updateState(status: 'Registration successful! Redirecting...');
+        await Future.delayed(const Duration(
+            seconds: 1)); // Başarı mesajının görünmesi için kısa bekletme
+        return user;
+      } else {
+        _updateState(isLoading: false, status: '');
+        SharedSnackbars.showErrorSnackBar(context, "Registration failed");
+        return null;
+      }
     } catch (e) {
-      state = LovedCategoriesState(
-          selectedMovieCategories: state.selectedMovieCategories,
-          selectedBookCategories: state.selectedBookCategories,
-          isLoading: false);
-      SharedSnackbars.showErrorSnackBar(context, "Something went wrong");
+      print("Registration error: $e");
+      _updateState(isLoading: false, status: '');
+      SharedSnackbars.showErrorSnackBar(
+          context, "Unexpected error. Please try again.");
       return null;
+    } finally {
+      _updateState(isLoading: false, status: '');
     }
+  }
+
+// State güncelleme yardımcı metodu
+  void _updateState({bool? isLoading, String? status}) {
+    state = LovedCategoriesState(
+      selectedMovieCategories: state.selectedMovieCategories,
+      selectedBookCategories: state.selectedBookCategories,
+      isLoading: isLoading ?? state.isLoading,
+      registrationStatus: status ?? state.registrationStatus,
+    );
   }
 }
