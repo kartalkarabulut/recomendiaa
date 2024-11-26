@@ -22,18 +22,36 @@ class BookRecomendationView extends ConsumerStatefulWidget {
 
 class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
   late TextEditingController promptController;
+  final NewAdService addServices = NewAdService();
+  bool isInterstitialAdReady = false;
 
   @override
   void initState() {
     super.initState();
     promptController = TextEditingController();
-    AdServices().loadInterstitialAd();
+    // AdServices().loadInterstitialAd(() {
+    //   setState(() {});
+    // });
+    addServices.loadInterstitialAd();
   }
 
   @override
   void dispose() {
     promptController.dispose();
     super.dispose();
+  }
+
+  void loadInterstitialAd() {
+    addServices.loadInterstitialAd();
+  }
+
+  void showInterstitialAd() {
+    if (isInterstitialAdReady) {
+      addServices.showInterstitialAd();
+      isInterstitialAdReady = false;
+      //reklam kapantıktan sonra yeni bir reklam yükleme  k için
+      loadInterstitialAd();
+    }
   }
 
   @override
@@ -62,6 +80,18 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
           Column(
             children: [
               // const SizedBox(height: 100),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       print("reklam gösterme denemeis");
+              //       addServices.showInterstitialAd();
+              //       // addServices.loadInterstitialAd(() {
+              //       //   if (mounted) setState(() {});
+              //       // });
+              //       // await AdServices().showInterstitialAd(() {
+              //       //   setState(() {});
+              //       // });
+              //     },
+              //     child: Text("Show Ad")),
               SizedBox(
                 height: 80,
                 child: Center(
@@ -96,11 +126,13 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
               const Spacer(),
               CustomButton(
                 text: "Suggest",
-                onPressed: () =>
-                    bookRecomendationViewModel.handleSuggestButtonPress(
-                        context: context,
-                        ref: ref,
-                        promptController: promptController),
+                onPressed: () {
+                  bookRecomendationViewModel.handleSuggestButtonPress(
+                    context: context,
+                    ref: ref,
+                    promptController: promptController,
+                  );
+                },
               )
             ],
           )

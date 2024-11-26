@@ -37,6 +37,8 @@ class BookRecomendationViewModel extends StateNotifier {
     required TextEditingController promptController,
   }) async {
     try {
+      Future.delayed(const Duration(milliseconds: 200));
+      NewAdService().showInterstitialAd();
       ref.read(isButtonWorkignProvider.notifier).state = true;
       final userData = ref.watch(userDataProvider);
       final bookRecomendationRepository =
@@ -46,7 +48,9 @@ class BookRecomendationViewModel extends StateNotifier {
           .makeRecomendation(promptController.text, RecomendationType.book);
 
       if (recomendations.isNotEmpty && context.mounted) {
+        // NewAdService().showInterstitialAd();
         ref.read(isButtonWorkignProvider.notifier).state = false;
+
         bookRecomendationRepository
             .generatePromptSuggestion(userData.value?.bookPromptHistory,
                 userData.value?.lovedBookCategories, RecomendationType.book)
@@ -57,7 +61,6 @@ class BookRecomendationViewModel extends StateNotifier {
         );
 
         generateBookSuggestion(ref);
-        await AdServices().showInterstitialAd();
 
         showModalBottomSheet(
           context: context,
