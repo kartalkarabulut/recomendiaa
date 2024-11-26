@@ -2,7 +2,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-// sdk entegrasyonu için  ca-app-pub-9468367932651303/2073876483
 class AdServices {
   InterstitialAd? interstitialAd;
   BannerAd? bannerAd;
