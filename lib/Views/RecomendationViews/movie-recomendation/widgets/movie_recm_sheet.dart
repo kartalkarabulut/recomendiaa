@@ -44,7 +44,7 @@ class MovieRecmSheet extends StatelessWidget {
           left: 0,
           right: 0,
           child: Text(
-            "Lütfen kaydetmek istediğiniz\n kitapları seçin",
+            "Please select the movies\n you want to save",
             textAlign: TextAlign.center,
             style: AppTextStyles.largeTextStyle.copyWith(
               fontWeight: FontWeight.bold,

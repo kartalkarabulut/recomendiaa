@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/shared_snackbars.dart';
+import 'package:recomendiaa/Views/Auth/auth_screen.dart';
 import 'package:recomendiaa/Views/Home/widgets/dot_indicator.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomendation_type_widget.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomendation_types_row.dart';
@@ -77,6 +78,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               onRefresh: () async {
                 SharedSnackbars.showInfoSnackBar(
                     context, "Refresh can take a while");
+                ref.invalidate(userIdProvider);
+                ref.invalidate(userDataProvider);
+
                 await ref
                     .read(homeViewModelProvider.notifier)
                     .generateMovieBookSuggestion(ref);
@@ -179,6 +183,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                               ref.invalidate(userDataProvider);
                                               ref.invalidate(userIdProvider);
                                               ref.invalidate(authStateProvider);
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const AuthView()));
                                             },
                                           ),
                                           PopupMenuItem(
@@ -216,6 +225,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                       userIdProvider);
                                                   ref.invalidate(
                                                       authStateProvider);
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const AuthView()));
                                                 }
                                               } catch (e) {
                                                 print(e);

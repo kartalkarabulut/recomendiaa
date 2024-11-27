@@ -13,6 +13,7 @@ class UserDataFromFirestoreImp implements UserDataFromFirestoreInterface {
 
   @override
   Future<UserModel?> getUserData(String userId) async {
+    print("getUserData fonksiyonu çağrıldı: $userId");
     try {
       final docSnapshot =
           await _firestore.collection(_userCollection).doc(userId).get();

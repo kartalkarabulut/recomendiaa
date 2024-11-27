@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
 import 'package:recomendiaa/Views/Auth/login/login_view.dart';
 import 'package:recomendiaa/Views/Home/widgets/prompt_field.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recm_view_model.dart';

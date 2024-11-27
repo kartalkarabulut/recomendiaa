@@ -36,16 +36,34 @@ class AuthWidget extends ConsumerWidget {
     // );
     return authState.when(
       data: (user) {
-        if (user != null) {
+        if (user == null || user.uid.isEmpty) {
+          return const AuthView();
+        } else {
           return PageRooter();
         }
-        return const AuthView();
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('Hata: $error')),
     );
   }
 }
+// class AuthWidget extends ConsumerWidget {
+//   const AuthWidget({super.key});
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     // Stream'i dinle
+//     final user = ref.watch(authStateProvider.select((value) => value.value));
+
+//     // Eğer user null ise AuthView'a yönlendir
+//     if (user == null) {
+//       return const AuthView();
+//     }
+
+//     // User varsa PageRooter'a yönlendir
+//     return PageRooter();
+//   }
+// }
 
 class OnboardingService {
   static const String _boxName = 'onboardingBox';

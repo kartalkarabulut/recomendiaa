@@ -67,7 +67,7 @@ class AuthView extends ConsumerWidget {
                               'Recomendia',
                               style:
                                   AppTextStyles.orbitronlargeTextStyle.copyWith(
-                                fontSize: 48,
+                                fontSize: 40,
                                 fontWeight: FontWeight.bold,
                                 shadows: [
                                   Shadow(
@@ -177,10 +177,24 @@ class AuthView extends ConsumerWidget {
                               ),
                             ),
                           ),
-                          child: Text(
-                            "Already have an account? Login",
-                            style: AppTextStyles.mediumTextStyle.copyWith(
-                              color: Colors.white.withOpacity(0.9),
+                          child: RichText(
+                            text: TextSpan(
+                              style: AppTextStyles.mediumTextStyle.copyWith(
+                                color: Colors.white.withOpacity(0.9),
+                              ),
+                              children: [
+                                const TextSpan(
+                                  text: "Already have an account?  ",
+                                ),
+                                TextSpan(
+                                  text: "Login!",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.deepOrange,
+                                    // decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

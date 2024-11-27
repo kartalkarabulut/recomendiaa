@@ -42,7 +42,7 @@ class BoookRecmSheet extends StatelessWidget {
           left: 0,
           right: 0,
           child: Text(
-            "Lütfen kaydetmek istediğiniz\n kitapları seçin",
+            "Please select the books\n you want to save",
             textAlign: TextAlign.center,
             style: AppTextStyles.largeTextStyle.copyWith(
               // color: Colors.white,

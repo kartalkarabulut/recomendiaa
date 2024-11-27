@@ -13,6 +13,7 @@ import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
 import 'package:recomendiaa/providers/auth-screens/auth_screens_providers.dart';
+import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/auth_repository.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
@@ -198,6 +199,9 @@ class LovedCategories extends ConsumerWidget {
                   ref.read(lovedCategoriesViewModelProvider.notifier);
               final user = await viewModel.finishRegistration(context, ref);
               if (user != null) {
+                ref.invalidate(userIdProvider);
+                ref.invalidate(userDataProvider);
+
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

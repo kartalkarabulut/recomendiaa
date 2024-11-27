@@ -3,14 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/models/user_model.dart';
 import 'package:recomendiaa/services/user/data/from-firestore/user_data_from_firestore_imp.dart';
 
+final userDataServiceProvider = Provider<UserDataFromFirestoreImp>((ref) {
+  return UserDataFromFirestoreImp();
+});
+
 final userDataProvider = FutureProvider<UserModel?>((ref) async {
-  final userId = ref.watch(userIdProvider);
+  final userId = ref.read(userIdProvider);
+  final userDataService = ref.watch(userDataServiceProvider);
+  print("Kullanıcı ID'si: $userId");
+
   print("userdata provider çalıştı");
-  return UserDataFromFirestoreImp().getUserData(userId!);
+  return await userDataService.getUserData(userId!);
 });
 
 final userIdProvider = Provider<String?>((ref) {
-  return FirebaseAuth.instance.currentUser?.uid;
+  final userId = FirebaseAuth.instance.currentUser?.uid;
+  print("Kullanıcı ID'si: $userId");
+  return userId;
 });
 
 final authStateProvider = StreamProvider((ref) {
