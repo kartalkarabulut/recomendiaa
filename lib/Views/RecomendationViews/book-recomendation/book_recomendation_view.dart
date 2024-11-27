@@ -11,6 +11,7 @@ import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/ad-services/ads_services.dart';
 
 import '../../../providers/user_data_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookRecomendationView extends ConsumerStatefulWidget {
   const BookRecomendationView({super.key});
@@ -57,9 +58,7 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
   @override
   Widget build(BuildContext context) {
     final userData = ref.watch(userDataProvider);
-    final bookRecomendationRepository =
-        ref.read(bookRecomendationRepositoryProvider);
-    final state = ref.watch(bookRecomendationViewModelProvider);
+
     final bookRecomendationViewModel =
         ref.read(bookRecomendationViewModelProvider.notifier);
     return Scaffold(
@@ -96,7 +95,7 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                 height: 80,
                 child: Center(
                   child: Text(
-                    "Book Recomendation",
+                    AppLocalizations.of(context)!.bookRecomendation,
                     style: AppTextStyles.orbitronlargeTextStyle
                         .copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
@@ -104,8 +103,8 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
               ),
               PromptField(
                   promptController: promptController,
-                  hintText: "Tell us about your taste in books"),
-
+                  hintText: AppLocalizations.of(context)!
+                      .tellUsAboutYourTasteInBooks),
               const SizedBox(height: 30),
               userData.when(
                 data: (data) {
@@ -121,11 +120,13 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, stack) => Center(child: Text('Hata: $error')),
+                error: (error, stack) => Center(
+                    child: Text(
+                        AppLocalizations.of(context)!.error(error.toString()))),
               ),
               const Spacer(),
               CustomButton(
-                text: "Suggest",
+                text: AppLocalizations.of(context)!.suggest,
                 onPressed: () {
                   bookRecomendationViewModel.handleSuggestButtonPress(
                     context: context,

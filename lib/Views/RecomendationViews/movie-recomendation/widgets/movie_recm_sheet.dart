@@ -5,6 +5,7 @@ import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovieRecmSheet extends StatelessWidget {
   const MovieRecmSheet({
@@ -30,6 +31,7 @@ class MovieRecmSheet extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SizedBox(height: 10),
                       for (var movie in recomendations)
                         GeneratedMovieWidget(movie: movie)
                     ],
@@ -40,11 +42,11 @@ class MovieRecmSheet extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 0,
+          top: 10,
           left: 0,
           right: 0,
           child: Text(
-            "Please select the movies\n you want to save",
+            AppLocalizations.of(context)!.pleaseSelectTheMoviesYouWantToSave,
             textAlign: TextAlign.center,
             style: AppTextStyles.largeTextStyle.copyWith(
               fontWeight: FontWeight.bold,

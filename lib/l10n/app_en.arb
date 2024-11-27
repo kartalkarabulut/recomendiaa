@@ -6,6 +6,246 @@
   "settings": "Settings Page",
   "@settings": {
     "description": "Settings Page"
+  },
+  "recomendationHistory": "Recomendation History",
+  "@recomendationHistory": {
+    "description": "Recomendation History Page Title"
+  },
+  "movies": "Movies",
+  "@movies": {
+    "description": "Movies Page Title"
+  },
+  "books": "Books",
+  "@books": {
+    "description": "Books Page Title"
+  },
+  "relatedTags": "Related Tags #",
+  "@relatedTags": {
+    "description": "Related Tags #"
+  },
+  "deleteThisMovie": "Delete this movie",
+  "@deleteThisMovie": {
+    "description": "Delete this movie"
+  },
+  "deleteThisBook": "Delete this book",
+  "@deleteThisBook": {
+    "description": "Delete this book"
+  },
+  "bookDeleted": "Book Deleted",
+  "@bookDeleted": {
+    "description": "Book Deleted"
+  },
+  "movieRecomendation": "Movie Recomendation",
+  "@movieRecomendation": {
+    "description": "Movie Recomendation"
+  },
+  "bookRecomendation": "Book Recomendation",
+  "@bookRecomendation": {
+    "description": "Book Recomendation"
+  },
+  "smartSuggestions": "Smart Suggestions",
+  "@smartSuggestions": {
+    "description": "Smart Suggestions"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Delete Account"
+  },
+  "nameNotProvided": "Name Not Provided",
+  "@nameNotProvided": {
+    "description": "Name Not Provided"
+  },
+  "emailNotProvided": "Email Not Provided",
+  "@emailNotProvided": {
+    "description": "Email Not Provided"
+  },
+  "errorOccurred": "An error occurred: {error}",
+  "@errorOccurred": {
+    "description": "An error occurred with error message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+        
+      }
+    }
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh"
+  },
+  "refreshing": "Refreshing",
+  "@refreshing": {
+    "description": "Refreshing"
+  },
+  "refreshCanTakeAWhile": "Refresh can take a while",
+  "@refreshCanTakeAWhile": {
+    "description": "Refresh can take a while"
+  },
+  "refreshThePage": "Refresh the page",
+  "@refreshThePage": {
+    "description": "Refresh the page"
+  },
+  "pleaseSelectTheBooksYouWantToSave": "Please select the books\n you want to save",
+  "@pleaseSelectTheBooksYouWantToSave": {
+    "description": "Please select the books\n you want to save"
+  },
+  "tellUsAboutYourTasteInBooks": "Tell us about your taste in books",
+  "@tellUsAboutYourTasteInBooks": {
+    "description": "Tell us about your taste in books"
+  },
+  "tellUsAboutYourTasteInMovies": "Tell us about your taste in movies",
+  "@tellUsAboutYourTasteInMovies": {
+    "description": "Tell us about your taste in movies"
+  },
+  "error": "Error: {error}",
+  "@error": {
+    "description": "Error: {error}",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "suggest": "Generate Suggestion",
+  "@suggest": {
+    "description": "Generate Suggestion"
+  },
+  "pleaseSelectTheMoviesYouWantToSave": "Please select the movies\n you want to save",
+  "@pleaseSelectTheMoviesYouWantToSave": {
+    "description": "Please select the movies\n you want to save"
+  },
+  "youHaveNoRecomendationsYet": "You have no recomendations yet",
+  "@youHaveNoRecomendationsYet": {
+    "description": "You havent generated any recomendations yet"
+  },
+  "recommendationGenerationFailed": "Recommendation generation failed",
+  "@recommendationGenerationFailed": {
+    "description": "Recommendation generation failed, please try again"
+  },
+  "findBooksAndMoviesThatSpeakToYou": "Find books and movies that speak to you, even if they're hidden deep within",
+  "@findBooksAndMoviesThatSpeakToYou": {
+    "description": "Find books and movies that speak to you, even if they're hidden deep within"
+  },
+  "justTellUsWhatKindOfBookYoureInTheMoodFor": "Just tell us what kind of book you're in the mood for, and let our AI find your perfect match!",
+  "@justTellUsWhatKindOfBookYoureInTheMoodFor": {
+    "description": "Just tell us what kind of book you're in the mood for, and let our AI find your perfect match!"
+  },
+  "describeYourPerfectMovieScene": "Describe your perfect movie scene, and we'll find films that match your vision.",
+  "@describeYourPerfectMovieScene": {
+    "description": "Describe your perfect movie scene, and we'll find films that match your vision."
+  },
+  "letsStart": "Let's get started",
+  "@letsStart": {
+    "description": "Let's get started"
+  },
+  "continueButton": "Continue",
+  "@continueButton": {
+    "description": "Continue"
+  },
+  "skip": "Skip",
+  "@skip": {
+    "description": "Skip"
+  },
+  "yourPersonalMovieAndBookRecommendationAssistant": "Your personal movie and book\nrecommendation assistant",
+  "@yourPersonalMovieAndBookRecommendationAssistant": {
+    "description": "Your personal movie and book\nrecommendation assistant"
+  },
+  "promiseItWillNotTakeTooLong": "Promise it will not take too long time",
+  "@promiseItWillNotTakeTooLong": {
+    "description": "Promise it will not take too long time"
+  },
+  "alreadyHaveAnAccount": "Already have an account?",
+  "@alreadyHaveAnAccount": {
+    "description": "Already have an account?"
+  },
+  "login": "Login!",
+  "@login": {
+    "description": "Login!"
+  },
+  "getStarted": "Get Started",
+  "@getStarted": {
+    "description": "Get Started"
+  },
+  "welcomeBack": "Welcome Back!",
+  "@welcomeBack": {
+    "description": "Welcome Back!"
+  },
+  "signInToYourAccountAndContinueExploring": "Sign in to your account and continue exploring",
+  "@signInToYourAccountAndContinueExploring": {
+    "description": "Sign in to your account and continue exploring"
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Sign In"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password"
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot Password?"
+  },
+  "enterYourEmailAddress": "Enter your email address",
+  "@enterYourEmailAddress": {
+    "description": "Enter your email address"
+  },
+  "resetPassword": "Reset Password",
+  "@resetPassword": {
+    "description": "Reset Password"
+  },
+  "send": "Send",
+  "@send": {
+    "description": "Send"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel"
+  },
+  "pleaseEnterYourEmailAddress": "Please enter your email address",
+  "@pleaseEnterYourEmailAddress": {
+    "description": "Please enter your email address"
+  },
+  "pleaseEnterAValidEmailAddress": "Please enter a valid email address",
+  "@pleaseEnterAValidEmailAddress": {
+    "description": "Please enter a valid email address"
+  },
+  "passwordResetLinkSentToYourEmail": "Password reset link sent to your email.",
+  "@passwordResetLinkSentToYourEmail": {
+    "description": "Password reset link sent to your email."
+  },
+  "noUserFoundWithThisEmailAddress": "No user found with this email address",
+  "@noUserFoundWithThisEmailAddress": {
+    "description": "No user found with this email address"
+  },
+  "invalidEmailAddress": "Invalid email address",
+  "@invalidEmailAddress": {
+    "description": "Invalid email address"
+  },
+  "pages": "{pages} pages",
+  "@pages": {
+    "description": "{pages} pages",
+    "placeholders": {
+      "pages": {
+        "type": "String"
+      }
+    }
+  },
+  "movieDeleted": "Movie Deleted",
+  "@movieDeleted": {
+    "description": "Movie Deleted"
+  },
+  "minutes": "{minutes} mins",
+  "@minutes": {
+    "description": "{minutes} minutes",
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
   }
-  
 }   

@@ -9,6 +9,7 @@ import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
 import 'package:recomendiaa/providers/movie_providers.dart';
 import 'package:recomendiaa/services/recomendation-history/movie_recm_data_imp.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovieDetailSheet extends StatelessWidget {
   const MovieDetailSheet({
@@ -153,14 +154,15 @@ class MovieDetailSheet extends StatelessWidget {
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.timer_outlined,
                                     color: AppColors.bluishColor,
                                     size: 20,
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    "${movie.duration} min",
+                                    AppLocalizations.of(context)!
+                                        .minutes(movie.duration),
                                     style:
                                         AppTextStyles.largeTextStyle.copyWith(
                                       color: AppColors.bluishColor,
@@ -309,7 +311,7 @@ class MovieDetailSheet extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Related Tags #",
+                            AppLocalizations.of(context)!.relatedTags,
                             style: AppTextStyles.largeTextStyle.copyWith(
                               color: Colors.grey,
                               fontWeight: FontWeight.w600,
@@ -368,8 +370,8 @@ class MovieDetailSheet extends StatelessWidget {
                             await MovieRecomendationDataImp()
                                 .deleteRecomendation(movie.title);
                             ref.invalidate(getAllMovieRecomendations);
-                            SharedSnackbars.showSuccessSnackBar(
-                                context, "Movie Deleted");
+                            SharedSnackbars.showSuccessSnackBar(context,
+                                AppLocalizations.of(context)!.movieDeleted);
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
@@ -384,7 +386,7 @@ class MovieDetailSheet extends StatelessWidget {
                             elevation: 4,
                           ),
                           child: Text(
-                            "Delete This Movie",
+                            AppLocalizations.of(context)!.deleteThisMovie,
                             style: AppTextStyles.largeTextStyle.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

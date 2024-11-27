@@ -3,6 +3,7 @@ import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/widgets/
 import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BoookRecmSheet extends StatelessWidget {
   const BoookRecmSheet({
@@ -42,7 +43,7 @@ class BoookRecmSheet extends StatelessWidget {
           left: 0,
           right: 0,
           child: Text(
-            "Please select the books\n you want to save",
+            AppLocalizations.of(context)!.pleaseSelectTheBooksYouWantToSave,
             textAlign: TextAlign.center,
             style: AppTextStyles.largeTextStyle.copyWith(
               // color: Colors.white,

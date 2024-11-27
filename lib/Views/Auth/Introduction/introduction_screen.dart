@@ -5,6 +5,7 @@ import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IntroductionPageView extends StatefulWidget {
   const IntroductionPageView({super.key});
@@ -14,28 +15,37 @@ class IntroductionPageView extends StatefulWidget {
 }
 
 class _IntroductionPageViewState extends State<IntroductionPageView> {
-  final PageController _pageController = PageController();
   bool isLastPage = false;
 
-  final List<IntroductionItem> introItems = [
-    IntroductionItem(
-      image: "assets/images/people.png",
-      description:
-          "Just tell us what kind of book you're in the mood for, and let our AI find your perfect match!",
-      gradientColors: [Colors.purple.shade700, Colors.blue.shade700],
-    ),
-    IntroductionItem(
-      image: "assets/images/movie-full-stack.png",
-      description:
-          "Describe your perfect movie scene, and we'll find films that match your vision.",
-      gradientColors: [Colors.orange.shade700, Colors.red.shade700],
-    ),
-  ];
+  final PageController _pageController = PageController();
+
+  List<IntroductionItem> getIntroItems(BuildContext context) {
+    return [
+      IntroductionItem(
+          image: "assets/logos/mix2.png",
+          description:
+              AppLocalizations.of(context)!.findBooksAndMoviesThatSpeakToYou,
+          gradientColors: [Colors.purple.shade700, Colors.blue.shade700],
+          height: 0.5),
+      IntroductionItem(
+        image: "assets/images/people.png",
+        description: AppLocalizations.of(context)!
+            .justTellUsWhatKindOfBookYoureInTheMoodFor,
+        gradientColors: [Colors.purple.shade700, Colors.blue.shade700],
+      ),
+      IntroductionItem(
+        image: "assets/images/movie-full-stack.png",
+        description:
+            AppLocalizations.of(context)!.describeYourPerfectMovieScene,
+        gradientColors: [Colors.orange.shade700, Colors.red.shade700],
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final introItems = getIntroItems(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -146,7 +156,9 @@ class _IntroductionPageViewState extends State<IntroductionPageView> {
                           ),
                         ),
                         child: Text(
-                          isLastPage ? "Başlayalım" : "Devam Et",
+                          isLastPage
+                              ? AppLocalizations.of(context)!.letsStart
+                              : AppLocalizations.of(context)!.continueButton,
                           style: AppTextStyles.largeTextStyle.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -167,7 +179,7 @@ class _IntroductionPageViewState extends State<IntroductionPageView> {
                             );
                           },
                           child: Text(
-                            "Atla",
+                            AppLocalizations.of(context)!.skip,
                             style: AppTextStyles.mediumTextStyle.copyWith(
                               color: Colors.white.withOpacity(0.9),
                             ),
@@ -186,24 +198,25 @@ class _IntroductionPageViewState extends State<IntroductionPageView> {
 }
 
 class IntroductionItem {
-  final String image;
-  final String description;
-  final List<Color> gradientColors;
-
   IntroductionItem({
     required this.image,
     required this.description,
     required this.gradientColors,
+    this.height,
   });
+  double? height;
+  final String description;
+  final List<Color> gradientColors;
+  final String image;
 }
 
 class IntroductionPage extends StatelessWidget {
-  final IntroductionItem item;
-
   const IntroductionPage({
     super.key,
     required this.item,
   });
+
+  final IntroductionItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +234,7 @@ class IntroductionPage extends StatelessWidget {
 
           // Görsel
           Container(
-            height: size.height * 0.4, // Görsel boyutunu biraz daha büyüttüm
+            height: size.height * (item.height ?? 0.4),
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),

@@ -7,6 +7,7 @@ import 'package:recomendiaa/Views/history/widgets/navigation_button.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/providers/recm_history_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecomendationHistory extends ConsumerStatefulWidget {
   const RecomendationHistory({super.key});
@@ -56,7 +57,7 @@ class _RecomendationHistoryState extends ConsumerState<RecomendationHistory> {
                 height: 80,
                 child: Center(
                   child: Text(
-                    "Recomendation History",
+                    AppLocalizations.of(context)!.recomendationHistory,
                     style: AppTextStyles.orbitronlargeTextStyle.copyWith(
                       fontSize: 24,
                     ),

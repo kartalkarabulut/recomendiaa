@@ -9,6 +9,7 @@ import 'package:recomendiaa/providers/auth-screens/auth_screens_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/SharedViews/modern_text_field.dart';
 import 'package:recomendiaa/SharedViews/buttons/modern_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginView extends ConsumerWidget {
   const LoginView({super.key});
@@ -42,7 +43,7 @@ class LoginView extends ConsumerWidget {
                 children: [
                   const Spacer(flex: 1),
                   Text(
-                    'Welcome Back!',
+                    AppLocalizations.of(context)!.welcomeBack,
                     style: GoogleFonts.poppins(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -51,7 +52,8 @@ class LoginView extends ConsumerWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Sign in to your account and continue exploring',
+                    AppLocalizations.of(context)!
+                        .signInToYourAccountAndContinueExploring,
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: Colors.white70,
@@ -67,14 +69,14 @@ class LoginView extends ConsumerWidget {
                   const SizedBox(height: 20),
                   ModernTextField(
                     controller: passwordController,
-                    hintText: 'Password',
+                    hintText: AppLocalizations.of(context)!.password,
                     icon: Icons.lock_outline,
                     isPassword: true,
                   ),
                   const ForgotPassword(),
                   const SizedBox(height: 30),
                   ModernButton(
-                    text: "Sign In",
+                    text: AppLocalizations.of(context)!.signIn,
                     onPressed: () async {
                       bool isLogin = await loginViewModel.login(
                           emailController.text, passwordController.text, ref);

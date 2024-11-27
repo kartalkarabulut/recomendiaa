@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:recomendiaa/SharedViews/shared_snackbars.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({
@@ -27,7 +28,7 @@ class ForgotPassword extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               title: Text(
-                'Reset Password',
+                AppLocalizations.of(context)!.resetPassword,
                 style: AppTextStyles.mediumTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -41,8 +42,9 @@ class ForgotPassword extends StatelessWidget {
                   controller: emailController,
                   style: const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your email address',
+                  decoration: InputDecoration(
+                    hintText:
+                        AppLocalizations.of(context)!.enterYourEmailAddress,
                     hintStyle: TextStyle(color: Colors.white54),
                     prefixIcon: Icon(Icons.email, color: Colors.white54),
                     border: InputBorder.none,
@@ -55,7 +57,7 @@ class ForgotPassword extends StatelessWidget {
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
-                    'Cancel',
+                    AppLocalizations.of(context)!.cancel,
                     style: AppTextStyles.mediumTextStyle.copyWith(
                       color: Colors.grey,
                     ),
@@ -68,7 +70,8 @@ class ForgotPassword extends StatelessWidget {
                     if (email.isEmpty) {
                       SharedSnackbars.showErrorSnackBar(
                         context,
-                        'Please enter your email address',
+                        AppLocalizations.of(context)!
+                            .pleaseEnterYourEmailAddress,
                       );
                       return;
                     }
@@ -76,7 +79,8 @@ class ForgotPassword extends StatelessWidget {
                     if (!email.contains('@') || !email.contains('.')) {
                       SharedSnackbars.showErrorSnackBar(
                         context,
-                        'Please enter a valid email address',
+                        AppLocalizations.of(context)!
+                            .pleaseEnterAValidEmailAddress,
                       );
                       return;
                     }
@@ -102,7 +106,8 @@ class ForgotPassword extends StatelessWidget {
 
                       SharedSnackbars.showSuccessSnackBar(
                         context,
-                        'Password reset link sent to your email. Please check your spam folder.',
+                        AppLocalizations.of(context)!
+                            .passwordResetLinkSentToYourEmail,
                       );
                     } on FirebaseAuthException catch (e) {
                       Navigator.pop(context);
@@ -111,11 +116,12 @@ class ForgotPassword extends StatelessWidget {
 
                       switch (e.code) {
                         case 'user-not-found':
-                          errorMessage =
-                              'No user found with this email address';
+                          errorMessage = AppLocalizations.of(context)!
+                              .noUserFoundWithThisEmailAddress;
                           break;
                         case 'invalid-email':
-                          errorMessage = 'Invalid email address';
+                          errorMessage =
+                              AppLocalizations.of(context)!.invalidEmailAddress;
                           break;
                         case 'too-many-requests':
                           errorMessage =
@@ -132,7 +138,7 @@ class ForgotPassword extends StatelessWidget {
 
                       SharedSnackbars.showErrorSnackBar(
                         context,
-                        'An unexpected error occurred',
+                        AppLocalizations.of(context)!.error(e.toString()),
                       );
                     }
                   },
@@ -143,7 +149,7 @@ class ForgotPassword extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Send',
+                    AppLocalizations.of(context)!.send,
                     style: AppTextStyles.mediumTextStyle.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -155,7 +161,7 @@ class ForgotPassword extends StatelessWidget {
           );
         },
         child: Text(
-          'Forgot Password?',
+          AppLocalizations.of(context)!.forgotPassword,
           style: GoogleFonts.poppins(
             color: Colors.deepOrange,
             fontSize: 14,

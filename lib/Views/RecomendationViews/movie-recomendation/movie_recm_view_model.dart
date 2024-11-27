@@ -9,6 +9,7 @@ import 'package:recomendiaa/models/movie_recomendation_model.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final movieRecomendationViewModelProvider =
     StateNotifierProvider<MovieRecomendationViewModel, void>((ref) {
@@ -25,9 +26,6 @@ class MovieRecomendationViewModel extends StateNotifier {
     // Get movie recommendation repository
     final movieRecomendationRepository =
         ref.read(movieRecomendationRepositoryProvider);
-
-    // print(userData.value!.moviePromptHistory.toString());
-    // print(userData.value!.lovedMovieCategories.toString());
 
     // Generate movie suggestions based on user's prompt history and loved categories
     List<MovieRecomendationModel> movieValue =
@@ -95,8 +93,9 @@ class MovieRecomendationViewModel extends StateNotifier {
         } else {
           // Show error if no recommendations generated
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('Öneri oluşturulamadı. Lütfen tekrar deneyin.')),
+            SnackBar(
+                content: Text(AppLocalizations.of(context)!
+                    .recommendationGenerationFailed)),
           );
         }
         ref.read(isButtonWorkignProvider.notifier).state = false;
@@ -105,7 +104,8 @@ class MovieRecomendationViewModel extends StateNotifier {
       // Handle errors and display error message
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Bir hata oluştu: $e')),
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!.error(e.toString()))),
         );
       }
     } finally {

@@ -6,6 +6,7 @@ import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/providers/home_page_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Recomendations extends ConsumerWidget {
   const Recomendations({super.key});
@@ -37,7 +38,7 @@ class Recomendations extends ConsumerWidget {
             ),
             error: (error, stack) => Center(
               child: Text(
-                "Refresh the page",
+                AppLocalizations.of(context)!.refreshThePage,
                 style: AppTextStyles.largeTextStyle.copyWith(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class Recomendations extends ConsumerWidget {
             ),
             error: (error, stack) => Center(
               child: Text(
-                "Refresh the page",
+                AppLocalizations.of(context)!.refreshThePage,
                 style: AppTextStyles.largeTextStyle.copyWith(
                   color: Colors.red,
                   fontWeight: FontWeight.bold,

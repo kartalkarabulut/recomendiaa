@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 
 class PromptField extends StatelessWidget {

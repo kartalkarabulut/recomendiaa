@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/providers/recm_history_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryNavigationButtons extends ConsumerWidget {
   const HistoryNavigationButtons({
@@ -23,7 +24,7 @@ class HistoryNavigationButtons extends ConsumerWidget {
           Expanded(
             child: NavigationButton(
               imageName: "movieNav.png",
-              title: 'Movies',
+              title: AppLocalizations.of(context)!.movies,
               isSelected: currentPage == 0,
               onPressed: () {
                 viewModel.setCurrentIndex(0);
@@ -33,7 +34,7 @@ class HistoryNavigationButtons extends ConsumerWidget {
           Expanded(
             child: NavigationButton(
               imageName: "book-stack.png",
-              title: 'Books',
+              title: AppLocalizations.of(context)!.books,
               isSelected: currentPage == 1,
               onPressed: () {
                 viewModel.setCurrentIndex(1);

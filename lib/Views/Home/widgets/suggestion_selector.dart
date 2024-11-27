@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
-import 'package:recomendiaa/providers/home_page_providers.dart';
 
 class SuggestionSelector extends StatelessWidget {
   final Function(bool isFirstSelected) onSelectionChanged;

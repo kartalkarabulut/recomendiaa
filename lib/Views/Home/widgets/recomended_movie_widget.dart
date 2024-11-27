@@ -1,10 +1,6 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recomendiaa/SharedViews/movie_detail_sheet.dart';
 import 'package:recomendiaa/core/constants/app_constans.dart';
-import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
-import 'package:recomendiaa/core/shared-funtcions/date_time_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';

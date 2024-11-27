@@ -19,10 +19,10 @@ import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
-// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/providers/home_page_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -73,11 +73,11 @@ class _HomePageState extends ConsumerState<HomePage> {
 
               triggerMode: RefreshIndicatorTriggerMode.onEdge,
               displacement: 100,
-              semanticsLabel: "Refresh",
-              semanticsValue: "Refreshing",
+              semanticsLabel: AppLocalizations.of(context)!.refresh,
+              semanticsValue: AppLocalizations.of(context)!.refreshing,
               onRefresh: () async {
-                SharedSnackbars.showInfoSnackBar(
-                    context, "Refresh can take a while");
+                SharedSnackbars.showInfoSnackBar(context,
+                    AppLocalizations.of(context)!.refreshCanTakeAWhile);
                 ref.invalidate(userIdProvider);
                 ref.invalidate(userDataProvider);
 
@@ -109,145 +109,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                     SliverList(
                       delegate: SliverChildListDelegate(
                         [
-                          Consumer(
-                            builder: (context, ref, child) {
-                              final userDataAsync = ref.watch(userDataProvider);
-
-                              return userDataAsync.when(
-                                loading: () => const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                                error: (error, stackTrace) => Center(
-                                  child: Text(
-                                    "Bir hata oluştu: $error",
-                                    style:
-                                        AppTextStyles.mediumTextStyle.copyWith(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                ),
-                                data: (userData) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 15),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              userData?.fullName != null &&
-                                                      userData!
-                                                          .fullName.isNotEmpty
-                                                  ? AllFormatters
-                                                      .capitalizeEachWord(
-                                                          userData.fullName)
-                                                  : "İsim Belirtilmedi",
-                                              style: AppTextStyles
-                                                  .largeTextStyle
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                            ),
-                                            Text(
-                                              userData?.email != null &&
-                                                      userData!.email.isNotEmpty
-                                                  ? userData.email
-                                                  : "E-posta Belirtilmedi",
-                                              style: AppTextStyles
-                                                  .mediumTextStyle
-                                                  .copyWith(color: Colors.grey),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      PopupMenuButton(
-                                        icon: const Icon(Icons.more_vert,
-                                            color: Colors.white),
-                                        color: AppColors.darkBackgorind,
-                                        itemBuilder: (context) => [
-                                          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                const Icon(Icons.logout,
-                                                    color: Colors.white),
-                                                const SizedBox(width: 8),
-                                                Text('Çıkış Yap',
-                                                    style: AppTextStyles
-                                                        .mediumTextStyle),
-                                              ],
-                                            ),
-                                            onTap: () async {
-                                              await FirebaseAuth.instance
-                                                  .signOut();
-                                              ref.invalidate(userDataProvider);
-                                              ref.invalidate(userIdProvider);
-                                              ref.invalidate(authStateProvider);
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const AuthView()));
-                                            },
-                                          ),
-                                          PopupMenuItem(
-                                            child: Row(
-                                              children: [
-                                                const Icon(Icons.delete,
-                                                    color: Colors.red),
-                                                const SizedBox(width: 8),
-                                                Text('Hesabı Sil',
-                                                    style: AppTextStyles
-                                                        .mediumTextStyle
-                                                        .copyWith(
-                                                            color: Colors.red)),
-                                              ],
-                                            ),
-                                            onTap: () async {
-                                              try {
-                                                final user = FirebaseAuth
-                                                    .instance.currentUser;
-                                                if (user != null) {
-                                                  // Firestore'daki kullanıcı verilerini sil
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('users')
-                                                      .doc(user.uid)
-                                                      .delete();
-
-                                                  // Firebase Auth'daki kullanıcıyı sil
-                                                  await user.delete();
-
-                                                  // Provider'ları sıfırla
-                                                  ref.invalidate(
-                                                      userDataProvider);
-                                                  ref.invalidate(
-                                                      userIdProvider);
-                                                  ref.invalidate(
-                                                      authStateProvider);
-                                                  Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const AuthView()));
-                                                }
-                                              } catch (e) {
-                                                print(e);
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                          const UserInfoMenu(),
                           const RecomendationTypesRow(),
                           const SizedBox(height: 40),
                           Text(
-                            "Smart Suggestions",
+                            AppLocalizations.of(context)!.smartSuggestions,
                             style: AppTextStyles.xLargeTextStyle.copyWith(
                                 // fontWeight: FontWeight.bold,
                                 ),
@@ -264,6 +130,122 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class UserInfoMenu extends ConsumerWidget {
+  const UserInfoMenu({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userDataAsync = ref.watch(userDataProvider);
+
+    return userDataAsync.when(
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (error, stackTrace) => Center(
+        child: Text(
+          AppLocalizations.of(context)!.errorOccurred(error.toString()),
+          style: AppTextStyles.mediumTextStyle.copyWith(
+            color: Colors.red,
+          ),
+        ),
+      ),
+      data: (userData) => Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userData?.fullName != null && userData!.fullName.isNotEmpty
+                        ? AllFormatters.capitalizeEachWord(userData.fullName)
+                        : AppLocalizations.of(context)!.nameNotProvided,
+                    style: AppTextStyles.largeTextStyle
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    userData?.email != null && userData!.email.isNotEmpty
+                        ? userData.email
+                        : AppLocalizations.of(context)!.emailNotProvided,
+                    style: AppTextStyles.mediumTextStyle
+                        .copyWith(color: Colors.grey),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuButton(
+              icon: const Icon(Icons.more_vert, color: Colors.white),
+              color: AppColors.darkBackgorind,
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.logout, color: Colors.white),
+                      const SizedBox(width: 8),
+                      Text(AppLocalizations.of(context)!.logout,
+                          style: AppTextStyles.mediumTextStyle),
+                    ],
+                  ),
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    ref.invalidate(userDataProvider);
+                    ref.invalidate(userIdProvider);
+                    ref.invalidate(authStateProvider);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AuthView()));
+                  },
+                ),
+                PopupMenuItem(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.delete, color: Colors.red),
+                      const SizedBox(width: 8),
+                      Text(AppLocalizations.of(context)!.deleteAccount,
+                          style: AppTextStyles.mediumTextStyle
+                              .copyWith(color: Colors.red)),
+                    ],
+                  ),
+                  onTap: () async {
+                    try {
+                      final user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        // Firestore'daki kullanıcı verilerini sil
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(user.uid)
+                            .delete();
+
+                        // Firebase Auth'daki kullanıcıyı sil
+                        await user.delete();
+
+                        // Provider'ları sıfırla
+                        ref.invalidate(userDataProvider);
+                        ref.invalidate(userIdProvider);
+                        ref.invalidate(authStateProvider);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AuthView()));
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

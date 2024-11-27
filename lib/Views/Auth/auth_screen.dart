@@ -7,6 +7,7 @@ import 'package:recomendiaa/Views/Auth/Introduction/introduction_screen.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthView extends ConsumerWidget {
   const AuthView({super.key});
@@ -87,7 +88,8 @@ class AuthView extends ConsumerWidget {
 
                       // Alt Başlık
                       Text(
-                        'Your personal movie and book\nrecommendation assistant',
+                        AppLocalizations.of(context)!
+                            .yourPersonalMovieAndBookRecommendationAssistant,
                         textAlign: TextAlign.center,
                         style: AppTextStyles.largeTextStyle.copyWith(
                           height: 1.5,
@@ -103,7 +105,8 @@ class AuthView extends ConsumerWidget {
                   Column(
                     children: [
                       Text(
-                        "Promise it will not take too long",
+                        AppLocalizations.of(context)!
+                            .promiseItWillNotTakeTooLong,
                         style: AppTextStyles.mediumTextStyle.copyWith(
                           color: Colors.white.withOpacity(0.8),
                         ),
@@ -144,7 +147,7 @@ class AuthView extends ConsumerWidget {
                             ),
                           ),
                           child: Text(
-                            "Get Started",
+                            AppLocalizations.of(context)!.getStarted,
                             style: AppTextStyles.largeTextStyle.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -183,11 +186,12 @@ class AuthView extends ConsumerWidget {
                                 color: Colors.white.withOpacity(0.9),
                               ),
                               children: [
-                                const TextSpan(
-                                  text: "Already have an account?  ",
+                                TextSpan(
+                                  text: AppLocalizations.of(context)!
+                                      .alreadyHaveAnAccount,
                                 ),
                                 TextSpan(
-                                  text: "Login!",
+                                  text: AppLocalizations.of(context)!.login,
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Colors.deepOrange,

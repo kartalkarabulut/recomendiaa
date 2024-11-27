@@ -10,6 +10,7 @@ import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
 import 'package:recomendiaa/providers/book_providers.dart';
 import 'package:recomendiaa/services/recomendation-history/book_recm_data_imp.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookDetailSheet extends StatelessWidget {
   const BookDetailSheet({
@@ -190,7 +191,7 @@ class BookDetailSheet extends StatelessWidget {
                             ),
                             const SizedBox(width: 12),
                             Text(
-                              '${book.pages} pages',
+                              AppLocalizations.of(context)!.pages(book.pages),
                               style: AppTextStyles.largeTextStyle.copyWith(
                                 color: AppColors.bluishColor,
                                 fontWeight: FontWeight.w500,
@@ -233,7 +234,7 @@ class BookDetailSheet extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Related Tags #",
+                            AppLocalizations.of(context)!.relatedTags,
                             style: AppTextStyles.largeTextStyle.copyWith(
                               color: Colors.grey,
                               fontWeight: FontWeight.w600,
@@ -292,8 +293,8 @@ class BookDetailSheet extends StatelessWidget {
                             await BookRecomendationDataImp()
                                 .deleteRecomendation(book.title);
                             ref.invalidate(getBookRecomendationsProvider);
-                            SharedSnackbars.showSuccessSnackBar(
-                                context, "Book Deleted");
+                            SharedSnackbars.showSuccessSnackBar(context,
+                                AppLocalizations.of(context)!.bookDeleted);
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
@@ -308,7 +309,7 @@ class BookDetailSheet extends StatelessWidget {
                             elevation: 4,
                           ),
                           child: Text(
-                            "Delete This Book",
+                            AppLocalizations.of(context)!.deleteThisBook,
                             style: AppTextStyles.largeTextStyle.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

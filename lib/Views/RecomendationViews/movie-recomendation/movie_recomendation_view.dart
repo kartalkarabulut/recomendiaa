@@ -2,13 +2,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
-import 'package:recomendiaa/Views/Auth/login/login_view.dart';
 import 'package:recomendiaa/Views/Home/widgets/prompt_field.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recm_view_model.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_card.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovieRecomendationView extends ConsumerStatefulWidget {
   const MovieRecomendationView({super.key});
@@ -47,7 +47,7 @@ class _MovieRecomendationViewState
                 height: 80,
                 child: Center(
                   child: Text(
-                    "Movie Recomendation",
+                    AppLocalizations.of(context)!.movieRecomendation,
                     style: AppTextStyles.orbitronlargeTextStyle
                         .copyWith(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
@@ -55,7 +55,8 @@ class _MovieRecomendationViewState
               ),
               PromptField(
                 promptController: promptController,
-                hintText: "Tell us about your taste in movies",
+                hintText:
+                    AppLocalizations.of(context)!.tellUsAboutYourTasteInMovies,
               ),
               const SizedBox(height: 30),
               userData.when(
@@ -72,11 +73,13 @@ class _MovieRecomendationViewState
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (error, stack) => Center(child: Text('Hata: $error')),
+                error: (error, stack) => Center(
+                    child: Text(
+                        AppLocalizations.of(context)!.error(error.toString()))),
               ),
               const Spacer(),
               CustomButton(
-                text: "Suggest",
+                text: AppLocalizations.of(context)!.suggest,
                 onPressed: () => ref
                     .read(movieRecomendationViewModelProvider.notifier)
                     .handleRecomendationGeneration(
