@@ -15,14 +15,14 @@ import 'package:recomendiaa/services/recomendation-history/recomendation_databas
 class BookRecomendationViewModel extends StateNotifier {
   BookRecomendationViewModel() : super(null);
 
-  Future<void> generateBookSuggestion(WidgetRef ref) async {
+  Future<void> generateBookSuggestion(WidgetRef ref, String language) async {
     final userData = ref.watch(userDataProvider);
     final bookRecomendationRepository =
         ref.read(bookRecomendationRepositoryProvider);
 
     List<BookRecomendationModel> bookValue = await GenerateBookRecomendation()
         .generateSuggestion(userData.value?.bookPromptHistory ?? [],
-            userData.value?.lovedBookCategories ?? []);
+            userData.value?.lovedBookCategories ?? [], language);
 
     final List<Map<String, dynamic>> bookMaps =
         bookValue.map((book) => book.toJson()).toList();
@@ -36,6 +36,7 @@ class BookRecomendationViewModel extends StateNotifier {
     required BuildContext context,
     required WidgetRef ref,
     required TextEditingController promptController,
+    required String language,
   }) async {
     try {
       Future.delayed(const Duration(milliseconds: 200));
@@ -45,23 +46,27 @@ class BookRecomendationViewModel extends StateNotifier {
       final bookRecomendationRepository =
           ref.read(bookRecomendationRepositoryProvider);
 
-      final recomendations = await bookRecomendationRepository
-          .makeRecomendation(promptController.text, RecomendationType.book);
+      final recomendations =
+          await bookRecomendationRepository.makeRecomendation(
+              promptController.text, language, RecomendationType.book);
 
       if (recomendations.isNotEmpty && context.mounted) {
         // NewAdService().showInterstitialAd();
         ref.read(isButtonWorkignProvider.notifier).state = false;
 
         bookRecomendationRepository
-            .generatePromptSuggestion(userData.value?.bookPromptHistory,
-                userData.value?.lovedBookCategories, RecomendationType.book)
+            .generatePromptSuggestion(
+                userData.value?.bookPromptHistory,
+                userData.value?.lovedBookCategories,
+                language,
+                RecomendationType.book)
             .then(
           (value) {
             ref.invalidate(userDataProvider);
           },
         );
 
-        generateBookSuggestion(ref);
+        generateBookSuggestion(ref, language);
 
         showModalBottomSheet(
           context: context,

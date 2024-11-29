@@ -1,6 +1,4 @@
-import 'package:recomendiaa/core/constants/api_constants.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
-import 'package:recomendiaa/models/user_model.dart';
 import 'package:recomendiaa/services/recomendation-generation/movie/movie_poster_url.dart';
 import 'package:recomendiaa/services/recomendation-generation/recomendation_generation_interface.dart';
 import 'package:recomendiaa/services/recomendation-generation/movie/gemini_movie_service.dart';
@@ -10,12 +8,12 @@ import 'package:recomendiaa/services/recomendation-generation/movie/gemini_movie
 class GenerateMovieRecomendation implements RecomendationGenerationInterface {
   @override
   Future<List<MovieRecomendationModel>> generateRecomendationByAI(
-      String definition) async {
+      String definition, String language) async {
     //! Gemini API ile film önerisi oluşturulacak
 
     List<MovieRecomendationModel> recommendations = [];
     final List<dynamic> films =
-        await GeminiMovieService().getFilmsFromGemini(definition);
+        await GeminiMovieService().getFilmsFromGemini(definition, language);
     for (var film in films) {
       //?Poster url alındı
       String? posterUrl = await MoviePosterUrl().getMoviePosterUrl(film.title);
@@ -42,11 +40,12 @@ class GenerateMovieRecomendation implements RecomendationGenerationInterface {
   @override
   Future<List<MovieRecomendationModel>> generateSuggestion(
       List<String> previousMoviaNames,
-      List<String> lastSuggestedMoviePrompts) async {
+      List<String> lastSuggestedMoviePrompts,
+      String language) async {
     List<MovieRecomendationModel> recommendations = [];
     final List<MovieRecomendationModel> films = await GeminiMovieService()
         .getFilmSuggestionsFromGemini(
-            previousMoviaNames, lastSuggestedMoviePrompts);
+            previousMoviaNames, lastSuggestedMoviePrompts, language);
     for (var film in films) {
       String? posterUrl = await MoviePosterUrl().getMoviePosterUrl(film.title);
       recommendations.add(
@@ -69,9 +68,9 @@ class GenerateMovieRecomendation implements RecomendationGenerationInterface {
   }
 
   @override
-  Future<List<String>> generatePromptSuggestion(
-      List<String>? previousPrompts, List<String>? lovedMovieCategories) async {
-    return await GeminiMovieService()
-        .generatePromptSuggestion(previousPrompts, lovedMovieCategories);
+  Future<List<String>> generatePromptSuggestion(List<String>? previousPrompts,
+      List<String>? lovedMovieCategories, String language) async {
+    return await GeminiMovieService().generatePromptSuggestion(
+        previousPrompts, lovedMovieCategories, language);
   }
 }

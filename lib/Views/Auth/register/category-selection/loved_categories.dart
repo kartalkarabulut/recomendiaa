@@ -18,6 +18,7 @@ import 'package:recomendiaa/repository/auth_repository.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 // import 'package:recomendiaa/providers/auth-screens/auth_screens_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LovedCategories extends ConsumerWidget {
   const LovedCategories({super.key});
@@ -195,9 +196,11 @@ class LovedCategories extends ConsumerWidget {
             backgroundColor: AppColors.yellowGreenColor,
             onPressed: () async {
               print("fab pressed  eaee e fffff aaaaaaaa bbbb ccccccc");
+              final language = Localizations.localeOf(context).languageCode;
               final viewModel =
                   ref.read(lovedCategoriesViewModelProvider.notifier);
-              final user = await viewModel.finishRegistration(context, ref);
+              final user =
+                  await viewModel.finishRegistration(context, ref, language);
               if (user != null) {
                 ref.invalidate(userIdProvider);
                 ref.invalidate(userDataProvider);

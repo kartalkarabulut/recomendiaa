@@ -33,7 +33,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   //!Generate book suggestions
-  Future<void> generateBookSuggestion(WidgetRef ref) async {
+  Future<void> generateBookSuggestion(WidgetRef ref, String language) async {
     final userData = ref.watch(userDataProvider);
     final bookRecomendationRepository =
         ref.read(bookRecomendationRepositoryProvider);
@@ -43,7 +43,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
     List<BookRecomendationModel> bookValue = await GenerateBookRecomendation()
         .generateSuggestion(userData.value?.bookPromptHistory ?? [],
-            userData.value?.lovedBookCategories ?? []);
+            userData.value?.lovedBookCategories ?? [], language);
 
     final List<Map<String, dynamic>> bookMaps =
         bookValue.map((book) => book.toJson()).toList();
@@ -56,7 +56,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   //!Generate movie suggestions
-  Future<void> generateMovieSuggestion(WidgetRef ref) async {
+  Future<void> generateMovieSuggestion(WidgetRef ref, String language) async {
     final userData = ref.watch(userDataProvider);
     final movieRecomendationRepository =
         ref.read(movieRecomendationRepositoryProvider);
@@ -67,7 +67,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
     List<MovieRecomendationModel> movieValue =
         await GenerateMovieRecomendation().generateSuggestion(
             userData.value?.moviePromptHistory ?? [],
-            userData.value?.lovedMovieCategories ?? []);
+            userData.value?.lovedMovieCategories ?? [],
+            language);
 
     logger.i('Generated ${movieValue.length} movie suggestions');
     logger.i('Saving movie suggestions to Firestore');
@@ -80,7 +81,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     logger.i('Movie suggestions saved successfully');
   }
 
-  Future<void> generateMovieBookSuggestion(WidgetRef ref) async {
+  Future<void> generateMovieBookSuggestion(WidgetRef ref, String language) async {
     //?Generate both book and movie suggestions concurrently
     //?then invalidate user data provider when both suggestions are generated
     //?This ensures that the user data is updated with the new suggestions
@@ -90,8 +91,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
     //!More efficient than generating them one by one with await keyword
     await Future.wait(
       [
-        generateBookSuggestion(ref),
-        generateMovieSuggestion(ref),
+        generateBookSuggestion(ref, language),
+        generateMovieSuggestion(ref, language),
       ],
     );
 

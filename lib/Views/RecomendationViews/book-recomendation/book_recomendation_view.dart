@@ -128,10 +128,12 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
               CustomButton(
                 text: AppLocalizations.of(context)!.suggest,
                 onPressed: () {
+                  final language = Localizations.localeOf(context).languageCode;
                   bookRecomendationViewModel.handleSuggestButtonPress(
                     context: context,
                     ref: ref,
                     promptController: promptController,
+                    language: language,
                   );
                 },
               )

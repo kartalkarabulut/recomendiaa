@@ -9,10 +9,10 @@ import 'package:recomendiaa/services/recomendation-generation/book/gemini_book_s
 class GenerateBookRecomendation implements RecomendationGenerationInterface {
   @override
   Future<List<BookRecomendationModel>> generateRecomendationByAI(
-      String prompt) async {
+      String prompt, String language) async {
     //! Gemini API ile kitap önerisi oluşturulacak
     final List<BookRecomendationModel> books =
-        await GeminiBookService().getBooksFromGemini(prompt);
+        await GeminiBookService().getBooksFromGemini(prompt, language);
     List<BookRecomendationModel> recommendations = [];
     for (var book in books) {
       recommendations.add(
@@ -32,9 +32,11 @@ class GenerateBookRecomendation implements RecomendationGenerationInterface {
   @override
   Future<List<BookRecomendationModel>> generateSuggestion(
       List<String> previousBookNames,
-      List<String> lastSuggestedBookPrompts) async {
+      List<String> lastSuggestedBookPrompts,
+      String language) async {
     final List<BookRecomendationModel> books = await GeminiBookService()
-        .getBookSuggestionsGemini(previousBookNames, lastSuggestedBookPrompts);
+        .getBookSuggestionsGemini(
+            previousBookNames, lastSuggestedBookPrompts, language);
     List<BookRecomendationModel> recommendations = [];
     for (var book in books) {
       recommendations.add(book);
@@ -45,8 +47,10 @@ class GenerateBookRecomendation implements RecomendationGenerationInterface {
 
   @override
   Future<List<String>> generatePromptSuggestion(
-      List<String>? previousPrompts, List<String>? lovedBookCategories) async {
+      List<String>? previousPrompts,
+      List<String>? lovedBookCategories,
+      String language) async {
     return await GeminiBookService()
-        .generatePromptSuggestion(previousPrompts, lovedBookCategories);
+        .generatePromptSuggestion(previousPrompts, lovedBookCategories, language);
   }
 }

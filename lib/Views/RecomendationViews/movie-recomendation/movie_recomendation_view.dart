@@ -80,10 +80,13 @@ class _MovieRecomendationViewState
               const Spacer(),
               CustomButton(
                 text: AppLocalizations.of(context)!.suggest,
-                onPressed: () => ref
-                    .read(movieRecomendationViewModelProvider.notifier)
-                    .handleRecomendationGeneration(
-                        context, ref, promptController),
+                onPressed: () {
+                  final language = Localizations.localeOf(context).languageCode;
+                  ref
+                      .read(movieRecomendationViewModelProvider.notifier)
+                      .handleRecomendationGeneration(
+                          context, ref, promptController, language);
+                },
               ),
             ],
           )

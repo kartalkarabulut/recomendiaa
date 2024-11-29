@@ -42,10 +42,10 @@ class RecomendationRepository {
   RecmGenDataImp recomendationGenData = RecmGenDataImp();
 
   Future<List<dynamic>> makeRecomendation(
-      String prompt, RecomendationType type) async {
+      String prompt, String language, RecomendationType type) async {
     //Todo: Geminiden öneri alıp, poster url ile birleştirme
-    List<dynamic> recomendations =
-        await recomendationGenerationService.generateRecomendationByAI(prompt);
+    List<dynamic> recomendations = await recomendationGenerationService
+        .generateRecomendationByAI(prompt, language);
     // await saveSelectedRecomendations(recomendations, type);
 
     //Todo: User prompts verisini güncelleme
@@ -84,29 +84,32 @@ class RecomendationRepository {
     await userDataToFirestore.updateUserPrompts(prompt, type);
   }
 
-  Future<dynamic> initialRecomendation(
-      List<String> lovedCategories, List<String> lastSuggestedPrompts) async {
+  Future<dynamic> initialRecomendation(List<String> lovedCategories,
+      List<String> lastSuggestedPrompts, String language) async {
     // List<dynamic> recomendations = await recomendationGenerationService
     //     .generateSuggestion(lovedCategories, lastSuggestedPrompts);
     if (recomendationGenerationService is GenerateBookRecomendation) {
       List<BookRecomendationModel> recomendations =
           await recomendationGenerationService.generateSuggestion(
-              lovedCategories, lastSuggestedPrompts);
+              lovedCategories, lastSuggestedPrompts, language);
       return recomendations;
     } else if (recomendationGenerationService is GenerateMovieRecomendation) {
       List<MovieRecomendationModel> recomendations =
           await recomendationGenerationService.generateSuggestion(
-              lovedCategories, lastSuggestedPrompts);
+              lovedCategories, lastSuggestedPrompts, language);
       return recomendations;
     }
   }
 
-  Future<void> generatePromptSuggestion(List<String>? previousPrompts,
-      List<String>? lovedCategories, RecomendationType type) async {
+  Future<void> generatePromptSuggestion(
+      List<String>? previousPrompts,
+      List<String>? lovedCategories,
+      String language,
+      RecomendationType type) async {
     try {
       print('Öneri istekleri oluşturuluyor...');
       final prompts = await recomendationGenerationService
-          .generatePromptSuggestion(previousPrompts, lovedCategories);
+          .generatePromptSuggestion(previousPrompts, lovedCategories, language);
 
       print(
           'Öneri istekleri başarıyla oluşturuldu. Firestore\'a kaydediliyor...');
@@ -122,16 +125,20 @@ class RecomendationRepository {
   Future<List<String>> initialGeneratePromptSuggestion(
       List<String>? previousPrompts,
       List<String>? lovedCategories,
+      String language,
       RecomendationType type) async {
     final prompts = await recomendationGenerationService
-        .generatePromptSuggestion(previousPrompts, lovedCategories);
+        .generatePromptSuggestion(previousPrompts, lovedCategories, language);
     return prompts;
   }
 
-  Future<List<dynamic>> generateSuggestion(List<String> previousPrompts,
-      List<String> lovedCategories, RecomendationType type) async {
+  Future<List<dynamic>> generateSuggestion(
+      List<String> previousPrompts,
+      List<String> lovedCategories,
+      String language,
+      RecomendationType type) async {
     final suggestions = await recomendationGenerationService.generateSuggestion(
-        previousPrompts, lovedCategories);
+        previousPrompts, lovedCategories, language);
     return suggestions;
   }
 

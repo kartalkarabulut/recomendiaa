@@ -19,7 +19,7 @@ final movieRecomendationViewModelProvider =
 class MovieRecomendationViewModel extends StateNotifier {
   MovieRecomendationViewModel() : super(null);
 
-  Future<void> generateMovieSuggestion(WidgetRef ref) async {
+  Future<void> generateMovieSuggestion(WidgetRef ref, String language) async {
     // Get user data from provider
     final userData = ref.watch(userDataProvider);
 
@@ -33,6 +33,7 @@ class MovieRecomendationViewModel extends StateNotifier {
             .generateSuggestion(
       userData.value?.moviePromptHistory ?? [],
       userData.value?.lovedMovieCategories ?? [],
+      language,
     ) as List<MovieRecomendationModel>;
 
     // Convert movie models to JSON format
@@ -46,8 +47,11 @@ class MovieRecomendationViewModel extends StateNotifier {
   }
 
   //!Handle recomendation generation
-  Future<void> handleRecomendationGeneration(BuildContext context,
-      WidgetRef ref, TextEditingController promptController) async {
+  Future<void> handleRecomendationGeneration(
+      BuildContext context,
+      WidgetRef ref,
+      TextEditingController promptController,
+      String language) async {
     // Return if prompt is empty
     if (promptController.text.isEmpty) return;
 
@@ -58,18 +62,19 @@ class MovieRecomendationViewModel extends StateNotifier {
     try {
       // Generate recommendations based on user prompt
       final recomendations = await movieRepository.makeRecomendation(
-          promptController.text, RecomendationType.movie);
+          promptController.text, language, RecomendationType.movie);
 
       if (context.mounted) {
         if (recomendations.isNotEmpty) {
           // Generate new movie suggestions if recommendations exist
-          generateMovieSuggestion(ref);
+          generateMovieSuggestion(ref, language);
 
           // Generate new prompt suggestions for future use
           movieRepository
               .generatePromptSuggestion(
                   ref.read(userDataProvider).value?.lastSuggestedMoviePrompts,
                   ref.read(userDataProvider).value?.lovedMovieCategories,
+                  language,
                   RecomendationType.movie)
               .then(
             (value) {

@@ -6,16 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/shared_snackbars.dart';
 import 'package:recomendiaa/Views/Auth/auth_screen.dart';
 import 'package:recomendiaa/Views/Home/widgets/dot_indicator.dart';
-import 'package:recomendiaa/Views/Home/widgets/recomendation_type_widget.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomendation_types_row.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomendations.dart';
-import 'package:recomendiaa/Views/Home/widgets/recomended_book_widget.dart';
-import 'package:recomendiaa/Views/Home/widgets/recomended_movie_widget.dart';
-import 'package:recomendiaa/Views/Home/widgets/suggestion_selector.dart';
-import 'package:recomendiaa/Views/Profile/profile_view.dart';
-import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recomendation_view.dart';
-import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recomendation_view.dart';
-import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
@@ -80,10 +72,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     AppLocalizations.of(context)!.refreshCanTakeAWhile);
                 ref.invalidate(userIdProvider);
                 ref.invalidate(userDataProvider);
-
+                final language = Localizations.localeOf(context).languageCode;
                 await ref
                     .read(homeViewModelProvider.notifier)
-                    .generateMovieBookSuggestion(ref);
+                    .generateMovieBookSuggestion(ref, language);
               },
               backgroundColor: AppColors.darkBackgorind,
               color: Colors.deepOrange,

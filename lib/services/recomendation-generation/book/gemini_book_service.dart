@@ -10,8 +10,8 @@ class GeminiBookService {
       model: 'gemini-1.5-flash', apiKey: dotenv.env['GEMINI_API_KEY'] ?? "");
 
   Future<List<BookRecomendationModel>> getBooksFromGemini(
-      String definition) async {
-    String geminiPrompt = ApiConstants().getBookPrompt(definition);
+      String definition, String language) async {
+    String geminiPrompt = ApiConstants().getBookPrompt(definition, language);
     final content = [Content.text(geminiPrompt)];
     final response = await model.generateContent(content);
     print("the response from gemini \n ${response.text}");
@@ -25,9 +25,11 @@ class GeminiBookService {
   }
 
   Future<List<BookRecomendationModel>> getBookSuggestionsGemini(
-      List<String> previousBookNames, List<String> previousBookPrompts) async {
+      List<String> previousBookNames,
+      List<String> previousBookPrompts,
+      String language) async {
     String geminiPrompt = ApiConstants()
-        .bookSuggestionPrompt(previousBookNames, previousBookPrompts);
+        .bookSuggestionPrompt(previousBookNames, previousBookPrompts, language);
     final content = [Content.text(geminiPrompt)];
     final response = await model.generateContent(content);
     print("the book suggestions response from gemini \n ${response.text}");
@@ -39,15 +41,15 @@ class GeminiBookService {
         .toList();
   }
 
-  Future<List<String>> generatePromptSuggestion(
-      List<String>? previousPrompts, List<String>? lovedBookCategories) async {
+  Future<List<String>> generatePromptSuggestion(List<String>? previousPrompts,
+      List<String>? lovedBookCategories, String language) async {
     try {
       print("Prompt önerileri oluşturuluyor...");
       print("Önceki promptlar: $previousPrompts");
       print("Sevilen kategoriler: $lovedBookCategories");
 
-      String geminiPrompt = ApiConstants()
-          .getBookPromptSuggestionPrompt(previousPrompts, lovedBookCategories);
+      String geminiPrompt = ApiConstants().getBookPromptSuggestionPrompt(
+          previousPrompts, lovedBookCategories, language);
 
       print("Gemini'ye gönderilen prompt: $geminiPrompt");
 

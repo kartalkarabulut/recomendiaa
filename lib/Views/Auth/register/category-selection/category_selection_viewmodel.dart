@@ -72,7 +72,7 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
   }
 
   Future<UserModel?> finishRegistration(
-      BuildContext context, WidgetRef ref) async {
+      BuildContext context, WidgetRef ref, String language) async {
     final authRepository = ref.read(authRepositoryProvider);
     final registeringUser = ref.read(registeringUserProvider.notifier);
     final bookRecomendationRepository =
@@ -87,7 +87,7 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
       _updateState(status: 'Preparing movie recommendations...');
       List<MovieRecomendationModel> movieRecomendations =
           await movieRecomendationRepository.initialRecomendation(
-              registeringUser.state.lovedMovieCategories, []);
+              registeringUser.state.lovedMovieCategories, [], language);
 
       // Film promptları
       _updateState(status: 'Creating prompts for movie recommendations...');
@@ -95,13 +95,14 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
           await movieRecomendationRepository.initialGeneratePromptSuggestion(
               null,
               registeringUser.state.lovedMovieCategories,
+              language,
               RecomendationType.movie);
 
       // Kitap önerileri
       _updateState(status: 'Preparing book recommendations...');
       List<BookRecomendationModel> bookRecomendations =
           await bookRecomendationRepository.initialRecomendation(
-              registeringUser.state.lovedBookCategories, []);
+              registeringUser.state.lovedBookCategories, [], language);
 
       // Kitap promptları
       _updateState(status: 'Creating prompts for book recommendations...');
@@ -109,6 +110,7 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
           await bookRecomendationRepository.initialGeneratePromptSuggestion(
               null,
               registeringUser.state.lovedBookCategories,
+              language,
               RecomendationType.book);
 
       // Kullanıcı verilerini güncelleme

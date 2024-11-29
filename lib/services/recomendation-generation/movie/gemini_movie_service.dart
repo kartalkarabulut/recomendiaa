@@ -10,8 +10,8 @@ class GeminiMovieService {
       model: 'gemini-1.5-flash', apiKey: dotenv.env['GEMINI_API_KEY'] ?? "");
 
   Future<List<MovieRecomendationModel>> getFilmsFromGemini(
-      String definition) async {
-    String geminiPrompt = ApiConstants().getMoviePrompt(definition);
+      String definition, String language) async {
+    String geminiPrompt = ApiConstants().getMoviePrompt(definition, language);
     // final model = GenerativeModel(model: 'gemini-pro', apiKey: 'YOUR_API_KEY');
     final content = [Content.text(geminiPrompt)];
     final response = await model.generateContent(content);
@@ -28,9 +28,10 @@ class GeminiMovieService {
 
   Future<List<MovieRecomendationModel>> getFilmSuggestionsFromGemini(
       List<String> previousMovieNames,
-      List<String> previousMoviePrompts) async {
-    String geminiPrompt = ApiConstants()
-        .movieSuggestionPrompt(previousMovieNames, previousMoviePrompts);
+      List<String> previousMoviePrompts,
+      String language) async {
+    String geminiPrompt = ApiConstants().movieSuggestionPrompt(
+        previousMovieNames, previousMoviePrompts, language);
     // final model = GenerativeModel(model: 'gemini-pro', apiKey: 'YOUR_API_KEY');
     final content = [Content.text(geminiPrompt)];
     final response = await model.generateContent(content);
@@ -46,15 +47,15 @@ class GeminiMovieService {
         .toList();
   }
 
-  Future<List<String>> generatePromptSuggestion(
-      List<String>? previousPrompts, List<String>? lovedMovieCategories) async {
+  Future<List<String>> generatePromptSuggestion(List<String>? previousPrompts,
+      List<String>? lovedMovieCategories, String language) async {
     try {
       print("Film önerileri oluşturuluyor...");
       print("Önceki promptlar: $previousPrompts");
       print("Sevilen kategoriler: $lovedMovieCategories");
 
       String geminiPrompt = ApiConstants().getMoviePromptSuggestionPrompt(
-          previousPrompts, lovedMovieCategories);
+          previousPrompts, lovedMovieCategories, language);
 
       print("Gemini'ye gönderilen prompt: $geminiPrompt");
 
