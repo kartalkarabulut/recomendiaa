@@ -11,6 +11,8 @@ import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+final generatedMovieRecommendationsProvider =
+    StateProvider<List<MovieRecomendationModel>>((ref) => []);
 final movieRecomendationViewModelProvider =
     StateNotifierProvider<MovieRecomendationViewModel, void>((ref) {
   return MovieRecomendationViewModel();
@@ -52,61 +54,42 @@ class MovieRecomendationViewModel extends StateNotifier {
       WidgetRef ref,
       TextEditingController promptController,
       String language) async {
-    // Return if prompt is empty
     if (promptController.text.isEmpty) return;
 
-    // Set button loading state
+    // Mevcut önerileri temizle
+    ref.read(generatedMovieRecommendationsProvider.notifier).state = [];
     ref.read(isButtonWorkignProvider.notifier).state = true;
     final movieRepository = ref.read(movieRecomendationRepository);
 
     try {
-      // Generate recommendations based on user prompt
       final recomendations = await movieRepository.makeRecomendation(
           promptController.text, language, RecomendationType.movie);
 
-      if (context.mounted) {
-        if (recomendations.isNotEmpty) {
-          // Generate new movie suggestions if recommendations exist
-          generateMovieSuggestion(ref, language);
+      if (context.mounted && recomendations.isNotEmpty) {
+        generateMovieSuggestion(ref, language);
 
-          // Generate new prompt suggestions for future use
-          movieRepository
-              .generatePromptSuggestion(
-                  ref.read(userDataProvider).value?.lastSuggestedMoviePrompts,
-                  ref.read(userDataProvider).value?.lovedMovieCategories,
-                  language,
-                  RecomendationType.movie)
-              .then(
-            (value) {
-              print("will invalidate");
-              ref.invalidate(userDataProvider);
-            },
-          );
+        movieRepository
+            .generatePromptSuggestion(
+                ref.read(userDataProvider).value?.lastSuggestedMoviePrompts,
+                ref.read(userDataProvider).value?.lovedMovieCategories,
+                language,
+                RecomendationType.movie)
+            .then((value) {
+          ref.invalidate(userDataProvider);
+        });
 
-          // Display recommendations in bottom sheet
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: AppColors.yellowGreenColor.withOpacity(0.5),
-            constraints: BoxConstraints(
-              maxHeight: AppConstants.screenHeight(context) * 0.7,
-            ),
-            builder: (context) => MovieRecmSheet(
-                recomendations:
-                    recomendations as List<MovieRecomendationModel>),
-          );
-        } else {
-          // Show error if no recommendations generated
+        ref.read(generatedMovieRecommendationsProvider.notifier).state =
+            recomendations as List<MovieRecomendationModel>;
+      } else {
+        if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
                 content: Text(AppLocalizations.of(context)!
                     .recommendationGenerationFailed)),
           );
         }
-        ref.read(isButtonWorkignProvider.notifier).state = false;
       }
     } catch (e) {
-      // Handle errors and display error message
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -114,7 +97,6 @@ class MovieRecomendationViewModel extends StateNotifier {
         );
       }
     } finally {
-      // Reset button loading state
       ref.read(isButtonWorkignProvider.notifier).state = false;
     }
   }

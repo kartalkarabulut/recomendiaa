@@ -247,5 +247,17 @@
         "type": "String"
       }
     }
+  },
+  "promptSuggestion": "Prompt Suggestions",
+  "@promptSuggestion": {
+    "description": "Prompt Suggestions"
+  },
+  "lastMovieSuggestions": "Last Movie Suggestions",
+  "@lastMovieSuggestions": {
+    "description": "Last Movie Suggestions"
+  },
+  "usePrompt": "Use Prompt",
+  "@usePrompt": {
+    "description": "Use Prompt"
   }
-}   
+}     

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PromptCard extends StatefulWidget {
-  const PromptCard({
+class SimplePromptItem extends StatelessWidget {
+  const SimplePromptItem({
     Key? key,
     required this.prompt,
     required this.promptController,
@@ -11,140 +12,106 @@ class PromptCard extends StatefulWidget {
   final String prompt;
   final TextEditingController promptController;
 
-  @override
-  State<PromptCard> createState() => _PromptCardState();
-}
-
-class _PromptCardState extends State<PromptCard>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animController;
-  bool _isHovered = false;
-  late Animation<double> _scaleAnimation;
-
-  @override
-  void dispose() {
-    _animController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _animController = AnimationController(
-      duration: const Duration(milliseconds: 200),
-      vsync: this,
-    );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
-      CurvedAnimation(parent: _animController, curve: Curves.easeInOut),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) {
-        setState(() => _isHovered = true);
-        _animController.forward();
-      },
-      onExit: (_) {
-        setState(() => _isHovered = false);
-        _animController.reverse();
-      },
-      child: GestureDetector(
-        onTap: () {
-          widget.promptController.text = widget.prompt;
-          HapticFeedback.lightImpact();
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ScaleTransition(
-            scale: _scaleAnimation,
-            child: Container(
-              width: 200,
-              // height: 20,
-              // constraints: const BoxConstraints(minHeight: 150),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.purple.withOpacity(0.7),
-                    Colors.blue.withOpacity(0.5),
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: _isHovered
-                        ? Colors.purple.withOpacity(0.5)
-                        : Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: CustomPaint(
-                      painter: BackgroundPatternPainter(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.auto_awesome,
-                            color: Colors.white.withOpacity(0.9),
-                            size: 20,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            widget.prompt,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+  void _showFullPrompt(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.2),
+              width: 1,
             ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                prompt,
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.9),
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  promptController.text = prompt;
+                  HapticFeedback.lightImpact();
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.usePrompt,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-}
 
-class BackgroundPatternPainter extends CustomPainter {
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white.withOpacity(0.05)
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
-
-    for (var i = 0; i < size.width + size.height; i += 20) {
-      canvas.drawLine(
-        Offset(0, i.toDouble()),
-        Offset(i.toDouble(), 0),
-        paint,
-      );
-    }
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: GestureDetector(
+        onTap: () {
+          promptController.text = prompt;
+          HapticFeedback.lightImpact();
+        },
+        onLongPress: () => _showFullPrompt(context),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.2),
+              width: 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.history,
+                size: 18,
+                color: Colors.white.withOpacity(0.7),
+              ),
+              const SizedBox(width: 8),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 150),
+                child: Text(
+                  prompt,
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 15,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 class PromptScrollView extends StatelessWidget {
@@ -163,7 +130,7 @@ class PromptScrollView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: prompts
-            .map((prompt) => PromptCard(
+            .map((prompt) => SimplePromptItem(
                   prompt: prompt,
                   promptController: promptController,
                 ))

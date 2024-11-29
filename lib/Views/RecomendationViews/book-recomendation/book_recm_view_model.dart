@@ -11,6 +11,15 @@ import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/ad-services/ads_services.dart';
 import 'package:recomendiaa/services/recomendation-generation/book/book_recm_gen_imp.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+final generatedBookRecommendationsProvider =
+    StateProvider<List<BookRecomendationModel>>((ref) => []);
+
+// final bookRecomendationViewModelProvider =
+//     StateNotifierProvider<BookRecomendationViewModel, void>((ref) {
+//   return BookRecomendationViewModel();
+// });
 
 class BookRecomendationViewModel extends StateNotifier {
   BookRecomendationViewModel() : super(null);
@@ -38,10 +47,16 @@ class BookRecomendationViewModel extends StateNotifier {
     required TextEditingController promptController,
     required String language,
   }) async {
+    if (promptController.text.isEmpty) return;
+
+    // Mevcut önerileri temizle
+    ref.read(generatedBookRecommendationsProvider.notifier).state = [];
+    ref.read(isButtonWorkignProvider.notifier).state = true;
+
     try {
       Future.delayed(const Duration(milliseconds: 200));
       NewAdService().showInterstitialAd();
-      ref.read(isButtonWorkignProvider.notifier).state = true;
+
       final userData = ref.watch(userDataProvider);
       final bookRecomendationRepository =
           ref.read(bookRecomendationRepositoryProvider);
@@ -51,9 +66,6 @@ class BookRecomendationViewModel extends StateNotifier {
               promptController.text, language, RecomendationType.book);
 
       if (recomendations.isNotEmpty && context.mounted) {
-        // NewAdService().showInterstitialAd();
-        ref.read(isButtonWorkignProvider.notifier).state = false;
-
         bookRecomendationRepository
             .generatePromptSuggestion(
                 userData.value?.bookPromptHistory,
@@ -68,20 +80,17 @@ class BookRecomendationViewModel extends StateNotifier {
 
         generateBookSuggestion(ref, language);
 
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          backgroundColor: AppColors.yellowGreenColor.withOpacity(0.5),
-          constraints: BoxConstraints(
-            maxHeight: AppConstants.screenHeight(context) * 0.7,
-          ),
-          builder: (context) => BoookRecmSheet(
-            recomendations: recomendations,
-          ),
-        );
+        // Önerileri provider'a kaydet
+        ref.read(generatedBookRecommendationsProvider.notifier).state =
+            recomendations as List<BookRecomendationModel>;
       }
     } catch (e) {
-      ref.read(isButtonWorkignProvider.notifier).state = false;
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(AppLocalizations.of(context)!.error(e.toString()))),
+        );
+      }
     } finally {
       ref.read(isButtonWorkignProvider.notifier).state = false;
     }

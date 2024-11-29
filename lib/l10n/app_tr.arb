@@ -56,5 +56,8 @@
     "noUserFoundWithThisEmailAddress": "Bu e-posta adresi ile bir kullanıcı bulunamadı",
     "invalidEmailAddress": "Geçersiz e-posta adresi",
     "pages": "{pages} sayfa",
-    "minutes": "{minutes} dk"
+    "minutes": "{minutes} dk",
+    "promptSuggestion": "Prompt Önerisi",
+    "lastMovieSuggestions": "Son Film Önerileri",
+    "usePrompt": "Prompt Kullan"
 }
