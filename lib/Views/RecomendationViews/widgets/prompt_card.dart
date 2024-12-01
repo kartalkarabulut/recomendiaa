@@ -89,7 +89,7 @@ class SimplePromptItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                Icons.history,
+                Icons.smart_button_outlined,
                 size: 18,
                 color: Colors.white.withOpacity(0.7),
               ),

@@ -62,168 +62,173 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: AppGradientColors.primaryGradient,
-                backgroundBlendMode: BlendMode.lighten),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
-              child: Container(color: Colors.black.withOpacity(0.75)),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: AppGradientColors.primaryGradient,
+                  backgroundBlendMode: BlendMode.lighten),
             ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: 80,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Center(
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back_ios,
-                              color: Colors.white),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.bookRecomendation,
-                          style: AppTextStyles.orbitronlargeTextStyle.copyWith(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Stack(
-                  children: [
-                    PromptField(
-                      promptController: promptController,
-                      hintText: AppLocalizations.of(context)!
-                          .tellUsAboutYourTasteInBooks,
-                    ),
-                    Positioned(
-                      right: 25,
-                      bottom: 15,
-                      child: FloatingPromptButton(
-                        onPressed: () {
-                          final language =
-                              Localizations.localeOf(context).languageCode;
-                          ref
-                              .read(bookRecomendationViewModelProvider.notifier)
-                              .handleSuggestButtonPress(
-                                context: context,
-                                ref: ref,
-                                promptController: promptController,
-                                language: language,
-                              );
-                        },
-                        text: AppLocalizations.of(context)!.suggest,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                userData.when(
-                  data: (data) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+                child: Container(color: Colors.black.withOpacity(0.75)),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    height: 80,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Center(
+                      child: Row(
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.promptSuggestion,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back_ios,
+                                color: Colors.white),
+                            onPressed: () => Navigator.pop(context),
                           ),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            height: 80,
-                            child: PromptScrollView(
-                              prompts: data!.lastSuggestedBookPrompts,
-                              promptController: promptController,
-                            ),
+                          Text(
+                            AppLocalizations.of(context)!.bookRecomendation,
+                            style: AppTextStyles.orbitronlargeTextStyle
+                                .copyWith(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
-                    );
-                  },
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stack) => Center(
-                      child: Text(AppLocalizations.of(context)!
-                          .error(error.toString()))),
-                ),
-                const SizedBox(height: 20),
-                Consumer(
-                  builder: (context, ref, child) {
-                    final isLoading = ref.watch(isButtonWorkignProvider);
-
-                    if (isLoading) {
-                      return const Center(
-                        child: LoadingAnimation(),
-                      );
-                    }
-
-                    if (generatedRecommendations.isEmpty) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            'Oluşturduğun öneriler burada gösterilecek',
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.mediumTextStyle.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      PromptField(
+                        promptController: promptController,
+                        hintText: AppLocalizations.of(context)!
+                            .tellUsAboutYourTasteInBooks,
+                      ),
+                      Positioned(
+                        right: 25,
+                        bottom: 15,
+                        child: FloatingPromptButton(
+                          onPressed: () {
+                            final language =
+                                Localizations.localeOf(context).languageCode;
+                            ref
+                                .read(
+                                    bookRecomendationViewModelProvider.notifier)
+                                .handleSuggestButtonPress(
+                                  context: context,
+                                  ref: ref,
+                                  promptController: promptController,
+                                  language: language,
+                                );
+                          },
+                          text: AppLocalizations.of(context)!.suggest,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  userData.when(
+                    data: (data) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.promptSuggestion,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              height: 80,
+                              child: PromptScrollView(
+                                prompts: data!.lastSuggestedBookPrompts,
+                                promptController: promptController,
+                              ),
+                            ),
+                          ],
                         ),
                       );
-                    }
+                    },
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stack) => Center(
+                        child: Text(AppLocalizations.of(context)!
+                            .error(error.toString()))),
+                  ),
+                  const SizedBox(height: 20),
+                  Consumer(
+                    builder: (context, ref, child) {
+                      final isLoading = ref.watch(isButtonWorkignProvider);
 
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            "Son öneriler",
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.largeTextStyle.copyWith(
-                              fontWeight: FontWeight.bold,
+                      if (isLoading) {
+                        return const Center(
+                          child: LoadingAnimation(),
+                        );
+                      }
+
+                      if (generatedRecommendations.isEmpty) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'Oluşturduğun öneriler burada gösterilecek',
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.mediumTextStyle.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 16),
-                        SizedBox(
-                          height: 360,
-                          child: ListView.builder(
+                        );
+                      }
+
+                      return Column(
+                        children: [
+                          Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            itemCount: generatedRecommendations.length,
-                            itemBuilder: (context, index) => RecomendedBook(
-                              book: generatedRecommendations[index],
-                              isSmartSuggestion: true,
+                            child: Text(
+                              "Son öneriler",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.largeTextStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            height: 360,
+                            child: ListView.builder(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              itemCount: generatedRecommendations.length,
+                              itemBuilder: (context, index) => RecomendedBook(
+                                book: generatedRecommendations[index],
+                                isSmartSuggestion: true,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
