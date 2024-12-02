@@ -130,11 +130,11 @@
   "@findBooksAndMoviesThatSpeakToYou": {
     "description": "Find books and movies that speak to you, even if they're hidden deep within"
   },
-  "justTellUsWhatKindOfBookYoureInTheMoodFor": "Just tell us what kind of book you're in the mood for, and let our AI find your perfect match!",
+  "justTellUsWhatKindOfBookYoureInTheMoodFor": "Don’t waste time browsing through bookshelves! Describe the book you want to read, and we’ll find the perfect one for you in seconds.",
   "@justTellUsWhatKindOfBookYoureInTheMoodFor": {
     "description": "Just tell us what kind of book you're in the mood for, and let our AI find your perfect match!"
   },
-  "describeYourPerfectMovieScene": "Describe your perfect movie scene, and we'll find films that match your vision.",
+  "describeYourPerfectMovieScene": "Spending minutes searching for a movie to watch? Describe what you're looking for, and we’ll recommend the perfect one for you in seconds!",
   "@describeYourPerfectMovieScene": {
     "description": "Describe your perfect movie scene, and we'll find films that match your vision."
   },

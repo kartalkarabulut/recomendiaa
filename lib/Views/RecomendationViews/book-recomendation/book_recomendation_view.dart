@@ -200,7 +200,7 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              "Son öneriler",
+                              "Last Suggestions",
                               textAlign: TextAlign.center,
                               style: AppTextStyles.largeTextStyle.copyWith(
                                 fontWeight: FontWeight.bold,
