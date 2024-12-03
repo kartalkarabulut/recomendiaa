@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_book_widget.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_movie_widget.dart';
-import 'package:recomendiaa/core/constants/app_constans.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/providers/home_page_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
@@ -14,13 +13,10 @@ class Recomendations extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userData = ref.watch(userDataProvider);
-    // final currentIndex = ref.watch(homeViewModelProvider).currentIndex;
 
     return SizedBox(
-      height: AppConstants.screenHeight(context) * 0.6,
+      height: 380,
       child: PageView(
-        // controller: _pageController,
-
         onPageChanged: (index) {
           ref.read(homeViewModelProvider.notifier).setCurrentIndex(index);
         },
@@ -28,8 +24,7 @@ class Recomendations extends ConsumerWidget {
           // Movies Page
           userData.when(
             data: (data) => ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
               itemCount: data?.lastSuggestedMovies.length ?? 0,
               itemBuilder: (context, index) => RecomendedMovie(
                 movie: data!.lastSuggestedMovies[index],
@@ -53,8 +48,7 @@ class Recomendations extends ConsumerWidget {
           // Books Page
           userData.when(
             data: (data) => ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
               itemCount: data?.lastSuggestedBooks.length ?? 0,
               itemBuilder: (context, index) => RecomendedBook(
                 book: data!.lastSuggestedBooks[index],

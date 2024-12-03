@@ -17,11 +17,12 @@ class PromptField extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       height: 200,
       decoration: const BoxDecoration(
-          // image: DecorationImage(
-          //   image: AssetImage("assets/images/fieldbg.png"),
-          //   fit: BoxFit.fill,
-          // ),
-          ),
+        borderRadius: BorderRadius.all(Radius.circular(16)),
+        // image: DecorationImage(
+        //   image: AssetImage("assets/images/fieldbg.png"),
+        //   fit: BoxFit.fill,
+        // ),
+      ),
       width: double.infinity,
       child: TextFormField(
         maxLines: 7,
@@ -40,7 +41,8 @@ class PromptField extends StatelessWidget {
             // fontWeight: FontWeight.bold,
             ),
         decoration: InputDecoration(
-            // filled: false,
+            filled: true,
+            fillColor: Colors.black38,
             hintText: hintText,
             // fillColor: Colors.grey[400],
             hintStyle: AppTextStyles.mediumTextStyle),

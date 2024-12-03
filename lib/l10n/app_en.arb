@@ -311,6 +311,10 @@
   "history" : "History",
   "@history" : {
     "description": "History"
+  },
+  "promptInfoText": "A more detailed and descriptive request will help you get better recommendations.",
+  "@promptInfoText": {
+    "description": "A more detailed and descriptive request will help\nyou get better recommendations."
   }
 
 

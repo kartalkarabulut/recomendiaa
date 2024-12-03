@@ -23,7 +23,7 @@
     "refreshCanTakeAWhile": "Yenileme biraz zaman alabilir",
     "refreshThePage": "Sayfayı Yenile",
     "pleaseSelectTheBooksYouWantToSave": "Lütfen istediğiniz\n kitapları seçin",
-    "tellUsAboutYourTasteInBooks": "Okumak istediğin kitab�� anlat",
+    "tellUsAboutYourTasteInBooks": "Okumak istediğin kitab anlat",
     "tellUsAboutYourTasteInMovies": "İzlemek istediğin filmi anlat",
     "error": "Hata: {error}",
     "suggest": "Öneri Oluştur",
@@ -72,5 +72,6 @@
     "generatedSuggestionsWillShowUpHere" : "Üretilen öneriler burada görünecek",
     "suggestionsAreBeingGenerated" : "Öneriler oluşturuluyor...",
     "home" : "Ana Sayfa",
-    "history" : "Geçmiş"
+    "history" : "Geçmiş",
+    "promptInfoText": "Daha detaylı ve açıklayıcı bir istek yazmanız, daha iyi öneriler almanızı sağlayacaktır."
 }

@@ -11,12 +11,14 @@ import 'package:recomendiaa/Views/RecomendationViews/widgets/loading_animation.d
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_card.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
+import 'package:recomendiaa/providers/ad_services_providers.dart';
 import 'package:recomendiaa/providers/book_related_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/ad-services/ads_services.dart';
 
 import '../../../providers/user_data_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_info_text.dart';
 
 class BookRecomendationView extends ConsumerStatefulWidget {
   const BookRecomendationView({super.key});
@@ -28,14 +30,15 @@ class BookRecomendationView extends ConsumerStatefulWidget {
 
 class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
   late TextEditingController promptController;
-  final NewAdService addServices = NewAdService();
   bool isInterstitialAdReady = false;
 
   @override
   void initState() {
     super.initState();
     promptController = TextEditingController();
-    addServices.loadInterstitialAd();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadInterstitialAd();
+    });
   }
 
   @override
@@ -45,15 +48,8 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
   }
 
   void loadInterstitialAd() {
-    addServices.loadInterstitialAd();
-  }
-
-  void showInterstitialAd() {
-    if (isInterstitialAdReady) {
-      addServices.showInterstitialAd();
-      isInterstitialAdReady = false;
-      loadInterstitialAd();
-    }
+    final bookAdService = ref.read(bookPageAdServiceProvider);
+    bookAdService.loadInterstitialAd();
   }
 
   @override
@@ -84,24 +80,34 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                   Container(
                     height: 80,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Center(
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back_ios,
-                                color: Colors.white),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.bookRecomendation,
-                            style: AppTextStyles.orbitronlargeTextStyle
-                                .copyWith(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.white.withOpacity(0.1),
+                          width: 1,
+                        ),
                       ),
                     ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios,
+                              color: Colors.white),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          AppLocalizations.of(context)!.bookRecomendation,
+                          style: AppTextStyles.orbitronlargeTextStyle.copyWith(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+                  const PromptInfoText(),
                   Stack(
                     children: [
                       PromptField(
@@ -137,8 +143,12 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 16),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.black38,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: Colors.white12,
+                            width: 1,
+                          ),
                         ),
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -146,9 +156,8 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.promptSuggestion,
-                              style: const TextStyle(
+                              style: AppTextStyles.mediumTextStyle.copyWith(
                                 color: Colors.white,
-                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -183,16 +192,35 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
 
                       if (generatedRecommendations.isEmpty) {
                         return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .generatedSuggestionsWillShowUpHere,
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.mediumTextStyle.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 32),
+                            padding: const EdgeInsets.all(24),
+                            decoration: BoxDecoration(
+                              color: Colors.black26,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Colors.white12,
+                                width: 1,
                               ),
+                            ),
+                            child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.book_outlined,
+                                  color: Colors.white54,
+                                  size: 48,
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .generatedSuggestionsWillShowUpHere,
+                                  textAlign: TextAlign.center,
+                                  style: AppTextStyles.mediumTextStyle.copyWith(
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         );
@@ -202,12 +230,21 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              "Last Suggestions",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.largeTextStyle.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.library_books_outlined,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  "Last Suggestions",
+                                  style: AppTextStyles.largeTextStyle.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -217,12 +254,16 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               itemCount: generatedRecommendations.length,
-                              itemBuilder: (context, index) => RecomendedBook(
-                                book: generatedRecommendations[index],
-                                isSmartSuggestion: true,
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: RecomendedBook(
+                                  book: generatedRecommendations[index],
+                                  isSmartSuggestion: true,
+                                ),
                               ),
                             ),
                           ),
+                          const SizedBox(height: 24),
                         ],
                       );
                     },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
+import 'package:recomendiaa/providers/ad_services_providers.dart';
 import 'package:recomendiaa/providers/movie_related_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
@@ -50,6 +51,7 @@ class MovieRecomendationViewModel extends StateNotifier {
     ref.read(generatedMovieRecommendationsProvider.notifier).state = [];
     ref.read(isButtonWorkignProvider.notifier).state = true;
     final movieRepository = ref.read(movieRecomendationRepository);
+    final movieAdService = ref.read(moviePageAdServiceProvider);
 
     try {
       final recomendations = await movieRepository.makeRecomendation(
@@ -70,6 +72,8 @@ class MovieRecomendationViewModel extends StateNotifier {
 
         ref.read(generatedMovieRecommendationsProvider.notifier).state =
             recomendations as List<MovieRecomendationModel>;
+        Future.delayed(const Duration(milliseconds: 1000));
+        movieAdService.showInterstitialAd();
       } else {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

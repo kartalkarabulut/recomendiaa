@@ -45,83 +45,89 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.darkBackgorind,
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: AppGradientColors.primaryGradient,
-                backgroundBlendMode: BlendMode.lighten),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
-              child: Container(color: Colors.black.withOpacity(0.75)),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: AppGradientColors.primaryGradient,
+                  backgroundBlendMode: BlendMode.lighten),
             ),
-          ),
-          Positioned.fill(
-            child: RefreshIndicator(
-              // strokeWidth: 5,
-              edgeOffset: 100,
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+                child: Container(color: Colors.black.withOpacity(0.75)),
+              ),
+            ),
+            Positioned.fill(
+              child: RefreshIndicator(
+                // strokeWidth: 5,
+                edgeOffset: 100,
 
-              triggerMode: RefreshIndicatorTriggerMode.onEdge,
-              displacement: 100,
-              semanticsLabel: AppLocalizations.of(context)!.refresh,
-              semanticsValue: AppLocalizations.of(context)!.refreshing,
-              onRefresh: () async {
-                SharedSnackbars.showInfoSnackBar(context,
-                    AppLocalizations.of(context)!.refreshCanTakeAWhile);
-                ref.invalidate(userIdProvider);
-                ref.invalidate(userDataProvider);
-                final language = Localizations.localeOf(context).languageCode;
-                await ref
-                    .read(homeViewModelProvider.notifier)
-                    .generateMovieBookSuggestion(ref, language);
-              },
-              backgroundColor: AppColors.darkBackgorind,
-              color: Colors.deepOrange,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      floating: true,
-                      automaticallyImplyLeading: false,
-                      // excludeHeaderSemantics: true,
-                      pinned: true,
-                      // snap: true,
-                      backgroundColor: Colors.transparent,
-                      // expandedHeight: 80,
-                      centerTitle: true,
-                      title: Text(
-                        "Recomendia",
-                        style: AppTextStyles.orbitronlargeTextStyle
-                            .copyWith(fontSize: 25),
+                triggerMode: RefreshIndicatorTriggerMode.onEdge,
+                displacement: 100,
+                semanticsLabel: AppLocalizations.of(context)!.refresh,
+                semanticsValue: AppLocalizations.of(context)!.refreshing,
+                onRefresh: () async {
+                  SharedSnackbars.showInfoSnackBar(context,
+                      AppLocalizations.of(context)!.refreshCanTakeAWhile);
+                  ref.invalidate(userIdProvider);
+                  ref.invalidate(userDataProvider);
+                  final language = Localizations.localeOf(context).languageCode;
+                  await ref
+                      .read(homeViewModelProvider.notifier)
+                      .generateMovieBookSuggestion(ref, language);
+                },
+                backgroundColor: AppColors.darkBackgorind,
+                color: Colors.deepOrange,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        floating: true,
+                        automaticallyImplyLeading: false,
+                        // excludeHeaderSemantics: true,
+                        pinned: true,
+                        snap: false,
+                        backgroundColor: Colors.transparent,
+                        // expandedHeight: 80,
+                        centerTitle: true,
+                        title: Text(
+                          "Recomendia",
+                          style: AppTextStyles.orbitronlargeTextStyle
+                              .copyWith(fontSize: 25),
+                        ),
                       ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          const UserInfoMenu(),
-                          const RecomendationTypesRow(),
-                          const SizedBox(height: 40),
-                          Text(
-                            AppLocalizations.of(context)!.smartSuggestions,
-                            style: AppTextStyles.xLargeTextStyle.copyWith(
-                                // fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          // const PageIndicators(),
-                          const PageDotIndicators(),
-                          const Recomendations(),
-                        ],
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            const UserInfoMenu(),
+                            const RecomendationTypesRow(),
+                            const SizedBox(height: 25),
+                            Text(
+                              AppLocalizations.of(context)!.smartSuggestions,
+                              style: AppTextStyles.xLargeTextStyle.copyWith(
+                                  // fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            const SizedBox(height: 25),
+                            // const PageIndicators(),
+                            const PageDotIndicators(),
+                            const SizedBox(height: 25),
+
+                            const Recomendations(),
+                            const SizedBox(height: 25),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
+import 'package:recomendiaa/providers/ad_services_providers.dart';
 import 'package:recomendiaa/providers/book_related_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
@@ -41,11 +42,9 @@ class BookRecomendationViewModel extends StateNotifier {
     // Mevcut önerileri temizle
     ref.read(generatedBookRecommendationsProvider.notifier).state = [];
     ref.read(isButtonWorkignProvider.notifier).state = true;
+    final bookAdService = ref.read(bookPageAdServiceProvider);
 
     try {
-      Future.delayed(const Duration(milliseconds: 200));
-      NewAdService().showInterstitialAd();
-
       final userData = ref.watch(userDataProvider);
       final bookRecomendationRepository =
           ref.read(bookRecomendationRepositoryProvider);
@@ -72,6 +71,8 @@ class BookRecomendationViewModel extends StateNotifier {
         // Önerileri provider'a kaydet
         ref.read(generatedBookRecommendationsProvider.notifier).state =
             recomendations as List<BookRecomendationModel>;
+        Future.delayed(const Duration(milliseconds: 1000));
+        bookAdService.showInterstitialAd();
       }
     } catch (e) {
       if (context.mounted) {
