@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recomendiaa/SharedViews/shared_snackbars.dart';
 import 'package:recomendiaa/Views/Auth/register/register_view.dart';
 import 'package:recomendiaa/Views/Home/home_page.dart';
 import 'package:recomendiaa/app/page_rooter_widget.dart';
@@ -11,7 +12,6 @@ import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/book_recomendation_model.dart';
-import 'package:recomendiaa/models/movie_recomendation_model.dart';
 import 'package:recomendiaa/providers/auth-screens/auth_screens_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/auth_repository.dart';
@@ -23,9 +23,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class LovedCategories extends ConsumerWidget {
   const LovedCategories({super.key});
 
+  void _showErrorSnackbar(BuildContext context, String message) {
+    SharedSnackbars.showErrorSnackBar(context, message);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final viewModel = ref.watch(lovedCategoriesViewModelProvider.notifier);
     final state = ref.watch(lovedCategoriesViewModelProvider);
 
     return SafeArea(
@@ -71,7 +74,7 @@ class LovedCategories extends ConsumerWidget {
                       child: Row(
                         children: [
                           Text(
-                            "Movie Categories",
+                            AppLocalizations.of(context)!.movieCategories,
                             style: AppTextStyles.xLargeTextStyle
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -90,7 +93,7 @@ class LovedCategories extends ConsumerWidget {
                     Wrap(
                       spacing: 10,
                       runSpacing: 15,
-                      children: CategoryNames.categories
+                      children: CategoryNames.getCategories(context)
                           .map((category) => CategoryNameBox(
                                 title: category,
                                 isMovie: true,
@@ -104,7 +107,7 @@ class LovedCategories extends ConsumerWidget {
                       child: Row(
                         children: [
                           Text(
-                            "Book Categories",
+                            AppLocalizations.of(context)!.bookCategories,
                             style: AppTextStyles.xLargeTextStyle
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -123,7 +126,7 @@ class LovedCategories extends ConsumerWidget {
                     Wrap(
                       spacing: 10,
                       runSpacing: 15,
-                      children: CategoryNames.bookCategories
+                      children: CategoryNames.getBookCategories(context)
                           .map((category) => CategoryNameBox(
                                 title: category,
                                 isMovie: false,
@@ -194,74 +197,50 @@ class LovedCategories extends ConsumerWidget {
           opacity: state.isLoading ? 0.5 : 1,
           child: FloatingActionButton.extended(
             backgroundColor: AppColors.yellowGreenColor,
-            onPressed: () async {
-              print("fab pressed  eaee e fffff aaaaaaaa bbbb ccccccc");
-              final language = Localizations.localeOf(context).languageCode;
-              final viewModel =
-                  ref.read(lovedCategoriesViewModelProvider.notifier);
-              final user =
-                  await viewModel.finishRegistration(context, ref, language);
-              if (user != null) {
-                ref.invalidate(userIdProvider);
-                ref.invalidate(userDataProvider);
+            onPressed: state.isLoading
+                ? null
+                : () async {
+                    final viewModel =
+                        ref.read(lovedCategoriesViewModelProvider.notifier);
+                    final selectedMovieCategories =
+                        viewModel.state.selectedMovieCategories;
+                    final selectedBookCategories =
+                        viewModel.state.selectedBookCategories;
 
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PageRooter(),
-                  ),
-                );
-              }
-              // final authRepository = ref.read(authRepositoryProvider);
-              // final registeringUser = ref.read(registeringUserProvider.notifier);
-              // //!initial recomendation in here
-              // final bookRecomendationRepository =
-              //     ref.read(bookRecomendationRepositoryProvider);
-              // final movieRecomendationRepository =
-              //     ref.read(movieRecomendationRepositoryProvider);
+                    if (selectedMovieCategories.length < 5) {
+                      _showErrorSnackbar(
+                        context,
+                        AppLocalizations.of(context)!.movieCategoriesMinimum,
+                      );
+                      return;
+                    }
 
-              // List<String> moviePrompts = await movieRecomendationRepository
-              //     .initialGeneratePromptSuggestion(
-              //         null,
-              //         registeringUser.state.lovedMovieCategories,
-              //         RecomendationType.movie);
-              // print("film prompts ${moviePrompts}");
-              // List<MovieRecomendationModel> movieRecomendations =
-              //     await movieRecomendationRepository.initialRecomendation(
-              //         registeringUser.state.lovedMovieCategories, []);
+                    if (selectedBookCategories.length < 5) {
+                      _showErrorSnackbar(
+                        context,
+                        AppLocalizations.of(context)!.bookCategoriesMinimum,
+                      );
+                      return;
+                    }
 
-              // List<BookRecomendationModel> bookRecomendations =
-              //     await bookRecomendationRepository.initialRecomendation(
-              //         registeringUser.state.lovedBookCategories, []);
-              // List<String> bookPrompts = await bookRecomendationRepository
-              //     .initialGeneratePromptSuggestion(
-              //         null,
-              //         registeringUser.state.lovedBookCategories,
-              //         RecomendationType.book);
-              // print("kitap prompts ${bookPrompts}");
+                    final language =
+                        Localizations.localeOf(context).languageCode;
+                    final user = await viewModel.finishRegistration(
+                        context, ref, language);
+                    if (user != null) {
+                      ref.invalidate(userIdProvider);
+                      ref.invalidate(userDataProvider);
 
-              // registeringUser.state.lastSuggestedBooks = bookRecomendations;
-              // registeringUser.state.lastSuggestedMovies = movieRecomendations;
-              // registeringUser.state.lastSuggestedBookPrompts = bookPrompts;
-              // registeringUser.state.lastSuggestedMoviePrompts = moviePrompts;
-
-              // //!end of initial recomendation
-
-              // final user = await authRepository.signUpAndSaveData(
-              //     registeringUser.state,
-              //     registeringUser.state.email,
-              //     registeringUser.state.password,
-              //     registeringUser.state.fullName,
-              //     SignUpType.emailPassword);
-              // if (user != null) {
-              //   print(
-              //       "kullanıcı verileri kaydedildi mi ${user.lastSuggestedBooks.first.title}");
-              //   Navigator.pushReplacement(context,
-              //       MaterialPageRoute(builder: (context) => const HomePage()));
-              // }
-            },
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PageRooter(),
+                        ),
+                      );
+                    }
+                  },
             label: Text(
-              "Finish",
+              AppLocalizations.of(context)!.finish,
               style: AppTextStyles.largeTextStyle.copyWith(color: Colors.black),
             ),
             icon: const Icon(Icons.arrow_forward, color: Colors.black),

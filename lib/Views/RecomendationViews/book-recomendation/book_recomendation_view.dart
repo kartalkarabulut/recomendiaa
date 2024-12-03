@@ -5,6 +5,7 @@ import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
 import 'package:recomendiaa/Views/Home/widgets/prompt_field.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_book_widget.dart';
 import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/book_recm_view_model.dart';
+import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/widgets/generated_book_widget.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recomendation_view.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/floating_prompt_button.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/loading_animation.dart';
@@ -19,6 +20,7 @@ import 'package:recomendiaa/services/ad-services/ads_services.dart';
 import '../../../providers/user_data_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_info_text.dart';
+import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/warning_widget.dart';
 
 class BookRecomendationView extends ConsumerStatefulWidget {
   const BookRecomendationView({super.key});
@@ -233,13 +235,14 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                             child: Row(
                               children: [
                                 const Icon(
-                                  Icons.library_books_outlined,
+                                  Icons.book_outlined,
                                   color: Colors.white,
                                   size: 24,
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "Last Suggestions",
+                                  AppLocalizations.of(context)!
+                                      .lastBookSuggestions,
                                   style: AppTextStyles.largeTextStyle.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -247,23 +250,23 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10),
+                          const WarningWidget(),
                           const SizedBox(height: 16),
                           SizedBox(
-                            height: 360,
+                            height: 400,
                             child: ListView.builder(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               itemCount: generatedRecommendations.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
-                                child: RecomendedBook(
+                                child: GeneratedBookWidget(
                                   book: generatedRecommendations[index],
-                                  isSmartSuggestion: true,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
                         ],
                       );
                     },

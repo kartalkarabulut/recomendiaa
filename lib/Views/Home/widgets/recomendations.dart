@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_book_widget.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_movie_widget.dart';
+import 'package:recomendiaa/Views/RecomendationViews/book-recomendation/widgets/generated_book_widget.dart';
+import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/generated_movie_widget.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/providers/home_page_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
@@ -26,9 +28,8 @@ class Recomendations extends ConsumerWidget {
             data: (data) => ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: data?.lastSuggestedMovies.length ?? 0,
-              itemBuilder: (context, index) => RecomendedMovie(
+              itemBuilder: (context, index) => GeneratedMovieWidget(
                 movie: data!.lastSuggestedMovies[index],
-                isSmartSuggestion: true,
               ),
             ),
             error: (error, stack) => Center(
@@ -50,9 +51,8 @@ class Recomendations extends ConsumerWidget {
             data: (data) => ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: data?.lastSuggestedBooks.length ?? 0,
-              itemBuilder: (context, index) => RecomendedBook(
+              itemBuilder: (context, index) => GeneratedBookWidget(
                 book: data!.lastSuggestedBooks[index],
-                isSmartSuggestion: true,
               ),
             ),
             error: (error, stack) => Center(

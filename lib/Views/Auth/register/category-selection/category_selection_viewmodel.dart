@@ -11,6 +11,7 @@ import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/auth_repository.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LovedCategoriesState {
   LovedCategoriesState({
@@ -81,16 +82,18 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
         ref.read(movieRecomendationRepositoryProvider);
 
     try {
-      _updateState(isLoading: true, status: 'Initializing...');
+      _updateState(
+          isLoading: true, status: AppLocalizations.of(context)!.initializing);
 
       // Film önerileri
-      _updateState(status: 'Preparing movie recommendations...');
+      _updateState(
+          status: AppLocalizations.of(context)!.preparingMovieRecommendations);
       List<MovieRecomendationModel> movieRecomendations =
           await movieRecomendationRepository.initialRecomendation(
               registeringUser.state.lovedMovieCategories, [], language);
 
       // Film promptları
-      _updateState(status: 'Creating prompts for movie recommendations...');
+      _updateState(status: AppLocalizations.of(context)!.creatingMoviePrompts);
       List<String> moviePrompts =
           await movieRecomendationRepository.initialGeneratePromptSuggestion(
               null,
@@ -99,13 +102,14 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
               RecomendationType.movie);
 
       // Kitap önerileri
-      _updateState(status: 'Preparing book recommendations...');
+      _updateState(
+          status: AppLocalizations.of(context)!.preparingBookRecommendations);
       List<BookRecomendationModel> bookRecomendations =
           await bookRecomendationRepository.initialRecomendation(
               registeringUser.state.lovedBookCategories, [], language);
 
-      // Kitap promptları
-      _updateState(status: 'Creating prompts for book recommendations...');
+      // Kitap promptlarıieaiaa
+      _updateState(status: AppLocalizations.of(context)!.creatingBookPrompts);
       List<String> bookPrompts =
           await bookRecomendationRepository.initialGeneratePromptSuggestion(
               null,
@@ -114,14 +118,14 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
               RecomendationType.book);
 
       // Kullanıcı verilerini güncelleme
-      _updateState(status: 'Saving recommendations...');
+      _updateState(status: AppLocalizations.of(context)!.savingRecommendations);
       registeringUser.state.lastSuggestedBooks = bookRecomendations;
       registeringUser.state.lastSuggestedMovies = movieRecomendations;
       registeringUser.state.lastSuggestedBookPrompts = bookPrompts;
       registeringUser.state.lastSuggestedMoviePrompts = moviePrompts;
 
       // Kullanıcı kaydı
-      _updateState(status: 'Creating your account...');
+      _updateState(status: AppLocalizations.of(context)!.creatingAccount);
       UserModel? user = await authRepository.signUpAndSaveData(
           registeringUser.state,
           registeringUser.state.email,
@@ -133,20 +137,21 @@ class LovedCategoriesViewModel extends StateNotifier<LovedCategoriesState> {
         ref.invalidate(registeringUserProvider);
         ref.invalidate(userDataProvider);
         ref.invalidate(authStateProvider);
-        _updateState(status: 'Registration successful! Redirecting...');
-        await Future.delayed(const Duration(
-            seconds: 1)); // Başarı mesajının görünmesi için kısa bekletme
+        _updateState(
+            status: AppLocalizations.of(context)!.registrationSuccessful);
+        await Future.delayed(const Duration(seconds: 1));
         return user;
       } else {
         _updateState(isLoading: false, status: '');
-        SharedSnackbars.showErrorSnackBar(context, "Registration failed");
+        SharedSnackbars.showErrorSnackBar(
+            context, AppLocalizations.of(context)!.registrationFailed);
         return null;
       }
     } catch (e) {
       print("Registration error: $e");
       _updateState(isLoading: false, status: '');
       SharedSnackbars.showErrorSnackBar(
-          context, "Unexpected error. Please try again.");
+          context, AppLocalizations.of(context)!.unexpectedError);
       return null;
     } finally {
       _updateState(isLoading: false, status: '');

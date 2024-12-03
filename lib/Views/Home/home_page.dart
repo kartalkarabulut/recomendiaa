@@ -8,6 +8,7 @@ import 'package:recomendiaa/Views/Auth/auth_screen.dart';
 import 'package:recomendiaa/Views/Home/widgets/dot_indicator.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomendation_types_row.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomendations.dart';
+import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/warning_widget.dart';
 import 'package:recomendiaa/core/shared-funtcions/all_formatters.dart';
 import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
@@ -115,7 +116,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                             // const PageIndicators(),
                             const PageDotIndicators(),
                             const SizedBox(height: 25),
-
                             const Recomendations(),
                             const SizedBox(height: 25),
                           ],

@@ -2,6 +2,7 @@ import "dart:ui";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:recomendiaa/Views/Auth/register/category-selection/loved_categories.dart";
+import "package:recomendiaa/Views/Home/home_page.dart";
 import "package:recomendiaa/core/theme/colors/app_colors.dart";
 import "package:recomendiaa/core/theme/colors/gradient_colors.dart";
 import "package:recomendiaa/core/theme/styles/app_text_styles.dart";
@@ -124,11 +125,11 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   String _getStepTitle(int index) {
     switch (index) {
       case 0:
-        return "Önce seni tanıyalım";
+        return AppLocalizations.of(context)!.registerStepTitle1;
       case 1:
-        return "E-posta adresini gir";
+        return AppLocalizations.of(context)!.registerStepTitle2;
       case 2:
-        return "Güvenli bir şifre belirle";
+        return AppLocalizations.of(context)!.registerStepTitle3;
       default:
         return "";
     }

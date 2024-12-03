@@ -315,7 +315,329 @@
   "promptInfoText": "A more detailed and descriptive request will help you get better recommendations.",
   "@promptInfoText": {
     "description": "A more detailed and descriptive request will help\nyou get better recommendations."
+  },
+  "warningText": "Long press to save recommendations, tap once to view details. Unsaved recommendations will be lost.",
+  "@warningText": {
+    "description": "Long press to save recommendations, tap once to view details. Unsaved recommendations will be lost."
+  },
+  "lastBookSuggestions": "Last Book Suggestions",
+  "@lastBookSuggestions": {
+    "description": "Last Book Suggestions"
+  },
+  "registerStepTitle1": "Let's get to know you first",
+  "@registerStepTitle1": {
+    "description": "Let's get to know you first"
+  },
+  "registerStepTitle2": "Enter your email address",
+  "@registerStepTitle2": {
+    "description": "Enter your email address"
+  },
+  "registerStepTitle3": "Create a secure password",
+  "@registerStepTitle3": {
+    "description": "Create a secure password"
+  },
+  "categoryAction": "Action",
+  "@categoryAction": {
+    "description": "Action movie category"
+  },
+  "categoryComedy": "Comedy",
+  "@categoryComedy": {
+    "description": "Comedy movie category"
+  },
+  "categoryDrama": "Drama",
+  "@categoryDrama": {
+    "description": "Drama movie category"
+  },
+  "categoryThriller": "Thriller",
+  "@categoryThriller": {
+    "description": "Thriller movie category"
+  },
+  "categoryHorror": "Horror",
+  "@categoryHorror": {
+    "description": "Horror movie category"
+  },
+  "categorySciFi": "Science Fiction",
+  "@categorySciFi": {
+    "description": "Science Fiction movie category"
+  },
+  "categoryFantasy": "Fantasy",
+  "@categoryFantasy": {
+    "description": "Fantasy movie category"
+  },
+  "categoryAnimation": "Animation",
+  "@categoryAnimation": {
+    "description": "Animation movie category"
+  },
+  "categoryAdventure": "Adventure",
+  "@categoryAdventure": {
+    "description": "Adventure movie category"
+  },
+  "categoryWar": "War Movies",
+  "@categoryWar": {
+    "description": "War movie category"
+  },
+  "categoryRomCom": "Romantic Comedy",
+  "@categoryRomCom": {
+    "description": "Romantic Comedy movie category"
+  },
+  "categoryCrime": "Crime",
+  "@categoryCrime": {
+    "description": "Crime movie category"
+  },
+  "categoryPsychoThriller": "Psychological Thriller",
+  "@categoryPsychoThriller": {
+    "description": "Psychological Thriller movie category"
+  },
+  "categoryHistorical": "Historical",
+  "@categoryHistorical": {
+    "description": "Historical movie category"
+  },
+  "categoryDocumentary": "Documentary",
+  "@categoryDocumentary": {
+    "description": "Documentary movie category"
+  },
+  "categoryDystopian": "Dystopian",
+  "@categoryDystopian": {
+    "description": "Dystopian movie category"
+  },
+  "categorySuperhero": "Superhero",
+  "@categorySuperhero": {
+    "description": "Superhero movie category"
+  },
+  "categorySpy": "Spy",
+  "@categorySpy": {
+    "description": "Spy movie category"
+  },
+  "categoryIndependent": "Independent Films",
+  "@categoryIndependent": {
+    "description": "Independent Films category"
+  },
+  "categoryAnime": "Anime",
+  "@categoryAnime": {
+    "description": "Anime movie category"
+  },
+  "categoryMusical": "Musical",
+  "@categoryMusical": {
+    "description": "Musical movie category"
+  },
+  "categoryWestern": "Western",
+  "@categoryWestern": {
+    "description": "Western movie category"
+  },
+  "categoryNoir": "Noir",
+  "@categoryNoir": {
+    "description": "Noir movie category"
+  },
+  "categoryFamily": "Family Movies",
+  "@categoryFamily": {
+    "description": "Family movie category"
+  },
+  "categorySupernatural": "Supernatural",
+  "@categorySupernatural": {
+    "description": "Supernatural movie category"
+  },
+  "categoryNovel": "Novel",
+  "@categoryNovel": {
+    "description": "Novel book category"
+  },
+  "categoryStory": "Story",
+  "@categoryStory": {
+    "description": "Story book category"
+  },
+  "categoryPoetry": "Poetry",
+  "@categoryPoetry": {
+    "description": "Poetry book category"
+  },
+  "categoryTheatre": "Theatre",
+  "@categoryTheatre": {
+    "description": "Theatre book category"
+  },
+  "categorySciFiBook": "Science Fiction",
+  "@categorySciFiBook": {
+    "description": "Science Fiction book category"
+  },
+  "categoryFantasyBook": "Fantasy",
+  "@categoryFantasyBook": {
+    "description": "Fantasy book category"
+  },
+  "categoryDystopianBook": "Dystopian",
+  "@categoryDystopianBook": {
+    "description": "Dystopian book category"
+  },
+  "categoryHorrorBook": "Horror",
+  "@categoryHorrorBook": {
+    "description": "Horror book category"
+  },
+  "categoryDetective": "Detective",
+  "@categoryDetective": {
+    "description": "Detective book category"
+  },
+  "categoryBiography": "Biography",
+  "@categoryBiography": {
+    "description": "Biography book category"
+  },
+  "categoryAutobiography": "Autobiography",
+  "@categoryAutobiography": {
+    "description": "Autobiography book category"
+  },
+  "categoryHistory": "History",
+  "@categoryHistory": {
+    "description": "History book category"
+  },
+  "categoryTravelWriting": "Travel Writing",
+  "@categoryTravelWriting": {
+    "description": "Travel Writing book category"
+  },
+  "categoryDiary": "Diary",
+  "@categoryDiary": {
+    "description": "Diary book category"
+  },
+  "categoryPhilosophy": "Philosophy",
+  "@categoryPhilosophy": {
+    "description": "Philosophy book category"
+  },
+  "categoryPsychology": "Psychology",
+  "@categoryPsychology": {
+    "description": "Psychology book category"
+  },
+  "categorySociology": "Sociology",
+  "@categorySociology": {
+    "description": "Sociology book category"
+  },
+  "categorySciTech": "Science and Technology",
+  "@categorySciTech": {
+    "description": "Science and Technology book category"
+  },
+  "categoryPoliticalScience": "Political Science",
+  "@categoryPoliticalScience": {
+    "description": "Political Science book category"
+  },
+  "categoryRomance": "Romance Novels",
+  "@categoryRomance": {
+    "description": "Romance Novels book category"
+  },
+  "categoryPsychologicalNovel": "Psychological Novel",
+  "@categoryPsychologicalNovel": {
+    "description": "Psychological Novel book category"
+  },
+  "categoryFamilyNovel": "Family Novels",
+  "@categoryFamilyNovel": {
+    "description": "Family Novels book category"
+  },
+  "categoryChildrensBooks": "Children's Books",
+  "@categoryChildrensBooks": {
+    "description": "Children's Books category"
+  },
+  "categoryYoungAdult": "Young Adult",
+  "@categoryYoungAdult": {
+    "description": "Young Adult book category"
+  },
+  "categoryClassicLit": "Classic Literature",
+  "@categoryClassicLit": {
+    "description": "Classic Literature book category"
+  },
+  "categoryTranslated": "Translated Works",
+  "@categoryTranslated": {
+    "description": "Translated Works book category"
+  },
+  "categoryEssay": "Essay",
+  "@categoryEssay": {
+    "description": "Essay book category"
+  },
+  "categoryGraphicNovel": "Graphic Novel",
+  "@categoryGraphicNovel": {
+    "description": "Graphic Novel book category"
+  },
+  "categoryDystopianNovel": "Dystopian Novel",
+  "@categoryDystopianNovel": {
+    "description": "Dystopian Novel book category"
+  },
+  "categoryAlternateHistory": "Alternate History",
+  "@categoryAlternateHistory": {
+    "description": "Alternate History book category"
+  },
+  "categoryCyberpunk": "Cyberpunk",
+  "@categoryCyberpunk": {
+    "description": "Cyberpunk book category"
+  },
+  "categoryWomensLit": "Women's Literature",
+  "@categoryWomensLit": {
+    "description": "Women's Literature book category"
+  },
+  "movieCategories": "Movie Categories",
+  "@movieCategories": {
+    "description": "Movie Categories header text"
+  },
+  "bookCategories": "Book Categories",
+  "@bookCategories": {
+    "description": "Book Categories header text"
+  },
+  "finish": "Finish",
+  "@finish": {
+    "description": "Finish button text"
+  },
+  "movieCategoriesMinimum": "Please select at least 5 movie categories",
+  "@movieCategoriesMinimum": {
+    "description": "Warning for minimum movie categories selection"
+  },
+  "bookCategoriesMinimum": "Please select at least 5 book categories",
+  "@bookCategoriesMinimum": {
+    "description": "Warning for minimum book categories selection"
+  },
+  "registrationInProgress": "Registration in progress...",
+  "@registrationInProgress": {
+    "description": "Registration status message"
+  },
+  "creatingAccount": "Creating your account...",
+  "@creatingAccount": {
+    "description": "Account creation status message"
+  },
+  "preparingMovieRecommendations": "Preparing movie recommendations...",
+  "@preparingMovieRecommendations": {
+    "description": "Preparing movie recommendations status message"
+  },
+  "savingPreferences": "Saving your preferences...",
+  "@savingPreferences": {
+    "description": "Preferences saving status message"
+  },
+  "almostDone": "Almost done...",
+  "@almostDone": {
+    "description": "Almost done status message"
+  },
+  "preparingRecommendations": "Preparing recommendations...",
+  "@preparingRecommendations": {
+    "description": "Preparing recommendations status message"
+  },
+  "initializing": "Initializing...",
+  "@initializing": {
+    "description": "Initializing status message"
+  },
+  "creatingMoviePrompts": "Creating prompts for movie recommendations...",
+  "@creatingMoviePrompts": {
+    "description": "Creating movie prompts status message"
+  },
+  "preparingBookRecommendations": "Preparing book recommendations...",
+  "@preparingBookRecommendations": {
+    "description": "Preparing book recommendations status message"
+  },
+  "creatingBookPrompts": "Creating prompts for book recommendations...",
+  "@creatingBookPrompts": {
+    "description": "Creating book prompts status message"
+  },
+  "savingRecommendations": "Saving recommendations...",
+  "@savingRecommendations": {
+    "description": "Saving recommendations status message"
+  },
+  "registrationSuccessful": "Registration successful! Redirecting...",
+  "@registrationSuccessful": {
+    "description": "Registration successful message"
+  },
+  "registrationFailed": "Registration failed",
+  "@registrationFailed": {
+    "description": "Registration failed message"
+  },
+  "unexpectedError": "Unexpected error. Please try again.",
+  "@unexpectedError": {
+    "description": "Unexpected error message"
   }
-
-
 }     

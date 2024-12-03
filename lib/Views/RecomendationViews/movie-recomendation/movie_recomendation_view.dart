@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
 import 'package:recomendiaa/Views/Home/widgets/prompt_field.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_movie_widget.dart';
+import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/generated_movie_widget.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/floating_prompt_button.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/loading_animation.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_card.dart';
@@ -14,6 +15,7 @@ import 'package:recomendiaa/providers/movie_related_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_info_text.dart';
+import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/warning_widget.dart';
 
 class MovieRecomendationView extends ConsumerStatefulWidget {
   const MovieRecomendationView({super.key});
@@ -254,18 +256,19 @@ class _MovieRecomendationViewState
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10),
+                          const WarningWidget(),
                           const SizedBox(height: 16),
                           SizedBox(
-                            height: 360,
+                            height: 400,
                             child: ListView.builder(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               itemCount: generatedRecommendations.length,
                               itemBuilder: (context, index) => Padding(
                                 padding: const EdgeInsets.only(bottom: 12),
-                                child: RecomendedMovie(
+                                child: GeneratedMovieWidget(
                                   movie: generatedRecommendations[index],
-                                  isSmartSuggestion: true,
                                 ),
                               ),
                             ),

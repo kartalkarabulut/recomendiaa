@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      // locale: const Locale('tr'),
+      locale: const Locale('tr'),
       supportedLocales: const [
         Locale('en'), // İngilizce
         Locale('tr'), // Türkçe
