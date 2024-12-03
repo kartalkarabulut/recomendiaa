@@ -5,13 +5,14 @@ import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
 import 'package:recomendiaa/Views/Home/widgets/prompt_field.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_movie_widget.dart';
 import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/movie_recm_view_model.dart';
-import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/generated_movie_widget.dart';
+import 'package:recomendiaa/Views/RecomendationViews/widgets/floating_prompt_button.dart';
+import 'package:recomendiaa/Views/RecomendationViews/widgets/loading_animation.dart';
 import 'package:recomendiaa/Views/RecomendationViews/widgets/prompt_card.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
+import 'package:recomendiaa/providers/movie_related_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:recomendiaa/providers/movie_providers.dart';
 
 class MovieRecomendationView extends ConsumerStatefulWidget {
   const MovieRecomendationView({super.key});
@@ -44,7 +45,7 @@ class _MovieRecomendationViewState
             Positioned.fill(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
-                child: Container(color: Colors.black.withOpacity(0.5)),
+                child: Container(color: Colors.black.withOpacity(0.75)),
               ),
             ),
             SingleChildScrollView(
@@ -151,7 +152,8 @@ class _MovieRecomendationViewState
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              'Oluşturduğun öneriler burada gösterilecek',
+                              AppLocalizations.of(context)!
+                                  .generatedSuggestionsWillShowUpHere,
                               textAlign: TextAlign.center,
                               style: AppTextStyles.mediumTextStyle.copyWith(
                                 color: Colors.white,
@@ -201,78 +203,6 @@ class _MovieRecomendationViewState
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class FloatingPromptButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
-  const FloatingPromptButton({
-    Key? key,
-    required this.onPressed,
-    required this.text,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          backgroundColor: Colors.white.withOpacity(0.15),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              text,
-              style: AppTextStyles.mediumTextStyle
-                  .copyWith(color: Colors.white, fontWeight: FontWeight.bold
-                      // fontSize: 14,
-                      ),
-            ),
-            const SizedBox(width: 4),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-              size: 14,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LoadingAnimation extends StatelessWidget {
-  const LoadingAnimation({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Film önerileri oluşturuluyor...',
-            style: AppTextStyles.mediumTextStyle.copyWith(
-              color: Colors.white,
-            ),
-          ),
-        ],
       ),
     );
   }

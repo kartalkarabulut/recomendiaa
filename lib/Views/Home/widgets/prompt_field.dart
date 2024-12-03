@@ -14,7 +14,7 @@ class PromptField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       height: 200,
       decoration: const BoxDecoration(
           // image: DecorationImage(
@@ -37,16 +37,13 @@ class PromptField extends StatelessWidget {
         // keyboardType: TextInputType.multiline,
         autofocus: false,
         style: AppTextStyles.largeTextStyle.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
+            // fontWeight: FontWeight.bold,
+            ),
         decoration: InputDecoration(
-          // filled: false,
-          hintText: hintText,
-          // fillColor: Colors.grey[400],
-          hintStyle: AppTextStyles.largeTextStyle.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+            // filled: false,
+            hintText: hintText,
+            // fillColor: Colors.grey[400],
+            hintStyle: AppTextStyles.mediumTextStyle),
       ),
     );
   }

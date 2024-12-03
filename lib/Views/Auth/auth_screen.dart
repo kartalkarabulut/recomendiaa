@@ -22,29 +22,15 @@ class AuthView extends ConsumerWidget {
           // Arkaplan Gradient
           Container(
             decoration: BoxDecoration(
-              gradient: AppGradientColors.primaryGradient,
-            ),
+                gradient: AppGradientColors.primaryGradient,
+                backgroundBlendMode: BlendMode.lighten),
           ),
-
-          // Blur Efekti
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.black.withOpacity(0.8),
-                    ],
-                  ),
-                ),
-              ),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+              child: Container(color: Colors.black.withOpacity(0.75)),
             ),
           ),
-
           // Ana İçerik
           SafeArea(
             child: Padding(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_book_widget.dart';
-import 'package:recomendiaa/providers/book_providers.dart';
+import 'package:recomendiaa/providers/book_related_providers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BooksListView extends ConsumerWidget {

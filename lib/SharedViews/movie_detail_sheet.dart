@@ -7,7 +7,7 @@ import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/core/theme/colors/gradient_colors.dart';
 import 'package:recomendiaa/core/theme/styles/app_text_styles.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
-import 'package:recomendiaa/providers/movie_providers.dart';
+import 'package:recomendiaa/providers/movie_related_providers.dart';
 import 'package:recomendiaa/services/recomendation-history/movie_recm_data_imp.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

@@ -14,3 +14,6 @@ final bookRecomendationViewModelProvider =
     StateNotifierProvider<BookRecomendationViewModel, void>((ref) {
   return BookRecomendationViewModel();
 });
+
+final generatedBookRecommendationsProvider =
+    StateProvider<List<BookRecomendationModel>>((ref) => []);

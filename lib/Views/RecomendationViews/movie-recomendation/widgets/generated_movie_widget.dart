@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/Views/Home/widgets/recomended_movie_widget.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
-import 'package:recomendiaa/providers/movie_providers.dart';
+import 'package:recomendiaa/providers/movie_related_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 

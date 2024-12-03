@@ -6,6 +6,7 @@ import "package:recomendiaa/core/theme/colors/app_colors.dart";
 import "package:recomendiaa/core/theme/colors/gradient_colors.dart";
 import "package:recomendiaa/core/theme/styles/app_text_styles.dart";
 import "package:recomendiaa/models/user_model.dart";
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final registeringUserProvider = StateProvider<UserModel>((ref) {
   return UserModel(
@@ -136,11 +137,11 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   String _getStepSubtitle(int index) {
     switch (index) {
       case 0:
-        return "Adın ne?";
+        return AppLocalizations.of(context)!.whatsYourName;
       case 1:
-        return "Sana ulaşabilmemiz için";
+        return AppLocalizations.of(context)!.toContactYou;
       case 2:
-        return "Hesabını güvende tutmak için";
+        return AppLocalizations.of(context)!.toKeepAcSecure;
       default:
         return "";
     }
@@ -156,25 +157,13 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: AppGradientColors.primaryGradient,
-              backgroundBlendMode: BlendMode.lighten,
-            ),
+                gradient: AppGradientColors.primaryGradient,
+                backgroundBlendMode: BlendMode.lighten),
           ),
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 0),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.black.withOpacity(0.8),
-                    ],
-                  ),
-                ),
-              ),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+              child: Container(color: Colors.black.withOpacity(0.75)),
             ),
           ),
           SafeArea(
@@ -233,10 +222,11 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                                 ? emailController
                                 : passwordController,
                         hintText: state.currentFieldIndex == 0
-                            ? "Adın"
+                            ? AppLocalizations.of(context)!.yourName
                             : state.currentFieldIndex == 1
-                                ? "E-posta adresin"
-                                : "Şifren",
+                                ? AppLocalizations.of(context)!
+                                    .enterYourEmailAddress
+                                : AppLocalizations.of(context)!.password,
                         isPassword: state.currentFieldIndex == 2,
                       ),
                     ),
@@ -275,7 +265,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                             icon: const Icon(Icons.arrow_back,
                                 color: Colors.white70),
                             label: Text(
-                              'Geri',
+                              AppLocalizations.of(context)!.back,
                               style: AppTextStyles.mediumTextStyle.copyWith(
                                 color: Colors.white70,
                               ),
@@ -302,8 +292,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                           },
                           label: Text(
                             state.currentFieldIndex == 2
-                                ? "Kategorilere Geç"
-                                : "Devam Et",
+                                ? AppLocalizations.of(context)!.toCategories
+                                : AppLocalizations.of(context)!.continueButton,
                             style: AppTextStyles.mediumTextStyle.copyWith(
                               color: Colors.white,
                             ),
@@ -318,101 +308,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
               ),
             ),
           ),
-          // SafeArea(
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(horizontal: 24),
-          //     child: Form(
-          //       key: _formKey,
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           SizedBox(height: screenHeight * 0.1),
-          //           LinearProgressIndicator(
-          //             value: (state.currentFieldIndex + 1) / 3,
-          //             backgroundColor: Colors.white.withOpacity(0.3),
-          //             valueColor:
-          //                 AlwaysStoppedAnimation<Color>(AppColors.primary100),
-          //           ),
-          //           SizedBox(height: screenHeight * 0.05),
-          //           Text(
-          //             _getStepTitle(state.currentFieldIndex),
-          //             style: AppTextStyles.largeTextStyle.copyWith(
-          //               color: Colors.white,
-          //               fontSize: 28,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //           const SizedBox(height: 8),
-          //           Text(
-          //             _getStepSubtitle(state.currentFieldIndex),
-          //             style: AppTextStyles.mediumTextStyle.copyWith(
-          //               color: Colors.white70,
-          //               fontSize: 16,
-          //             ),
-          //           ),
-          //           SizedBox(height: screenHeight * 0.05),
-          //           AnimatedSwitcher(
-          //             duration: const Duration(milliseconds: 300),
-          //             transitionBuilder:
-          //                 (Widget child, Animation<double> animation) {
-          //               return FadeTransition(
-          //                 opacity: animation,
-          //                 child: SlideTransition(
-          //                   position: Tween<Offset>(
-          //                     begin: const Offset(0.1, 0.0),
-          //                     end: Offset.zero,
-          //                   ).animate(animation),
-          //                   child: child,
-          //                 ),
-          //               );
-          //             },
-          //             child: RegisterViewField(
-          //               key: ValueKey<int>(state.currentFieldIndex),
-          //               fullNameController: state.currentFieldIndex == 0
-          //                   ? fullNameController
-          //                   : state.currentFieldIndex == 1
-          //                       ? emailController
-          //                       : passwordController,
-          //               hintText: state.currentFieldIndex == 0
-          //                   ? "Adın"
-          //                   : state.currentFieldIndex == 1
-          //                       ? "E-posta adresin"
-          //                       : "Şifren",
-          //               isPassword: state.currentFieldIndex == 2,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(right: 24),
-      //   child: FloatingActionButton.extended(
-      //     isExtended: true,
-      //     onPressed: () {
-      //       if (_formKey.currentState!.validate()) {
-      //         if (state.currentFieldIndex == 2) {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(
-      //                 builder: (context) => const LovedCategories()),
-      //           );
-      //         } else {
-      //           ref.read(registerViewNotifierProvider.notifier).nextField();
-      //         }
-      //       }
-      //     },
-      //     backgroundColor: AppColors.primary100,
-      //     label: Text(
-      //       state.currentFieldIndex == 2 ? "Kategorilere Geç" : "Devam Et",
-      //       style: AppTextStyles.largeTextStyle.copyWith(color: Colors.white),
-      //     ),
-      //     icon: const Icon(Icons.arrow_forward, color: Colors.white),
-      // ),
-      // ),
     );
   }
 }
@@ -441,7 +338,7 @@ class RegisterViewField extends ConsumerWidget {
         style: const TextStyle(color: Colors.white, fontSize: 20),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Bu alan boş bırakılamaz";
+            return AppLocalizations.of(context)!.cantBeEmpty;
           }
           return null;
         },

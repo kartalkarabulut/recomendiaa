@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:recomendiaa/SharedViews/buttons/custom_button.dart';
-import 'package:recomendiaa/Views/Auth/login/login_view.dart';
-import 'package:recomendiaa/Views/RecomendationViews/movie-recomendation/widgets/movie_recm_sheet.dart';
-import 'package:recomendiaa/core/constants/app_constans.dart';
-import 'package:recomendiaa/core/theme/colors/app_colors.dart';
 import 'package:recomendiaa/models/movie_recomendation_model.dart';
+import 'package:recomendiaa/providers/movie_related_providers.dart';
 import 'package:recomendiaa/providers/user_data_providers.dart';
 import 'package:recomendiaa/repository/recomendation_repository.dart';
 import 'package:recomendiaa/services/recomendation-history/recomendation_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-final generatedMovieRecommendationsProvider =
-    StateProvider<List<MovieRecomendationModel>>((ref) => []);
-final movieRecomendationViewModelProvider =
-    StateNotifierProvider<MovieRecomendationViewModel, void>((ref) {
-  return MovieRecomendationViewModel();
-});
 
 class MovieRecomendationViewModel extends StateNotifier {
   MovieRecomendationViewModel() : super(null);

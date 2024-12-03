@@ -23,7 +23,7 @@
     "refreshCanTakeAWhile": "Yenileme biraz zaman alabilir",
     "refreshThePage": "Sayfayı Yenile",
     "pleaseSelectTheBooksYouWantToSave": "Lütfen istediğiniz\n kitapları seçin",
-    "tellUsAboutYourTasteInBooks": "Okumak istediğin kitabı anlat",
+    "tellUsAboutYourTasteInBooks": "Okumak istediğin kitab�� anlat",
     "tellUsAboutYourTasteInMovies": "İzlemek istediğin filmi anlat",
     "error": "Hata: {error}",
     "suggest": "Öneri Oluştur",
@@ -59,5 +59,18 @@
     "minutes": "{minutes} dk",
     "promptSuggestion": "Prompt Önerisi",
     "lastMovieSuggestions": "Son Film Önerileri",
-    "usePrompt": "Prompt Kullan"
+    "usePrompt": "Prompt Kullan",
+    "yourName" : "Adınız",
+    "emailField" : "E-posta adresiniz",
+    "yourPassWord" : "Şifre",
+    "back" : "Geri",
+    "toCategories" : "Kategorilere Git",
+    "cantBeEmpty" : "Alan Boş Olamaz",
+    "whatsYourName" : "Adınız Nedir?",
+    "toContactYou" : "Sizinle İletişime Geçmek İçin",
+    "toKeepAcSecure" : "Hesabınızı Güvende Tutmak İçin",
+    "generatedSuggestionsWillShowUpHere" : "Üretilen öneriler burada görünecek",
+    "suggestionsAreBeingGenerated" : "Öneriler oluşturuluyor...",
+    "home" : "Ana Sayfa",
+    "history" : "Geçmiş"
 }

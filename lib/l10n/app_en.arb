@@ -93,13 +93,13 @@
   "@pleaseSelectTheBooksYouWantToSave": {
     "description": "Please select the books\n you want to save"
   },
-  "tellUsAboutYourTasteInBooks": "Tell us about your taste in books",
+  "tellUsAboutYourTasteInBooks": "Describe the book you want to read",
   "@tellUsAboutYourTasteInBooks": {
-    "description": "Tell us about your taste in books"
+    "description": "Describe the book you want to read, and we’ll find the perfect one for you in seconds."
   },
-  "tellUsAboutYourTasteInMovies": "Tell us about your taste in movies",
+  "tellUsAboutYourTasteInMovies": "Describe the movie you want to watch",
   "@tellUsAboutYourTasteInMovies": {
-    "description": "Tell us about your taste in movies"
+    "description": "Describe the movie you want to watch, and we’ll find the perfect one for you in seconds."
   },
   "error": "Error: {error}",
   "@error": {
@@ -259,5 +259,59 @@
   "usePrompt": "Use Prompt",
   "@usePrompt": {
     "description": "Use Prompt"
+  },
+  "yourName" : "Your Name",
+  "@yourName" : {
+    "description": "your name field"
+  },
+  "emailField" : "Your email",
+  "@emailField" : {
+    "description": "Your email field"
+  },
+  "yourPassWord" : "Password",
+  "@yourPassWord" : {
+    "description": "password field "
+  },
+  "back" : "Back",
+  "@back" : {
+    "description": "back button"
+  },
+  "toCategories" : "Go Categories",
+  "@toCategories" : {
+    "description": "go to categories"
+  }, 
+  "cantBeEmpty" : "Field Cant Be Empty",
+  "@cantBeEmpty" : {
+    "description": "this field cant be empty"
+  },
+  "whatsYourName" : "What is Your Name?",
+  "@whatsYourName" : {
+    "description": "what is your name"
+  },
+  "toContactYou" : "To Contact You",
+  "@toContactYou" : {
+    "description": "to contact you"
+  },
+  "toKeepAcSecure" : "To Keep Your Account Secure",
+  "@toKeepAcSecure" : {
+    "description": "to kepp secure you"
+  },
+  "generatedSuggestionsWillShowUpHere" : "Generated suggestions will show up here",
+  "@generatedSuggestionsWillShowUpHere" : {
+    "description": "generated suggestions will show up here"
+  },
+  "suggestionsAreBeingGenerated" : "Suggestions are being generated...",
+  "@suggestionsAreBeingGenerated" : {
+    "description": "Suggestions are being generated..."
+  },
+  "home" : "Home",
+  "@home" : {
+    "description": "Home"
+  },
+  "history" : "History",
+  "@history" : {
+    "description": "History"
   }
+
+
 }     

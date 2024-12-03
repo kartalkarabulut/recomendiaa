@@ -52,26 +52,13 @@ class _IntroductionPageViewState extends State<IntroductionPageView> {
           // Arkaplan Gradient
           Container(
             decoration: BoxDecoration(
-              gradient: AppGradientColors.primaryGradient,
-            ),
+                gradient: AppGradientColors.primaryGradient,
+                backgroundBlendMode: BlendMode.lighten),
           ),
-
-          // Blur Efekti
           Positioned.fill(
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.6),
-                      Colors.black.withOpacity(0.8),
-                    ],
-                  ),
-                ),
-              ),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+              child: Container(color: Colors.black.withOpacity(0.75)),
             ),
           ),
 
@@ -222,22 +209,16 @@ class IntroductionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.06,
-        vertical: size.height * 0.02,
-      ),
+    return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(),
-
           // Görsel
           Container(
             height: size.height * (item.height ?? 0.4),
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(0),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
@@ -250,6 +231,7 @@ class IntroductionPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
                 item.image,
+                width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
