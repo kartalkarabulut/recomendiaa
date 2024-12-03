@@ -1,7 +1,7 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:logger/logger.dart';
 
-class NewAdService {
+class AdverstasingService {
   static const String _interstitialAdUnitId =
       'ca-app-pub-9468367932651303/2073876483';
 

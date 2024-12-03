@@ -41,15 +41,28 @@ class RecomendationTypeWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset("assets/images/$imagePath", height: 60, width: 60),
-                const Icon(
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: -2.0,
+                        blurRadius: 4.0,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Image.asset("assets/images/$imagePath",
+                      height: 60, width: 60),
+                ),
+                Icon(
                   Icons.arrow_outward_outlined,
                   size: 40,
                   // weight: 300.00,
                   shadows: [
                     Shadow(
-                      color: Colors.deepOrange,
-                      offset: Offset(1, 1),
+                      color: Colors.black.withOpacity(0.5),
+                      offset: Offset(0, 1),
                     ),
                   ],
                   color: Colors.deepOrange,
