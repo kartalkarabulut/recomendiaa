@@ -150,23 +150,12 @@ class _MovieRecomendationViewState
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.history,
-                                  color: Colors.white70,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .promptSuggestion,
-                                  style: AppTextStyles.mediumTextStyle.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              AppLocalizations.of(context)!.promptSuggestion,
+                              style: AppTextStyles.mediumTextStyle.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 12),
                             SizedBox(
@@ -262,6 +251,7 @@ class _MovieRecomendationViewState
                           SizedBox(
                             height: 400,
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               itemCount: generatedRecommendations.length,
@@ -273,6 +263,7 @@ class _MovieRecomendationViewState
                               ),
                             ),
                           ),
+                          const SizedBox(height: 16),
                         ],
                       );
                     },

@@ -256,6 +256,7 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                           SizedBox(
                             height: 400,
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               itemCount: generatedRecommendations.length,
@@ -267,6 +268,7 @@ class _BookRecomendationViewState extends ConsumerState<BookRecomendationView> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 16),
                         ],
                       );
                     },

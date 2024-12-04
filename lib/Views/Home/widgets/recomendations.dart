@@ -26,6 +26,7 @@ class Recomendations extends ConsumerWidget {
           // Movies Page
           userData.when(
             data: (data) => ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: data?.lastSuggestedMovies.length ?? 0,
               itemBuilder: (context, index) => GeneratedMovieWidget(
@@ -49,6 +50,7 @@ class Recomendations extends ConsumerWidget {
           // Books Page
           userData.when(
             data: (data) => ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
               itemCount: data?.lastSuggestedBooks.length ?? 0,
               itemBuilder: (context, index) => GeneratedBookWidget(

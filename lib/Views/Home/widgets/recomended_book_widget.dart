@@ -85,6 +85,7 @@ class RecomendedBook extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.mediumTextStyle.copyWith(
                 color: Colors.orange,
+                fontWeight: FontWeight.bold,
               ),
             ),
             Text(

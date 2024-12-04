@@ -43,97 +43,83 @@ class LovedCategories extends ConsumerWidget {
             ),
             Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 15, sigmaY: 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.6),
-                        Colors.black.withOpacity(0.8),
-                      ],
-                    ),
-                  ),
-                ),
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+                child: Container(color: Colors.black.withOpacity(0.75)),
               ),
             ),
             SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   "To be able to recommend you the best content, we need to know your favorite categories",
-                    //   style: AppTextStyles.mediumTextStyle,
-                    // ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.movieCategories,
-                            style: AppTextStyles.xLargeTextStyle
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                              iconSize: 20,
-                              onPressed: () {},
-                              icon: Image.asset(
-                                "assets/images/categories.png",
-                                width: 30,
-                                color: Colors.orange,
-                              ))
-                        ],
+                    Text(
+                      "AEİAİA",
+                      style: AppTextStyles.xLargeTextStyle.copyWith(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 15,
-                      children: CategoryNames.getCategories(context)
-                          .map((category) => CategoryNameBox(
-                                title: category,
-                                isMovie: true,
-                                recomendationType: RecomendationType.movie,
-                              ))
-                          .toList(),
-                    ),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.bookCategories,
-                            style: AppTextStyles.xLargeTextStyle
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                              iconSize: 20,
-                              onPressed: () {},
-                              icon: Image.asset(
-                                "assets/images/categories.png",
-                                width: 30,
-                                color: Colors.teal,
-                              ))
-                        ],
+                    const SizedBox(height: 10),
+                    Text(
+                      "aeiaia",
+                      style: AppTextStyles.mediumTextStyle.copyWith(
+                        color: Colors.white70,
                       ),
                     ),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 15,
-                      children: CategoryNames.getBookCategories(context)
-                          .map((category) => CategoryNameBox(
-                                title: category,
-                                isMovie: false,
-                                recomendationType: RecomendationType.book,
-                              ))
-                          .toList(),
-                    )
+                    const SizedBox(height: 30),
+                    _buildCategoryHeader(
+                      context,
+                      AppLocalizations.of(context)!.movieCategories,
+                      "assets/images/categories.png",
+                      Colors.orange,
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Wrap(
+                        spacing: 12,
+                        runSpacing: 15,
+                        children: CategoryNames.getCategories(context)
+                            .map((category) => CategoryNameBox(
+                                  title: category,
+                                  isMovie: true,
+                                  recomendationType: RecomendationType.movie,
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    _buildCategoryHeader(
+                      context,
+                      AppLocalizations.of(context)!.bookCategories,
+                      "assets/images/categories.png",
+                      Colors.teal,
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Wrap(
+                        spacing: 12,
+                        runSpacing: 15,
+                        children: CategoryNames.getBookCategories(context)
+                            .map((category) => CategoryNameBox(
+                                  title: category,
+                                  isMovie: false,
+                                  recomendationType: RecomendationType.book,
+                                ))
+                            .toList(),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -193,59 +179,151 @@ class LovedCategories extends ConsumerWidget {
               ),
           ],
         ),
-        floatingActionButton: Opacity(
+        floatingActionButton: AnimatedOpacity(
+          duration: Duration(milliseconds: 300),
           opacity: state.isLoading ? 0.5 : 1,
-          child: FloatingActionButton.extended(
-            backgroundColor: AppColors.yellowGreenColor,
-            onPressed: state.isLoading
-                ? null
-                : () async {
-                    final viewModel =
-                        ref.read(lovedCategoriesViewModelProvider.notifier);
-                    final selectedMovieCategories =
-                        viewModel.state.selectedMovieCategories;
-                    final selectedBookCategories =
-                        viewModel.state.selectedBookCategories;
-
-                    if (selectedMovieCategories.length < 5) {
-                      _showErrorSnackbar(
-                        context,
-                        AppLocalizations.of(context)!.movieCategoriesMinimum,
-                      );
-                      return;
-                    }
-
-                    if (selectedBookCategories.length < 5) {
-                      _showErrorSnackbar(
-                        context,
-                        AppLocalizations.of(context)!.bookCategoriesMinimum,
-                      );
-                      return;
-                    }
-
-                    final language =
-                        Localizations.localeOf(context).languageCode;
-                    final user = await viewModel.finishRegistration(
-                        context, ref, language);
-                    if (user != null) {
-                      ref.invalidate(userIdProvider);
-                      ref.invalidate(userDataProvider);
-
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PageRooter(),
-                        ),
-                      );
-                    }
-                  },
-            label: Text(
-              AppLocalizations.of(context)!.finish,
-              style: AppTextStyles.largeTextStyle.copyWith(color: Colors.black),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              gradient: LinearGradient(
+                colors: state.isLoading
+                    ? [Colors.grey, Colors.grey.shade600]
+                    : [Colors.orange.shade400, Colors.deepOrange.shade600],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: state.isLoading
+                      ? Colors.transparent
+                      : Colors.deepOrange.withOpacity(0.3),
+                  blurRadius: 12,
+                  offset: Offset(0, 4),
+                  spreadRadius: 2,
+                ),
+              ],
             ),
-            icon: const Icon(Icons.arrow_forward, color: Colors.black),
+            child: FloatingActionButton.extended(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              onPressed: state.isLoading
+                  ? null
+                  : () async {
+                      final viewModel =
+                          ref.read(lovedCategoriesViewModelProvider.notifier);
+                      final selectedMovieCategories =
+                          viewModel.state.selectedMovieCategories;
+                      final selectedBookCategories =
+                          viewModel.state.selectedBookCategories;
+
+                      if (selectedMovieCategories.length < 5) {
+                        _showErrorSnackbar(
+                          context,
+                          AppLocalizations.of(context)!.movieCategoriesMinimum,
+                        );
+                        return;
+                      }
+
+                      if (selectedBookCategories.length < 5) {
+                        _showErrorSnackbar(
+                          context,
+                          AppLocalizations.of(context)!.bookCategoriesMinimum,
+                        );
+                        return;
+                      }
+
+                      final language =
+                          Localizations.localeOf(context).languageCode;
+                      final user = await viewModel.finishRegistration(
+                          context, ref, language);
+                      if (user != null) {
+                        ref.invalidate(userIdProvider);
+                        ref.invalidate(userDataProvider);
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PageRooter(),
+                          ),
+                        );
+                      }
+                    },
+              label: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.finish,
+                      style: AppTextStyles.largeTextStyle.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    if (!state.isLoading) ...[
+                      SizedBox(width: 8),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ] else
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryHeader(
+      BuildContext context, String title, String iconPath, Color iconColor) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.black12,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: iconColor.withOpacity(0.3), width: 1),
+      ),
+      child: Row(
+        children: [
+          Image.asset(
+            iconPath,
+            width: 24,
+            color: iconColor,
+          ),
+          const SizedBox(width: 12),
+          Text(
+            title,
+            style: AppTextStyles.xLargeTextStyle.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -277,58 +355,76 @@ class CategoryNameBox extends ConsumerWidget {
         ? Colors.orange
         : Colors.teal;
 
-    return GestureDetector(
-      onTap: () {
-        if (isSelected) {
-          if (isMovie) {
-            viewModel.removeMovieCategory(title);
-            registeringUser.state.lovedMovieCategories.remove(title);
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
+      child: GestureDetector(
+        onTap: () {
+          if (isSelected) {
+            if (isMovie) {
+              viewModel.removeMovieCategory(title);
+              registeringUser.state.lovedMovieCategories.remove(title);
+            } else {
+              viewModel.removeBookCategory(title);
+              registeringUser.state.lovedBookCategories.remove(title);
+            }
           } else {
-            viewModel.removeBookCategory(title);
-            registeringUser.state.lovedBookCategories.remove(title);
+            if (isMovie) {
+              registeringUser.state.lovedMovieCategories.add(title);
+              viewModel.addMovieCategory(title);
+            } else {
+              viewModel.addBookCategory(title);
+              registeringUser.state.lovedBookCategories.add(title);
+            }
           }
-        } else {
-          if (isMovie) {
-            registeringUser.state.lovedMovieCategories.add(title);
-            viewModel.addMovieCategory(title);
-          } else {
-            viewModel.addBookCategory(title);
-            registeringUser.state.lovedBookCategories.add(title);
-          }
-        }
-      },
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: isSelected ? color.withOpacity(0.5) : color,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              title,
-              style: AppTextStyles.largeTextStyle.copyWith(color: Colors.black),
-            ),
-          ),
-          if (isSelected)
-            Positioned(
-              right: -5,
-              top: -5,
-              child: Container(
-                padding: const EdgeInsets.all(2),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
+        },
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: isSelected ? color.withOpacity(0.2) : Colors.black38,
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(
+                  color: isSelected ? color : color.withOpacity(0.3),
+                  width: 1.5,
                 ),
-                child: Icon(
-                  Icons.check_circle,
-                  color: color,
-                  size: 20,
+                boxShadow: isSelected
+                    ? [
+                        BoxShadow(
+                          color: color.withOpacity(0.3),
+                          blurRadius: 8,
+                          spreadRadius: 1,
+                        )
+                      ]
+                    : null,
+              ),
+              child: Text(
+                title,
+                style: AppTextStyles.mediumTextStyle.copyWith(
+                  color: isSelected ? color : Colors.white70,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ),
-        ],
+            if (isSelected)
+              Positioned(
+                top: -4,
+                right: -4,
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.black87,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.check_circle,
+                    color: color,
+                    size: 18,
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

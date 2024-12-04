@@ -7,23 +7,31 @@ class PromptInfoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.amber.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.amber.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
       child: Row(
         children: [
           const Icon(
             Icons.info_outline,
-            color: Colors.white70,
-            size: 16,
+            color: Colors.amber,
+            size: 24,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               AppLocalizations.of(context)!.promptInfoText,
               style: AppTextStyles.smallTextStyle.copyWith(
-                color: Colors.white70,
-                fontSize: 12,
-                fontStyle: FontStyle.italic,
+                color: Colors.amber,
+                height: 1.4,
               ),
             ),
           ),

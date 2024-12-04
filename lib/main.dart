@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:recomendiaa/Views/Home/home_page.dart';
-import 'package:recomendiaa/Views/history/recomendation_history_view.dart';
-import 'package:recomendiaa/Views/history/recomendation_history_viewmodel.dart';
 import 'package:recomendiaa/app/auth_wigdet.dart';
 import 'package:recomendiaa/app/main_initializations.dart';
 import 'package:recomendiaa/core/theme/light_theme.dart';

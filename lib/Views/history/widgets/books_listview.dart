@@ -27,6 +27,7 @@ class BooksListView extends ConsumerWidget {
             );
           }
           return ListView.builder(
+            padding: EdgeInsets.zero,
             itemCount: data.length,
             itemBuilder: (context, index) => RecomendedBook(
               book: data[index],

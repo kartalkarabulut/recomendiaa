@@ -28,16 +28,16 @@ class _IntroductionPageViewState extends State<IntroductionPageView> {
           gradientColors: [Colors.purple.shade700, Colors.blue.shade700],
           height: 0.5),
       IntroductionItem(
-        image: "assets/images/cantbook.jpg",
-        description: AppLocalizations.of(context)!
-            .justTellUsWhatKindOfBookYoureInTheMoodFor,
-        gradientColors: [Colors.purple.shade700, Colors.blue.shade700],
-      ),
-      IntroductionItem(
         image: "assets/images/man-wacthing.jpg",
         description:
             AppLocalizations.of(context)!.describeYourPerfectMovieScene,
         gradientColors: [Colors.orange.shade700, Colors.red.shade700],
+      ),
+      IntroductionItem(
+        image: "assets/images/cantbook.jpg",
+        description: AppLocalizations.of(context)!
+            .justTellUsWhatKindOfBookYoureInTheMoodFor,
+        gradientColors: [Colors.purple.shade700, Colors.blue.shade700],
       ),
     ];
   }

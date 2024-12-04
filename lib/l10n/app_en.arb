@@ -639,5 +639,17 @@
   "unexpectedError": "Unexpected error. Please try again.",
   "@unexpectedError": {
     "description": "Unexpected error message"
+  },
+  "emailAlreadyInUse": "This email address is already in use.",
+  "@emailAlreadyInUse": {
+    "description": "Email already in use message"
+  },
+  "emailNotVerified": "Your email address is not verified. Please verify your email address.",
+  "@emailNotVerified": {
+    "description": "Email not verified message"
+  },
+  "categorySelfImprovement": "Self Improvement",
+  "@categorySelfImprovement": {
+    "description": "Self Improvement book category"
   }
 }     

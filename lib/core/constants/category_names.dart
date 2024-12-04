@@ -66,6 +66,7 @@ class CategoryNames {
       AppLocalizations.of(context)!.categoryAlternateHistory,
       AppLocalizations.of(context)!.categoryCyberpunk,
       AppLocalizations.of(context)!.categoryWomensLit,
+      AppLocalizations.of(context)!.categorySelfImprovement,
     ];
   }
 
@@ -131,5 +132,6 @@ class CategoryNames {
         "Alternate History",
         "Cyberpunk",
         "Women's Literature",
+        "Self Improvement",
       ];
 }

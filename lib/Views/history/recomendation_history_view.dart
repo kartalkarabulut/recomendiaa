@@ -37,58 +37,60 @@ class _RecomendationHistoryState extends ConsumerState<RecomendationHistory> {
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: AppGradientColors.primaryGradient,
-              backgroundBlendMode: BlendMode.lighten,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                gradient: AppGradientColors.primaryGradient,
+                backgroundBlendMode: BlendMode.lighten,
+              ),
             ),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
-              child: Container(color: Colors.black.withOpacity(0.75)),
+            Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+                child: Container(color: Colors.black.withOpacity(0.75)),
+              ),
             ),
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 80,
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.recomendationHistory,
-                    style: AppTextStyles.orbitronlargeTextStyle.copyWith(
-                      fontSize: 24,
+            Column(
+              children: [
+                SizedBox(
+                  height: 80,
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.recomendationHistory,
+                      style: AppTextStyles.orbitronlargeTextStyle.copyWith(
+                        fontSize: 24,
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // Navigation Buttons
-              const HistoryNavigationButtons(),
+                // Navigation Buttons
+                const HistoryNavigationButtons(),
 
-              // PageView
-              Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  onPageChanged: (index) {
-                    ref
-                        .read(recomendationHistoryViewModelProvider.notifier)
-                        .setCurrentIndex(index);
-                  },
-                  children: const [
-                    // Movies Page
-                    MoviesListView(),
+                // PageView
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (index) {
+                      ref
+                          .read(recomendationHistoryViewModelProvider.notifier)
+                          .setCurrentIndex(index);
+                    },
+                    children: const [
+                      // Movies Page
+                      MoviesListView(),
 
-                    // Books Page
-                    BooksListView(),
-                  ],
+                      // Books Page
+                      BooksListView(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

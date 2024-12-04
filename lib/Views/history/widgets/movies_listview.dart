@@ -27,6 +27,7 @@ class MoviesListView extends ConsumerWidget {
             );
           }
           return ListView.builder(
+            padding: EdgeInsets.zero,
             itemCount: data.length,
             itemBuilder: (context, index) => RecomendedMovie(
               isSmartSuggestion: false,

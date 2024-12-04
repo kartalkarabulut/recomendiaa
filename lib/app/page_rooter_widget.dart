@@ -21,8 +21,8 @@ class PageRooter extends ConsumerWidget {
     return Scaffold(
         body: pages[pageIndex],
         bottomNavigationBar: Container(
-          height: AppConstants.screenHeight(context) * 0.08,
-          decoration: BoxDecoration(color: Colors.black),
+          height: AppConstants.screenHeight(context) * 0.1,
+          decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

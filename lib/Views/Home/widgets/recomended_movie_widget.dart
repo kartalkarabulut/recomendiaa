@@ -43,45 +43,52 @@ class RecomendedMovie extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         height: 120,
-        // width: 100,
         decoration: BoxDecoration(
-          color: AppColors.darkBackgorind.withOpacity(0.6),
-          // color: Colors.red,
-          borderRadius: BorderRadius.circular(10),
+          color: AppColors.darkBackgorind.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Hero(
               tag: movie.posterUrl ?? 'emptyUrl',
-              child: SizedBox(
-                height: 120,
-                child: Image.network(
-                  movie.posterUrl ?? '',
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 80,
-                      color: AppColors.darkBackgorind,
-                      child: const Center(
-                        child: Icon(
-                          Icons.movie_outlined,
-                          color: Colors.white54,
-                          size: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  height: 120,
+                  child: Image.network(
+                    movie.posterUrl ?? '',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: 80,
+                        color: AppColors.darkBackgorind,
+                        child: const Center(
+                          child: Icon(
+                            Icons.movie_outlined,
+                            color: Colors.white54,
+                            size: 40,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      width: 80,
-                      color: AppColors.darkBackgorind,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  },
-                  fit: BoxFit.cover,
+                      );
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        width: 80,
+                        color: AppColors.darkBackgorind,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
@@ -98,19 +105,25 @@ class RecomendedMovie extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.largeTextStyle.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                     Text(
                       "IMDB  ${movie.imdbRating}",
                       style: AppTextStyles.mediumTextStyle.copyWith(
-                          color: Colors.orange, fontWeight: FontWeight.bold),
+                        color: Colors.orangeAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       movie.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.mediumTextStyle
-                          .copyWith(color: Colors.grey),
+                      style: AppTextStyles.mediumTextStyle.copyWith(
+                        color: Colors.grey.shade400,
+                      ),
                     ),
                   ],
                 ),

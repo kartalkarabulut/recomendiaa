@@ -73,7 +73,7 @@
     "suggestionsAreBeingGenerated" : "Öneriler oluşturuluyor...",
     "home" : "Ana Sayfa",
     "history" : "Geçmiş",
-    "promptInfoText": "Daha detaylı ve açıklayıcı bir istek yazmanız, daha iyi öneriler almanızı sağlayacaktır.",
+    "promptInfoText": "Daha detaylı ve açıklayıcı bir prompt yazmanız, daha iyi öneriler almanızı sağlayacaktır.",
     "warningText": "Önerileri kaydetmek için uzun basın, detayları görmek için tek tıklayın. Kaydedilmeyen öneriler kaybolacaktır.",
     "lastBookSuggestions": "Son Kitap Önerileri",
     "registerStepTitle1": "Önce seni tanıyalım",
@@ -152,5 +152,8 @@
     "savingRecommendations": "Öneriler kaydediliyor...",
     "registrationSuccessful": "Kayıt başarılı! Yönlendiriliyorsunuz...",
     "registrationFailed": "Kayıt başarısız oldu",
-    "unexpectedError": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
+    "unexpectedError": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
+    "emailAlreadyInUse": "Bu e-posta adresi zaten kullanılıyor.",
+    "emailNotVerified": "E-posta adresiniz doğrulanmamış. Lütfen e-posta adresinizi doğrulayın.",
+    "categorySelfImprovement": "Kişisel Gelişim"
 }
