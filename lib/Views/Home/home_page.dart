@@ -113,7 +113,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   ),
                             ),
                             const SizedBox(height: 25),
-                            // const PageIndicators(),
                             const PageDotIndicators(),
                             const SizedBox(height: 25),
                             const Recomendations(),

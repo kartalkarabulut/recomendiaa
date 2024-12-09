@@ -263,7 +263,6 @@ class _MovieRecomendationViewState
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
                         ],
                       );
                     },
